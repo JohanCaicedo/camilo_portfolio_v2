@@ -28,16 +28,16 @@ const skills = [
 export function SkillsSection() {
     return (
         <SectionContainer id="skills" className="mb-32">
-            {/* Header - Technical Style */}
-            <div className="flex items-center justify-center gap-4 mb-16 mt-12">
-                <div className="p-3 border border-black/10 dark:border-white/10 rounded-sm bg-black/5 dark:bg-white/5">
-                    <Sparkles className="size-6 text-brand-salmon" strokeWidth={1.5} />
+            {/* Header - Technical / Monospace Accent */}
+            <div className="flex items-center gap-4 mb-10 mt-8">
+                <div className="p-2.5 border border-black/10 dark:border-white/10 rounded-sm bg-black/5 dark:bg-white/5">
+                    <Sparkles className="size-5 text-brand-salmon" strokeWidth={1.5} />
                 </div>
-                <div className="text-left">
-                    <h3 className="text-4xl md:text-5xl font-bold text-[#1a1a1a] dark:text-[#faf9f6] tracking-tight leading-none">
+                <div>
+                    <h3 className="text-3xl md:text-4xl font-bold text-[#1a1a1a] dark:text-[#faf9f6] tracking-tight leading-none">
                         TECH_STACK
                     </h3>
-                    <p className="text-xs font-mono text-brand-salmon mt-1 tracking-widest uppercase">
+                    <p className="text-[10px] font-mono text-brand-salmon mt-1 tracking-widest uppercase">
                         // CAPABILITY_MATRIX
                     </p>
                 </div>
