@@ -5,6 +5,8 @@ import './globals.css'
 import { ThemeProvider } from "@/components/theme-provider"
 import { InteractiveGridPattern } from "@/components/ui/interactive-grid-pattern"
 import { AtomCursor } from "@/components/atom-cursor"
+import { Navbar } from "@/components/navbar"
+import { Footer } from "@/components/footer"
 
 const _geist = Geist({ subsets: ["latin"] });
 const _geistMono = Geist_Mono({ subsets: ["latin"] });
@@ -34,7 +36,9 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <div className="relative z-10">
+            <Navbar />
             {children}
+            <Footer />
           </div>
           <InteractiveGridPattern />
           <AtomCursor />
