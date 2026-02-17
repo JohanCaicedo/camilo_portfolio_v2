@@ -68,7 +68,7 @@ export function ExperienceSection() {
                     <TerminalSquare className="size-5 text-brand-salmon" strokeWidth={1.5} />
                 </motion.div>
                 <div>
-                    <h3 className="text-3xl md:text-4xl font-bold text-[#1a1a1a] dark:text-[#faf9f6] tracking-tight leading-none">
+                    <h3 className="text-3xl md:text-4xl font-bold text-foreground dark:text-foreground tracking-tight leading-none">
                         SYSTEM_LOG
                     </h3>
                     <p className="text-[10px] font-mono text-brand-salmon mt-1 tracking-widest uppercase">
@@ -90,7 +90,7 @@ export function ExperienceSection() {
                                 label={`LOG_${String(index + 1).padStart(2, '0')}`}
                             >
                                 <div className="flex flex-col justify-between mb-2 gap-1 border-b border-black/5 dark:border-white/5 pb-2">
-                                    <h3 className="text-base md:text-lg font-bold text-[#1a1a1a] dark:text-[#faf9f6] tracking-tight leading-snug">
+                                    <h3 className="text-base md:text-lg font-bold text-foreground dark:text-foreground tracking-tight leading-snug">
                                         {exp.title}
                                     </h3>
                                     <div className="flex justify-between items-center w-full">
@@ -103,7 +103,7 @@ export function ExperienceSection() {
                                     </div>
                                 </div>
 
-                                <p className="text-xs text-[#555555] dark:text-[#a0a0a0] leading-relaxed font-mono mt-auto pt-2">
+                                <p className="text-xs text-muted-foreground dark:text-muted-foreground leading-relaxed font-mono mt-auto pt-2">
                                     <span className="text-brand-green/70 mr-1">{'>'}</span>
                                     {exp.description}
                                 </p>
@@ -143,7 +143,7 @@ export function ExperienceSection() {
                                             label={`LOG_${String(index + 1).padStart(2, '0')}`}
                                         >
                                             <div className="flex flex-col justify-between mb-2 gap-1 border-b border-black/5 dark:border-white/5 pb-2">
-                                                <h3 className="text-base md:text-lg font-bold text-[#1a1a1a] dark:text-[#faf9f6] tracking-tight leading-snug">
+                                                <h3 className="text-base md:text-lg font-bold text-foreground dark:text-foreground tracking-tight leading-snug">
                                                     {exp.title}
                                                 </h3>
                                                 <div className="flex justify-between items-center w-full">
@@ -156,7 +156,7 @@ export function ExperienceSection() {
                                                 </div>
                                             </div>
 
-                                            <p className="text-xs text-[#555555] dark:text-[#a0a0a0] leading-relaxed font-mono mt-auto pt-2">
+                                            <p className="text-xs text-muted-foreground dark:text-muted-foreground leading-relaxed font-mono mt-auto pt-2">
                                                 <span className="text-brand-green/70 mr-1">{'>'}</span>
                                                 {exp.description}
                                             </p>
@@ -171,7 +171,7 @@ export function ExperienceSection() {
                     <div className="flex justify-center mt-12 relative z-10">
                         <motion.button
                             onClick={() => setShowAll(!showAll)}
-                            className="px-8 py-3 bg-[#faf9f6] dark:bg-[#0a0a0a] border border-black/10 dark:border-white/10 hover:border-brand-blue hover:text-brand-blue text-[#1a1a1a] dark:text-[#faf9f6] font-mono text-sm tracking-widest uppercase transition-all duration-300 outline-none focus-visible:ring-2 focus-visible:ring-brand-blue focus-visible:ring-offset-2 focus-visible:ring-offset-background group"
+                            className="px-8 py-3 bg-background dark:bg-background border border-black/10 dark:border-white/10 hover:border-brand-blue hover:text-brand-blue text-foreground dark:text-foreground font-mono text-sm tracking-widest uppercase transition-all duration-300 outline-none focus-visible:ring-2 focus-visible:ring-brand-blue focus-visible:ring-offset-2 focus-visible:ring-offset-background group"
                             whileHover={{ y: -1, scale: 1.02 }}
                             whileTap={{ scale: 0.98 }}
                             transition={{ type: "spring", stiffness: 320, damping: 20 }}

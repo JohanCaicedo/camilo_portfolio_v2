@@ -5,6 +5,7 @@ import { Model as Zorrito } from "./NewZorrito-Web"
 import { Suspense, useEffect, useRef } from "react"
 import { useTheme } from "next-themes"
 import * as THREE from "three"
+import { ErrorBoundary } from "@/components/ui/error-boundary"
 
 // Color palette — same as interactive-grid-pattern
 const PALETTE = [
@@ -285,6 +286,18 @@ function SceneLighting() {
   )
 }
 
+function SceneErrorFallback() {
+  return (
+    <div className="w-full h-full flex items-center justify-center">
+      <img 
+        src="/Foxy-Blink.gif" 
+        alt="Paper Fox Studio mascot"
+        className="w-64 h-64 object-contain opacity-80"
+      />
+    </div>
+  )
+}
+
 export function AsciiScene() {
   const { theme } = useTheme()
 
@@ -293,24 +306,26 @@ export function AsciiScene() {
 
   return (
     <div className="w-full h-full relative">
-      <Canvas
-        camera={{ position: [0, 1, 5], fov: 35 }}
-        gl={{ alpha: true }} // Fix #12: removed preserveDrawingBuffer
-        style={{ background: "transparent" }}
-      >
-        <Suspense fallback={null}>
-          <SceneLighting />
-          <Zorrito
-            scale={1.8}
-            position={[0, -0.2, 0]}
+      <ErrorBoundary fallback={<SceneErrorFallback />}>
+        <Canvas
+          camera={{ position: [0, 1, 5], fov: 35 }}
+          gl={{ alpha: true }}
+          style={{ background: "transparent" }}
+        >
+          <Suspense fallback={null}>
+            <SceneLighting />
+            <Zorrito
+              scale={1.8}
+              position={[0, -0.2, 0]}
+            />
+          </Suspense>
+          <InteractiveAsciiEffect
+            fgColor={fgColor}
+            characters={ASCII_CHARS}
+            resolution={0.18}
           />
-        </Suspense>
-        <InteractiveAsciiEffect
-          fgColor={fgColor}
-          characters={ASCII_CHARS}
-          resolution={0.18}
-        />
-      </Canvas>
+        </Canvas>
+      </ErrorBoundary>
     </div>
   )
 }

@@ -19,7 +19,7 @@ export function Footer() {
     const year = new Date().getFullYear()
 
     return (
-        <footer className="relative w-full border-t border-black/10 dark:border-white/10 bg-[#faf9f6]/80 dark:bg-[#0a0a0a]/80 backdrop-blur-sm">
+        <footer className="relative w-full border-t border-black/10 dark:border-white/10 bg-background/80 dark:bg-background/80 backdrop-blur-sm">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
                 {/* Top row */}
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 mb-10">
@@ -28,10 +28,10 @@ export function Footer() {
                         <p className="text-[10px] font-mono text-brand-blue tracking-widest uppercase mb-2">
                             // SYSTEM_INFO
                         </p>
-                        <h3 className="text-lg font-bold text-[#1a1a1a] dark:text-[#faf9f6] tracking-tight">
+                        <h3 className="text-lg font-bold text-foreground dark:text-foreground tracking-tight">
                             Paper Fox Studio 🦊🍃
                         </h3>
-                        <p className="text-sm text-[#999] mt-1">
+                        <p className="text-sm text-muted-foreground mt-1">
                             Visual Design Continuity Across Every Dimension.
                         </p>
                     </div>
@@ -46,7 +46,7 @@ export function Footer() {
                                 <Link
                                     key={link.label}
                                     href={link.href}
-                                    className="text-sm font-mono text-[#666] dark:text-[#888] hover:text-brand-salmon transition-colors w-fit"
+                                    className="text-sm font-mono text-muted-foreground dark:text-muted-foreground hover:text-brand-salmon transition-colors w-fit"
                                 >
                                     {link.label}
                                 </Link>

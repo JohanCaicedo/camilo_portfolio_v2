@@ -24,11 +24,21 @@ export function AtomCursor() {
     const animRef = useRef<number>(0)
     const visibleRef = useRef(false)
     const isHoveringInteractive = useRef(false)
-    // Smooth transitions for scale effects
+    const isTouchDevice = useRef(false)
     const currentScale = useRef(1)
     const clickScale = useRef(1)
 
     useEffect(() => {
+        // Detect touch device more precisely
+        // Only disable on true touch devices (coarse pointer AND no hover capability)
+        const hasCoarsePointer = window.matchMedia('(pointer: coarse)').matches
+        const hasNoHover = window.matchMedia('(hover: none)').matches
+        const isTouch = hasCoarsePointer && hasNoHover
+        isTouchDevice.current = isTouch
+
+        // Don't initialize on touch devices
+        if (isTouchDevice.current) return
+
         const canvas = canvasRef.current
         if (!canvas) return
 
@@ -228,6 +238,11 @@ export function AtomCursor() {
             style.remove()
         }
     }, [])
+
+    // Don't render on touch devices
+    if (isTouchDevice.current) {
+        return null
+    }
 
     return (
         <canvas

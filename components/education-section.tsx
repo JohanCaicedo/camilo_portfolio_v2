@@ -76,7 +76,7 @@ export function EducationSection() {
                         <GraduationCap className="size-5 text-brand-salmon" strokeWidth={1.5} />
                     </motion.div>
                     <div>
-                        <h3 className="text-3xl md:text-4xl font-bold text-[#1a1a1a] dark:text-[#faf9f6] tracking-tight leading-none">
+                        <h3 className="text-3xl md:text-4xl font-bold text-foreground dark:text-foreground tracking-tight leading-none">
                             ACADEMIC_DATA
                         </h3>
                         <p className="text-[10px] font-mono text-brand-salmon mt-1 tracking-widest uppercase">
@@ -101,11 +101,11 @@ export function EducationSection() {
                                     <span className={`text-[9px] font-mono uppercase tracking-widest px-1.5 py-0.5 border rounded-sm ${edu.state === 'Graduate' ? 'text-brand-green border-brand-green/30 bg-brand-green/5' : 'text-brand-yellow border-brand-yellow/30 bg-brand-yellow/5'}`}>
                                         [{edu.state}]
                                     </span>
-                                    <span className="text-[10px] font-mono text-[#666666] dark:text-[#888888]">
+                                    <span className="text-[10px] font-mono text-muted-foreground dark:text-muted-foreground">
                                         {edu.date}
                                     </span>
                                 </div>
-                                <h3 className="text-xl font-bold text-left mb-1 tracking-tight leading-tight text-[#1a1a1a] dark:text-[#faf9f6]">
+                                <h3 className="text-xl font-bold text-left mb-1 tracking-tight leading-tight text-foreground dark:text-foreground">
                                     {edu.title}
                                 </h3>
                                 <h4 className={`text-xs font-mono tracking-wide text-left opacity-80 ${edu.accentColor}`}>
@@ -114,7 +114,7 @@ export function EducationSection() {
                             </div>
 
                             <div className="flex items-end justify-between relative z-10 border-t border-black/5 dark:border-white/5 pt-3">
-                                <span className="text-[10px] font-mono text-[#555555] dark:text-[#a0a0a0] uppercase tracking-wider">
+                                <span className="text-[10px] font-mono text-muted-foreground dark:text-muted-foreground uppercase tracking-wider">
                                     TYPE: {edu.type}
                                 </span>
                                 <div className="w-1.5 h-1.5 bg-brand-blue/50 rounded-full animate-pulse" />

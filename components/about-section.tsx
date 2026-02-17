@@ -64,7 +64,7 @@ export function AboutSection() {
                     <UserRound className="size-5 text-brand-salmon" strokeWidth={1.5} />
                 </motion.div>
                 <div>
-                    <h3 className="text-3xl md:text-4xl font-bold text-[#1a1a1a] dark:text-[#faf9f6] tracking-tight leading-none">
+                    <h3 className="text-3xl md:text-4xl font-bold text-foreground dark:text-foreground tracking-tight leading-none">
                         PROFILE_CONTEXT
                     </h3>
                     <p className="text-[10px] font-mono text-brand-salmon mt-1 tracking-widest uppercase">
@@ -76,15 +76,15 @@ export function AboutSection() {
             <div className="grid md:grid-cols-5 gap-4 max-w-6xl mx-auto">
                 <ViewerCard label="ABOUT_ME" className="md:col-span-3">
                     <div className="space-y-4">
-                        <p className="text-sm md:text-base text-[#555555] dark:text-[#a0a0a0] leading-relaxed">
+                        <p className="text-sm md:text-base text-muted-foreground dark:text-muted-foreground leading-relaxed">
                             I am Johan Caicedo, a multidisciplinary digital and multimedia designer based in Bogota.
                             My practice integrates web design, graphic systems, editorial design, photography, and audiovisual production into one coherent visual language.
                         </p>
-                        <p className="text-sm md:text-base text-[#555555] dark:text-[#a0a0a0] leading-relaxed">
+                        <p className="text-sm md:text-base text-muted-foreground dark:text-muted-foreground leading-relaxed">
                             Through collaborations with institutions such as ILSA and through my personal project Paper Fox Studio,
                             I work on experiences where strategy, aesthetics, and usability are developed as one connected system.
                         </p>
-                        <p className="text-sm md:text-base text-[#555555] dark:text-[#a0a0a0] leading-relaxed">
+                        <p className="text-sm md:text-base text-muted-foreground dark:text-muted-foreground leading-relaxed">
                             The objective is consistent in every project: translate complex ideas into clear, memorable, and scalable visual experiences.
                         </p>
                     </div>
@@ -100,10 +100,10 @@ export function AboutSection() {
                     <ul className="space-y-3">
                         {WORKFLOW_PROTOCOL.map((item) => (
                             <li key={item.title} className="border-l border-black/10 dark:border-white/10 pl-3">
-                                <p className="text-[11px] font-mono uppercase tracking-wider text-[#1a1a1a] dark:text-[#faf9f6]">
+                                <p className="text-[11px] font-mono uppercase tracking-wider text-foreground dark:text-foreground">
                                     {item.title}
                                 </p>
-                                <p className="text-xs text-[#666666] dark:text-[#999999] leading-relaxed">
+                                <p className="text-xs text-muted-foreground dark:text-muted-foreground leading-relaxed">
                                     {item.description}
                                 </p>
                             </li>
@@ -117,11 +117,11 @@ export function AboutSection() {
                     <ViewerCard key={area.id} label={area.id}>
                         <div className="flex items-start gap-2 mb-2">
                             <CircuitBoard className="size-4 text-brand-salmon mt-0.5" />
-                            <h4 className="text-sm font-bold text-[#1a1a1a] dark:text-[#faf9f6] tracking-tight">
+                            <h4 className="text-sm font-bold text-foreground dark:text-foreground tracking-tight">
                                 {area.title}
                             </h4>
                         </div>
-                        <p className="text-xs text-[#666666] dark:text-[#999999] leading-relaxed">
+                        <p className="text-xs text-muted-foreground dark:text-muted-foreground leading-relaxed">
                             {area.description}
                         </p>
                     </ViewerCard>
@@ -130,7 +130,7 @@ export function AboutSection() {
 
             <div className="max-w-6xl mx-auto mt-6 flex items-center gap-2 border-t border-black/10 dark:border-white/10 pt-4">
                 <Layers3 className="size-4 text-brand-green" />
-                <p className="text-[10px] font-mono text-[#777777] dark:text-[#999999] tracking-widest uppercase">
+                <p className="text-[10px] font-mono text-muted-foreground dark:text-muted-foreground tracking-widest uppercase">
                     // Visual Design Continuity Across Every Dimension
                 </p>
             </div>

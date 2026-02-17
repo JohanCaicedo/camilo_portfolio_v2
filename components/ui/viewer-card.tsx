@@ -20,7 +20,7 @@ export function ViewerCard({
     return (
         <div
             className={cn(
-                "relative group border border-black/10 dark:border-white/10 bg-[#faf9f6]/90 dark:bg-[#0a0a0a]/90 backdrop-blur-sm transition-all duration-300",
+                "relative group border border-black/10 dark:border-white/10 bg-background/90 dark:bg-background/90 backdrop-blur-sm transition-all duration-300",
                 active && "border-brand-blue/50 dark:border-brand-blue/50",
                 className
             )}
@@ -34,7 +34,7 @@ export function ViewerCard({
 
             {/* Optional Data Label (HUD style) */}
             {label && (
-                <div className="absolute -top-3 left-4 bg-[#faf9f6] dark:bg-[#0a0a0a] px-2 text-[10px] font-mono text-brand-blue tracking-widest uppercase border border-black/5 dark:border-white/5">
+                <div className="absolute -top-3 left-4 bg-background dark:bg-background px-2 text-[10px] font-mono text-brand-blue tracking-widest uppercase border border-black/5 dark:border-white/5">
                     {label}
                 </div>
             )}

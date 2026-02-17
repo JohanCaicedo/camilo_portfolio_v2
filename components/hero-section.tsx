@@ -4,10 +4,14 @@ import dynamic from "next/dynamic"
 import { SocialPill } from "@/components/ui/social-pill"
 import { Github, Linkedin, Mail, ChevronDown } from "lucide-react"
 import { useEffect, useState } from "react"
+import { AsciiSkeleton } from "@/components/ui/ascii-skeleton"
 
 const AsciiScene = dynamic(
   () => import("./ascii-scene").then((mod) => ({ default: mod.AsciiScene })),
-  { ssr: false }
+  { 
+    ssr: false,
+    loading: () => <AsciiSkeleton />
+  }
 )
 
 function useStaggeredReveal() {
@@ -48,18 +52,18 @@ export function HeroSection() {
           >
             <div className="inline-flex items-center gap-2">
               <span className="inline-block w-2 h-2 rounded-full bg-brand-salmon animate-pulse" />
-              <span className="text-xs font-mono text-[#666666] tracking-widest uppercase dark:text-white">
+              <span className="text-xs font-mono text-muted-foreground tracking-widest uppercase dark:text-foreground">
                 Design Portfolio
               </span>
             </div>
 
             {/* Status */}
-            <div className="flex items-center gap-2 px-3 py-1.5 bg-[#faf9f6] dark:bg-white/5 border border-black/10 dark:border-white/10 rounded-full w-fit">
+            <div className="flex items-center gap-2 px-3 py-1.5 bg-background dark:bg-white/5 border border-black/10 dark:border-white/10 rounded-full w-fit">
               <div className="relative flex h-2 w-2">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-green opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-brand-green"></span>
               </div>
-              <span className="text-[10px] font-mono font-medium text-[#1a1a1a] dark:text-[#faf9f6] tracking-widest uppercase">
+              <span className="text-[10px] font-mono font-medium text-foreground dark:text-muted-foreground tracking-widest uppercase">
                 Available for work
               </span>
             </div>
@@ -67,7 +71,7 @@ export function HeroSection() {
 
           {/* Main heading */}
           <h1
-            className="text-3xl sm:text-4xl lg:text-5xl font-sans font-bold text-[#1a1a1a] leading-tight tracking-tight text-balance mb-6 transition-all duration-700 ease-out dark:text-white"
+            className="text-3xl sm:text-4xl lg:text-5xl font-sans font-bold text-foreground leading-tight tracking-tight text-balance mb-6 transition-all duration-700 ease-out dark:text-foreground"
             style={{
               opacity: visible ? 1 : 0,
               transform: visible ? "translateY(0)" : "translateY(30px)",
@@ -88,10 +92,10 @@ export function HeroSection() {
               transitionDelay: "600ms",
             }}
           >
-            <p className="text-lg text-[#777777] max-w-md leading-relaxed text-pretty mb-4">
+            <p className="text-lg text-muted-foreground max-w-md leading-relaxed text-pretty mb-4">
               Synthesizing static structure and dynamic motion into a unified, immersive visual language.
             </p>
-            <p className="text-sm font-mono text-[#999999] tracking-widest uppercase">
+            <p className="text-sm font-mono text-muted-foreground tracking-widest uppercase">
               // BASED_IN_BOGOTA_<span
                 className="inline-block font-bold colombia-flag-text"
               >COLOMBIA</span>
@@ -163,7 +167,7 @@ export function HeroSection() {
           transitionDelay: visible ? "1200ms" : "0ms",
         }}
       >
-        <span className="text-sm font-mono font-bold text-[#999999] dark:text-[#888888] tracking-widest uppercase">
+        <span className="text-sm font-mono font-bold text-muted-foreground dark:text-muted-foreground tracking-widest uppercase">
           Scroll to explore
         </span>
         <div className="flex flex-col items-center -space-y-3">

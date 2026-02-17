@@ -16,7 +16,7 @@ export interface Skill {
     darkInvert?: boolean
 }
 
-interface SkillCardProps extends Skill { }
+type SkillCardProps = Skill
 
 function SkillCard({
     title,

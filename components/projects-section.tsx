@@ -65,7 +65,7 @@ export function ProjectsSection() {
                     <FolderGit2 className="size-5 text-brand-salmon" strokeWidth={1.5} />
                 </motion.div>
                 <div>
-                    <h3 className="text-3xl md:text-4xl font-bold text-[#1a1a1a] dark:text-[#faf9f6] tracking-tight leading-none">
+                    <h3 className="text-3xl md:text-4xl font-bold text-foreground dark:text-foreground tracking-tight leading-none">
                         SELECTED_PROJECTS
                     </h3>
                     <p className="text-[10px] font-mono text-brand-salmon mt-1 tracking-widest uppercase">
@@ -96,7 +96,7 @@ export function ProjectsSection() {
                             <div className="flex flex-col h-full relative z-10">
                                 {/* Technical Header */}
                                 <div className="flex justify-between items-start mb-3 border-b border-black/5 dark:border-white/5 pb-3">
-                                    <h3 className="font-bold text-xl text-[#1a1a1a] dark:text-[#faf9f6] tracking-tight">
+                                    <h3 className="font-bold text-xl text-foreground dark:text-foreground tracking-tight">
                                         {project.title}
                                     </h3>
                                     <div className="bg-brand-blue/10 px-1.5 py-0.5">
@@ -122,7 +122,7 @@ export function ProjectsSection() {
                                 {/* Tech Stack Footer */}
                                 <div className="mt-3 pt-2 border-t border-black/5 dark:border-white/5 flex items-center gap-2">
                                     <span className="w-1.5 h-1.5 bg-brand-green rounded-full animate-pulse" />
-                                    <span className="text-[10px] font-mono text-[#666666] dark:text-[#888888] uppercase tracking-wide">
+                                    <span className="text-[10px] font-mono text-muted-foreground dark:text-muted-foreground uppercase tracking-wide">
                                         {project.tech}
                                     </span>
                                 </div>

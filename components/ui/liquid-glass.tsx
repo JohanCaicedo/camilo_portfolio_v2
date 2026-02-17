@@ -88,7 +88,7 @@ export function LiquidGlass({
     // Updated to match Navbar style: extremely subtle, almost invisible border, matching background
     const backgroundClasses = glassBgClass
         ? glassBgClass
-        : "bg-[#faf9f6]/80 dark:bg-[#0a0a0a]/80 backdrop-blur-md border border-black/5 dark:border-white/5 shadow-sm"
+        : "bg-background/80 dark:bg-background/80 backdrop-blur-md border border-black/5 dark:border-white/5 shadow-sm"
 
     // Gradient for the highlight effect - made much subtler
     const gradientBackground = useTransform(
@@ -117,7 +117,7 @@ export function LiquidGlass({
                     rotateX: enable3DEffect ? rotateX : 0,
                     rotateY: enable3DEffect ? rotateY : 0,
                     transformStyle: "preserve-3d",
-                    // @ts-ignore - Custom CSS variables
+                    // @ts-expect-error - Custom CSS variables
                     "--glass-color": glassColor,
                     "--dark-glass-color": darkGlassColor,
                 }}
