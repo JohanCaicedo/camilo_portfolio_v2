@@ -83,6 +83,7 @@ export default function RootLayout({
             {children}
             <Footer />
           </div>
+          <InteractiveGridPattern />
           <AtomCursor />
           <Analytics />
           <JsonLd />
