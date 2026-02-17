@@ -37,6 +37,7 @@ export function HeroSection() {
         {/* Left side - Text content */}
         <div className="flex-1 flex flex-col justify-center py-24 lg:py-0 lg:pr-12">
           {/* Badge */}
+          {/* Badge */}
           <div
             className="inline-flex items-center gap-2 mb-8 w-fit transition-all duration-700 ease-out"
             style={{
@@ -45,26 +46,24 @@ export function HeroSection() {
               transitionDelay: "200ms",
             }}
           >
-            <span className="inline-block w-2 h-2 rounded-full bg-[#1a1a1a] animate-pulse" />
+            <span className="inline-block w-2 h-2 rounded-full bg-brand-salmon animate-pulse" />
             <span className="text-sm font-mono text-[#666666] tracking-widest uppercase">
-              Creative Studio
+              Design Portfolio
             </span>
           </div>
 
           {/* Main heading */}
           <h1
-            className="text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-sans font-bold text-[#1a1a1a] leading-[0.95] tracking-tight text-balance mb-6 transition-all duration-700 ease-out"
+            className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-sans font-bold text-[#1a1a1a] leading-tight tracking-tight text-balance mb-6 transition-all duration-700 ease-out"
             style={{
               opacity: visible ? 1 : 0,
               transform: visible ? "translateY(0)" : "translateY(30px)",
               transitionDelay: "400ms",
             }}
           >
-            We craft
+            Designing visual continuity
             <br />
-            digital
-            <br />
-            <span className="text-[#999999]">experiences</span>
+            <span className="text-brand-blue">across every dimension.</span>
           </h1>
 
           {/* Description */}
@@ -76,8 +75,7 @@ export function HeroSection() {
               transitionDelay: "600ms",
             }}
           >
-            Immersive web experiences that blend creativity with
-            cutting-edge technology. From concept to launch.
+            Synthesizing static structure and dynamic motion into a unified, immersive visual language.
           </p>
 
           {/* Buttons */}
@@ -91,7 +89,7 @@ export function HeroSection() {
           >
             <Button
               size="lg"
-              className="bg-[#1a1a1a] text-[#faf9f6] hover:bg-[#333333] font-semibold rounded-full px-8 h-12 text-base transition-all hover:scale-[1.02] active:scale-[0.98]"
+              className="bg-brand-yellow text-[#1a1a1a] hover:bg-brand-yellow/80 font-semibold rounded-full px-8 h-12 text-base transition-all hover:scale-[1.02] active:scale-[0.98]"
             >
               Start a Project
               <ArrowRight className="ml-2 h-4 w-4" />
@@ -99,7 +97,7 @@ export function HeroSection() {
             <Button
               variant="outline"
               size="lg"
-              className="border-[#d0d0d0] text-[#555555] hover:bg-[#f0efec] hover:text-[#1a1a1a] hover:border-[#aaaaaa] rounded-full px-8 h-12 text-base transition-all"
+              className="border-brand-green text-[#555555] hover:bg-brand-green/20 hover:text-[#1a1a1a] hover:border-brand-green rounded-full px-8 h-12 text-base transition-all"
             >
               <Play className="mr-2 h-4 w-4" />
               Watch Reel
