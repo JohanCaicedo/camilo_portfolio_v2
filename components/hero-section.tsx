@@ -92,8 +92,31 @@ export function HeroSection() {
               Synthesizing static structure and dynamic motion into a unified, immersive visual language.
             </p>
             <p className="text-sm font-mono text-[#999999] tracking-widest uppercase">
-              // BASED_IN_BOGOTA_COLOMBIA
+              // BASED_IN_BOGOTA_<span
+                className="inline-block font-bold colombia-flag-text"
+              >COLOMBIA</span>
             </p>
+            <style>{`
+              .colombia-flag-text {
+                background: linear-gradient(
+                  90deg,
+                  #999999 0%, #999999 15%,
+                  #FCD116 25%, #FCD116 35%,
+                  #003893 42%, #003893 52%,
+                  #CE1126 60%, #CE1126 70%,
+                  #999999 80%, #999999 100%
+                );
+                background-size: 300% 100%;
+                -webkit-background-clip: text;
+                background-clip: text;
+                -webkit-text-fill-color: transparent;
+                animation: colombia-sweep 6s linear infinite;
+              }
+              @keyframes colombia-sweep {
+                0% { background-position: 100% 0; }
+                100% { background-position: -100% 0; }
+              }
+            `}</style>
           </div>
 
           {/* Social Links */}

@@ -130,6 +130,21 @@
   }
 }
 
+/* ===== Colombia Flag Sweep Animation ===== */
+@keyframes colombia-sweep {
+  0% {
+    background-position: 100% 0;
+  }
+
+  70% {
+    background-position: 0% 0;
+  }
+
+  100% {
+    background-position: 0% 0;
+  }
+}
+
 /* ===== Custom Scrollbar ===== */
 
 /* Firefox */

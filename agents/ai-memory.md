@@ -270,14 +270,41 @@ File: `components/hero-section.tsx`
 
 ---
 
-## 11. ZBrush Dark Mode Fix
+## 11. Colombia Flag Text Animation
+
+File: `components/hero-section.tsx` (inline `<style>` tag)
+
+The word "COLOMBIA" in `// BASED_IN_BOGOTA_COLOMBIA` has a sweeping gradient animation using the Colombian flag colors.
+
+### Implementation
+
+- **Technique**: `background-clip: text` with animated `background-position`
+- **Gradient**: `linear-gradient(90deg, gray → yellow → blue → red → gray)`
+- **Background size**: `300% 100%` — gradient is 3x wider than text
+- **Keyframes**: `background-position: 100% → -100%` (smooth one-directional sweep)
+- **Duration**: 6 seconds per cycle
+- **Easing**: `linear` for constant fluid motion
+- **Loop**: `infinite` — never stops
+
+### Flag Colors
+
+| Color | Hex | Gradient Position |
+|---|---|---|
+| Gray (rest) | `#999999` | 0–15%, 80–100% |
+| Yellow | `#FCD116` | 25–35% |
+| Blue | `#003893` | 42–52% |
+| Red | `#CE1126` | 60–70% |
+
+---
+
+## 12. ZBrush Dark Mode Fix
 
 In `components/skills-section.tsx`, the ZBrush skill has `darkInvert: true`.
 In `components/ui/skill-slider.tsx`, when `darkInvert` is set, the image gets `dark:invert` CSS filter to turn the black SVG white in dark mode.
 
 ---
 
-## 12. Key Files Quick Reference
+## 13. Key Files Quick Reference
 
 | File | Purpose |
 |---|---|
