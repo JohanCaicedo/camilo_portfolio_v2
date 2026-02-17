@@ -1,5 +1,6 @@
 "use client"
 
+import { motion } from "framer-motion"
 import { Sparkles } from "lucide-react"
 import { SectionContainer } from "@/components/section-container"
 import { SkillSlider } from "@/components/ui/skill-slider"
@@ -27,12 +28,21 @@ const skills = [
 
 export function SkillsSection() {
     return (
-        <SectionContainer id="skills" className="mb-32">
+        <SectionContainer id="skills" className="snap-section scroll-mt-24 py-10 md:py-12 mb-16 md:mb-20">
             {/* Header - Technical / Monospace Accent */}
-            <div className="flex items-center gap-4 mb-10 mt-8">
-                <div className="p-2.5 border border-black/10 dark:border-white/10 rounded-sm bg-black/5 dark:bg-white/5">
+            <div className="flex items-center gap-4 mb-7 mt-4">
+                <motion.div
+                    className="p-2.5 border border-black/10 dark:border-white/10 rounded-sm bg-black/5 dark:bg-white/5"
+                    animate={{
+                        scale: [1, 1.12, 0.96, 1],
+                        rotate: [0, 7, -5, 0],
+                        opacity: [1, 0.82, 1],
+                    }}
+                    whileHover={{ rotate: 10, scale: 1.1 }}
+                    transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
+                >
                     <Sparkles className="size-5 text-brand-salmon" strokeWidth={1.5} />
-                </div>
+                </motion.div>
                 <div>
                     <h3 className="text-3xl md:text-4xl font-bold text-[#1a1a1a] dark:text-[#faf9f6] tracking-tight leading-none">
                         TECH_STACK

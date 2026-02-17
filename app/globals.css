@@ -214,3 +214,31 @@
     clip-path: none !important;
   }
 }
+
+/* ===== Home Section Snap Scroll ===== */
+
+html.home-snap {
+  scroll-behavior: smooth;
+  scroll-snap-type: y proximity;
+  scroll-padding-top: 5rem;
+}
+
+html.home-snap body {
+  overscroll-behavior-y: contain;
+}
+
+.snap-section {
+  scroll-snap-align: start;
+  scroll-snap-stop: normal;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.home-snap {
+    scroll-behavior: auto;
+    scroll-snap-type: y proximity;
+  }
+
+  .snap-section {
+    scroll-snap-stop: normal;
+  }
+}

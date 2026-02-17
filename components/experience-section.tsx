@@ -1,7 +1,8 @@
 "use client"
 
 import { useState } from "react"
-import { ArrowBigRight, TerminalSquare } from "lucide-react"
+import { AnimatePresence, motion } from "framer-motion"
+import { ChevronDown, TerminalSquare } from "lucide-react"
 import { SectionContainer } from "@/components/section-container"
 import { ViewerCard } from "@/components/ui/viewer-card"
 
@@ -48,15 +49,24 @@ const EXPERIENCE_DATA = [
 export function ExperienceSection() {
     const [showAll, setShowAll] = useState(false)
     const initialItemsToShow = 2
-    const items = showAll ? EXPERIENCE_DATA : EXPERIENCE_DATA.slice(0, initialItemsToShow)
+    const baseItems = EXPERIENCE_DATA.slice(0, initialItemsToShow)
+    const extraItems = EXPERIENCE_DATA.slice(initialItemsToShow)
 
     return (
-        <SectionContainer id="experience">
+        <SectionContainer id="experience" className="snap-section scroll-mt-24 py-10 md:py-12">
             {/* Header - System Log Style */}
-            <div className="flex items-center gap-4 mb-10 mt-8">
-                <div className="p-2.5 border border-black/10 dark:border-white/10 rounded-sm bg-black/5 dark:bg-white/5">
+            <div className="flex items-center gap-4 mb-7 mt-4">
+                <motion.div
+                    className="p-2.5 border border-black/10 dark:border-white/10 rounded-sm bg-black/5 dark:bg-white/5"
+                    animate={{
+                        opacity: [1, 0.72, 1, 0.85, 1],
+                        scale: [1, 1.02, 1],
+                    }}
+                    whileHover={{ scale: 1.06 }}
+                    transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
+                >
                     <TerminalSquare className="size-5 text-brand-salmon" strokeWidth={1.5} />
-                </div>
+                </motion.div>
                 <div>
                     <h3 className="text-3xl md:text-4xl font-bold text-[#1a1a1a] dark:text-[#faf9f6] tracking-tight leading-none">
                         SYSTEM_LOG
@@ -71,8 +81,8 @@ export function ExperienceSection() {
                 {/* Timeline Line removed for Grid Layout */}
 
                 <div className="grid md:grid-cols-2 gap-4">
-                    {items.map((exp, index) => (
-                        <div key={index} className="relative">
+                    {baseItems.map((exp, index) => (
+                        <div key={`${exp.title}-${exp.date}`} className="relative">
                             {/* Timeline Marker removed */}
 
                             <ViewerCard
@@ -100,17 +110,81 @@ export function ExperienceSection() {
                             </ViewerCard>
                         </div>
                     ))}
+
+                    <AnimatePresence initial={false}>
+                        {showAll &&
+                            extraItems.map((exp, extraIndex) => {
+                                const index = extraIndex + initialItemsToShow
+                                return (
+                                    <motion.div
+                                        key={`${exp.title}-${exp.date}`}
+                                        className="relative"
+                                        initial={{ opacity: 0, y: 28, scale: 0.985 }}
+                                        animate={{
+                                            opacity: 1,
+                                            y: 0,
+                                            scale: 1,
+                                            transition: {
+                                                duration: 0.42,
+                                                ease: [0.22, 1, 0.36, 1],
+                                                delay: extraIndex * 0.07,
+                                            },
+                                        }}
+                                        exit={{
+                                            opacity: 0,
+                                            y: -18,
+                                            scale: 0.985,
+                                            transition: { duration: 0.24, ease: "easeInOut" },
+                                        }}
+                                        layout
+                                    >
+                                        <ViewerCard
+                                            className="w-full h-full flex flex-col"
+                                            label={`LOG_${String(index + 1).padStart(2, '0')}`}
+                                        >
+                                            <div className="flex flex-col justify-between mb-2 gap-1 border-b border-black/5 dark:border-white/5 pb-2">
+                                                <h3 className="text-base md:text-lg font-bold text-[#1a1a1a] dark:text-[#faf9f6] tracking-tight leading-snug">
+                                                    {exp.title}
+                                                </h3>
+                                                <div className="flex justify-between items-center w-full">
+                                                    <span className="text-[10px] font-mono text-brand-blue dark:text-brand-blue uppercase tracking-widest">
+                                                        @{exp.company}
+                                                    </span>
+                                                    <span className="text-[9px] font-mono text-brand-salmon bg-brand-salmon/5 px-1.5 py-0.5 border border-brand-salmon/20 rounded-sm uppercase tracking-wide">
+                                                        {exp.date}
+                                                    </span>
+                                                </div>
+                                            </div>
+
+                                            <p className="text-xs text-[#555555] dark:text-[#a0a0a0] leading-relaxed font-mono mt-auto pt-2">
+                                                <span className="text-brand-green/70 mr-1">{'>'}</span>
+                                                {exp.description}
+                                            </p>
+                                        </ViewerCard>
+                                    </motion.div>
+                                )
+                            })}
+                    </AnimatePresence>
                 </div>
 
                 {EXPERIENCE_DATA.length > initialItemsToShow && (
                     <div className="flex justify-center mt-12 relative z-10">
-                        <button
+                        <motion.button
                             onClick={() => setShowAll(!showAll)}
                             className="px-8 py-3 bg-[#faf9f6] dark:bg-[#0a0a0a] border border-black/10 dark:border-white/10 hover:border-brand-blue hover:text-brand-blue text-[#1a1a1a] dark:text-[#faf9f6] font-mono text-sm tracking-widest uppercase transition-all duration-300 outline-none focus-visible:ring-2 focus-visible:ring-brand-blue focus-visible:ring-offset-2 focus-visible:ring-offset-background group"
+                            whileHover={{ y: -1, scale: 1.02 }}
+                            whileTap={{ scale: 0.98 }}
+                            transition={{ type: "spring", stiffness: 320, damping: 20 }}
                         >
-                            <span className="mr-2 group-hover:animate-pulse">_</span>
+                            <motion.span
+                                className="mr-2 inline-flex align-middle"
+                                animate={{ rotate: showAll ? 180 : 0 }}
+                                transition={{ duration: 0.28, ease: "easeInOut" }}
+                            >
+                                <ChevronDown className="size-4" />
+                            </motion.span>
                             {showAll ? "COLLAPSE_LOGS" : "LOAD_FULL_HISTORY"}
-                        </button>
+                        </motion.button>
                     </div>
                 )}
             </div>

@@ -50,12 +50,20 @@ const projects = [
 
 export function ProjectsSection() {
     return (
-        <SectionContainer id="projects">
+        <SectionContainer id="projects" className="snap-section scroll-mt-24 py-10 md:py-12">
             {/* Header - Technical / Monospace Accent */}
-            <div className="flex items-center gap-4 mb-10 mt-8">
-                <div className="p-2.5 border border-black/10 dark:border-white/10 rounded-sm bg-black/5 dark:bg-white/5">
+            <div className="flex items-center gap-4 mb-7 mt-4">
+                <motion.div
+                    className="p-2.5 border border-black/10 dark:border-white/10 rounded-sm bg-black/5 dark:bg-white/5"
+                    animate={{
+                        rotate: [0, -2.5, 2, 0],
+                        x: [0, 1.2, 0, -0.8, 0],
+                    }}
+                    whileHover={{ rotate: -4, x: 2, scale: 1.06 }}
+                    transition={{ duration: 2.6, repeat: Infinity, ease: "easeInOut" }}
+                >
                     <FolderGit2 className="size-5 text-brand-salmon" strokeWidth={1.5} />
-                </div>
+                </motion.div>
                 <div>
                     <h3 className="text-3xl md:text-4xl font-bold text-[#1a1a1a] dark:text-[#faf9f6] tracking-tight leading-none">
                         SELECTED_PROJECTS

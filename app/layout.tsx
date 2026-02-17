@@ -37,7 +37,7 @@ export const metadata: Metadata = {
     description: "Crafting immersive web experiences that blend creativity with cutting-edge technology",
     images: [
       {
-        url: "/og-image.jpg", // Ensure this exists or use a fallback
+        url: "/og-image.jpg",
         width: 1200,
         height: 630,
         alt: "Paper Fox Studio",
@@ -48,7 +48,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Paper Fox Studio",
     description: "Crafting immersive web experiences that blend creativity with cutting-edge technology",
-    creator: "@paperfoxstudio", // Placeholder
+    creator: "@paperfoxstudio",
     images: ["/og-image.jpg"],
   },
   robots: {

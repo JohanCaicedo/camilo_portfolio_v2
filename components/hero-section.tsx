@@ -32,7 +32,7 @@ export function HeroSection() {
   }, [])
 
   return (
-    <section className="relative min-h-screen w-full overflow-hidden">
+    <section className="relative min-h-screen w-full overflow-hidden snap-section scroll-mt-24">
 
       <div className="relative z-10 flex flex-col lg:flex-row items-center min-h-screen max-w-7xl mx-auto px-6 lg:px-12">
         {/* Left side - Text content */}
