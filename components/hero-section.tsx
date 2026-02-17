@@ -1,8 +1,8 @@
 "use client"
 
 import dynamic from "next/dynamic"
-import { ArrowRight, Play } from "lucide-react"
-import { Button } from "@/components/ui/button"
+import { SocialPill } from "@/components/ui/social-pill"
+import { Github, Linkedin, Mail, ChevronDown } from "lucide-react"
 import { useEffect, useState } from "react"
 
 const AsciiScene = dynamic(
@@ -21,64 +21,82 @@ function useStaggeredReveal() {
 
 export function HeroSection() {
   const visible = useStaggeredReveal()
+  const [hasScrolled, setHasScrolled] = useState(false)
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setHasScrolled(window.scrollY > 50)
+    }
+    window.addEventListener("scroll", handleScroll, { passive: true })
+    return () => window.removeEventListener("scroll", handleScroll)
+  }, [])
 
   return (
-    <section className="relative min-h-screen w-full bg-[#faf9f6] overflow-hidden">
-      {/* Subtle dot grid pattern */}
-      <div
-        className="absolute inset-0 opacity-[0.04]"
-        style={{
-          backgroundImage: "radial-gradient(circle, #1a1a1a 1px, transparent 1px)",
-          backgroundSize: "24px 24px",
-        }}
-      />
+    <section className="relative min-h-screen w-full overflow-hidden">
 
       <div className="relative z-10 flex flex-col lg:flex-row items-center min-h-screen max-w-7xl mx-auto px-6 lg:px-12">
         {/* Left side - Text content */}
         <div className="flex-1 flex flex-col justify-center py-24 lg:py-0 lg:pr-12">
-          {/* Badge */}
-          {/* Badge */}
+          {/* Badge & Status */}
           <div
-            className="inline-flex items-center gap-2 mb-8 w-fit transition-all duration-700 ease-out"
+            className="flex flex-col gap-4 mb-6 w-fit transition-all duration-700 ease-out"
             style={{
               opacity: visible ? 1 : 0,
               transform: visible ? "translateY(0)" : "translateY(20px)",
               transitionDelay: "200ms",
             }}
           >
-            <span className="inline-block w-2 h-2 rounded-full bg-brand-salmon animate-pulse" />
-            <span className="text-sm font-mono text-[#666666] tracking-widest uppercase">
-              Design Portfolio
-            </span>
+            <div className="inline-flex items-center gap-2">
+              <span className="inline-block w-2 h-2 rounded-full bg-brand-salmon animate-pulse" />
+              <span className="text-xs font-mono text-[#666666] tracking-widest uppercase dark:text-white">
+                Design Portfolio
+              </span>
+            </div>
+
+            {/* Status */}
+            <div className="flex items-center gap-2 px-3 py-1.5 bg-[#faf9f6] dark:bg-white/5 border border-black/10 dark:border-white/10 rounded-full w-fit">
+              <div className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-green opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-brand-green"></span>
+              </div>
+              <span className="text-[10px] font-mono font-medium text-[#1a1a1a] dark:text-[#faf9f6] tracking-widest uppercase">
+                Available for work
+              </span>
+            </div>
           </div>
 
           {/* Main heading */}
           <h1
-            className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-sans font-bold text-[#1a1a1a] leading-tight tracking-tight text-balance mb-6 transition-all duration-700 ease-out"
+            className="text-3xl sm:text-4xl lg:text-5xl font-sans font-bold text-[#1a1a1a] leading-tight tracking-tight text-balance mb-6 transition-all duration-700 ease-out dark:text-white"
             style={{
               opacity: visible ? 1 : 0,
               transform: visible ? "translateY(0)" : "translateY(30px)",
               transitionDelay: "400ms",
             }}
           >
-            Designing visual continuity
+            Visual Design Continuity
             <br />
-            <span className="text-brand-blue">across every dimension.</span>
+            <span className="text-brand-blue">Across Every Dimension.</span>
           </h1>
 
           {/* Description */}
-          <p
-            className="text-lg text-[#777777] max-w-md leading-relaxed mb-10 text-pretty transition-all duration-700 ease-out"
+          <div
+            className="transition-all duration-700 ease-out mb-10"
             style={{
               opacity: visible ? 1 : 0,
               transform: visible ? "translateY(0)" : "translateY(20px)",
               transitionDelay: "600ms",
             }}
           >
-            Synthesizing static structure and dynamic motion into a unified, immersive visual language.
-          </p>
+            <p className="text-lg text-[#777777] max-w-md leading-relaxed text-pretty mb-4">
+              Synthesizing static structure and dynamic motion into a unified, immersive visual language.
+            </p>
+            <p className="text-sm font-mono text-[#999999] tracking-widest uppercase">
+              // BASED_IN_BOGOTA_COLOMBIA
+            </p>
+          </div>
 
-          {/* Buttons */}
+          {/* Social Links */}
           <div
             className="flex flex-wrap items-center gap-4 transition-all duration-700 ease-out"
             style={{
@@ -87,46 +105,17 @@ export function HeroSection() {
               transitionDelay: "800ms",
             }}
           >
-            <Button
-              size="lg"
-              className="bg-brand-yellow text-[#1a1a1a] hover:bg-brand-yellow/80 font-semibold rounded-full px-8 h-12 text-base transition-all hover:scale-[1.02] active:scale-[0.98]"
-            >
-              Start a Project
-              <ArrowRight className="ml-2 h-4 w-4" />
-            </Button>
-            <Button
-              variant="outline"
-              size="lg"
-              className="border-brand-green text-[#555555] hover:bg-brand-green/20 hover:text-[#1a1a1a] hover:border-brand-green rounded-full px-8 h-12 text-base transition-all"
-            >
-              <Play className="mr-2 h-4 w-4" />
-              Watch Reel
-            </Button>
-          </div>
+            <SocialPill href="https://www.linkedin.com/in/johan-caicedo/">
+              <Linkedin className="size-4" /> LINKEDIN
+            </SocialPill>
 
-          {/* Stats */}
-          <div
-            className="flex items-center gap-10 mt-14 pt-10 border-t border-[#e5e5e0] transition-all duration-700 ease-out"
-            style={{
-              opacity: visible ? 1 : 0,
-              transform: visible ? "translateY(0)" : "translateY(20px)",
-              transitionDelay: "1000ms",
-            }}
-          >
-            <div>
-              <div className="text-3xl font-bold text-[#1a1a1a] font-mono">150+</div>
-              <div className="text-sm text-[#999999] mt-1">Projects</div>
-            </div>
-            <div className="w-px h-10 bg-[#e5e5e0]" />
-            <div>
-              <div className="text-3xl font-bold text-[#1a1a1a] font-mono">98%</div>
-              <div className="text-sm text-[#999999] mt-1">Satisfaction</div>
-            </div>
-            <div className="w-px h-10 bg-[#e5e5e0]" />
-            <div>
-              <div className="text-3xl font-bold text-[#1a1a1a] font-mono">12+</div>
-              <div className="text-sm text-[#999999] mt-1">Years</div>
-            </div>
+            <SocialPill href="mailto:camilo.design07@gmail.com">
+              <Mail className="size-4" /> MAIL
+            </SocialPill>
+
+            <SocialPill href="https://github.com/JohanCaicedo">
+              <Github className="size-4" /> GITHUB
+            </SocialPill>
           </div>
         </div>
 
@@ -143,18 +132,22 @@ export function HeroSection() {
         </div>
       </div>
 
-      {/* Bottom scroll hint */}
+      {/* Bottom scroll hint — animation stops on scroll */}
       <div
         className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 z-10 transition-all duration-700 ease-out"
         style={{
           opacity: visible ? 1 : 0,
-          transitionDelay: "1200ms",
+          transitionDelay: visible ? "1200ms" : "0ms",
         }}
       >
-        <span className="text-xs text-[#aaaaaa] font-mono tracking-widest uppercase">
+        <span className="text-sm font-mono font-bold text-[#999999] dark:text-[#888888] tracking-widest uppercase">
           Scroll to explore
         </span>
-        <div className="w-px h-8 bg-gradient-to-b from-[#aaaaaa] to-transparent animate-pulse" />
+        <div className="flex flex-col items-center -space-y-3">
+          <ChevronDown className={`size-6 text-brand-salmon transition-all duration-300 ${hasScrolled ? "" : "animate-bounce"}`} style={hasScrolled ? {} : { animationDuration: "1.2s" }} />
+          <ChevronDown className={`size-6 text-brand-salmon/60 transition-all duration-300 ${hasScrolled ? "" : "animate-bounce"}`} style={hasScrolled ? {} : { animationDuration: "1.2s", animationDelay: "150ms" }} />
+          <ChevronDown className={`size-6 text-brand-salmon/30 transition-all duration-300 ${hasScrolled ? "" : "animate-bounce"}`} style={hasScrolled ? {} : { animationDuration: "1.2s", animationDelay: "300ms" }} />
+        </div>
       </div>
     </section>
   )

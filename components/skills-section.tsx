@@ -1,0 +1,56 @@
+"use client"
+
+import { Sparkles } from "lucide-react"
+import { SectionContainer } from "@/components/section-container"
+import { SkillSlider } from "@/components/ui/skill-slider"
+
+const skills = [
+    { title: "Autodesk 3ds Max", imageSrc: "https://firebasestorage.googleapis.com/v0/b/camilo-portfolio-77b8a.appspot.com/o/SVG%2F3ds-max-full-logo-svgrepo-com.svg?alt=media&token=93c33d08-8889-4e73-937e-6e747bdb9852", imageAlt: "Autodesk 3ds Max Icon", experienceLevel: "High" },
+    { title: "Autodesk Maya", imageSrc: "https://firebasestorage.googleapis.com/v0/b/camilo-portfolio-77b8a.appspot.com/o/SVG%2Fmaya-svgrepo-com.svg?alt=media&token=e128968f-3a04-45cc-982e-e7e86d81048a", imageAlt: "Autodesk Maya Icon", experienceLevel: "Medium" },
+    { title: "Adobe After Effects", imageSrc: "https://firebasestorage.googleapis.com/v0/b/camilo-portfolio-77b8a.appspot.com/o/SVG%2Fafter-effects.svg?alt=media&token=a8d5134e-dc69-4a30-a4e1-66a07d71cbe4", imageAlt: "Adobe After Effects Icon", experienceLevel: "Medium" },
+    { title: "Astro FrameWork", imageSrc: "https://firebasestorage.googleapis.com/v0/b/camilo-portfolio-77b8a.appspot.com/o/SVG%2Fastro-svgrepo-com.svg?alt=media&token=b3795653-8014-40c8-88c9-7da922d351f2", imageAlt: "Astro FrameWork Icon", experienceLevel: "High" },
+    { title: "Adobe Illustrator", imageSrc: "https://firebasestorage.googleapis.com/v0/b/camilo-portfolio-77b8a.appspot.com/o/SVG%2Fillustrator.svg?alt=media&token=e0d22be4-1a42-4bc9-a63e-5ef464927910", imageAlt: "Adobe Illustrator Icon", experienceLevel: "Medium / High" },
+    { title: "Adobe InDesign", imageSrc: "https://firebasestorage.googleapis.com/v0/b/camilo-portfolio-77b8a.appspot.com/o/SVG%2Findesign.svg?alt=media&token=2fea87b2-9fa1-418b-a31d-4185653ddeea", imageAlt: "Adobe InDesign Icon", experienceLevel: "Expert", experienceClass: "text-[#8758f4] font-bold" },
+    { title: "Adobe Lightroom", imageSrc: "https://firebasestorage.googleapis.com/v0/b/camilo-portfolio-77b8a.appspot.com/o/SVG%2Flightroom.svg?alt=media&token=19234e33-00bb-4304-a2f7-c7db135fd7e6", imageAlt: "Adobe Lightroom Icon", experienceLevel: "High" },
+    { title: "Adobe Photoshop", imageSrc: "https://firebasestorage.googleapis.com/v0/b/camilo-portfolio-77b8a.appspot.com/o/SVG%2Fphotoshop.svg?alt=media&token=f51ab187-02b9-4f79-81ea-bb74afbd09db", imageAlt: "Adobe Photoshop Icon", experienceLevel: "Expert", experienceClass: "text-[#8758f4] font-bold" },
+    { title: "Adobe Premiere Pro", imageSrc: "https://firebasestorage.googleapis.com/v0/b/camilo-portfolio-77b8a.appspot.com/o/SVG%2Fpremiere.svg?alt=media&token=5b4dcb35-b33e-4d96-bf22-e4c6a8c53f9e", imageAlt: "Adobe Premiere Icon", experienceLevel: "High" },
+    { title: "Blender", imageSrc: "https://firebasestorage.googleapis.com/v0/b/camilo-portfolio-77b8a.appspot.com/o/SVG%2Fblender-svgrepo-com.svg?alt=media&token=aca383c6-2488-4f0e-bb52-8da6620d84a2", imageAlt: "Blender Icon", experienceLevel: "Expert", experienceClass: "text-[#8758f4] font-bold" },
+    { title: "CSS", imageSrc: "https://firebasestorage.googleapis.com/v0/b/camilo-portfolio-77b8a.appspot.com/o/SVG%2Fcss-3-svgrepo-com.svg?alt=media&token=01e6f75f-464d-4952-b1d2-fcd450a14a34", imageAlt: "CSS Icon", experienceLevel: "Medium" },
+    { title: "Figma", imageSrc: "https://firebasestorage.googleapis.com/v0/b/camilo-portfolio-77b8a.appspot.com/o/SVG%2Ffigma-svgrepo-com.svg?alt=media&token=1972c921-ca0c-475a-b467-21665d9d9426", imageAlt: "Figma Icon", experienceLevel: "Medium" },
+    { title: "HTML 5", imageSrc: "https://firebasestorage.googleapis.com/v0/b/camilo-portfolio-77b8a.appspot.com/o/SVG%2Fhtml-5-svgrepo-com.svg?alt=media&token=187fc215-2814-4ed7-9969-1540b472f876", imageAlt: "HTML 5 Icon", experienceLevel: "High" },
+    { title: "JavaScript", imageSrc: "https://firebasestorage.googleapis.com/v0/b/camilo-portfolio-77b8a.appspot.com/o/SVG%2Fjavascript-svgrepo-com.svg?alt=media&token=f8814dd8-5a24-43d0-b83c-6d83e748444a", imageAlt: "JavaScript", experienceLevel: "Medium" },
+    { title: "React", imageSrc: "https://firebasestorage.googleapis.com/v0/b/camilo-portfolio-77b8a.appspot.com/o/SVG%2Freact-svgrepo-com.svg?alt=media&token=d416cd70-d985-4e44-9f80-ce8f521802e3", imageAlt: "React", experienceLevel: "Medium" },
+    { title: "Tailwind", imageSrc: "https://firebasestorage.googleapis.com/v0/b/camilo-portfolio-77b8a.appspot.com/o/SVG%2Ftailwind-svgrepo-com.svg?alt=media&token=76dcbe98-102e-4d05-8c19-4d28255803a6", imageAlt: "Tailwind", experienceLevel: "Expert", experienceClass: "text-[#8758f4] font-bold" },
+    { title: "WordPress", imageSrc: "https://www.svgrepo.com/show/475696/wordpress-color.svg", imageAlt: "WordPress", experienceLevel: "Expert", experienceClass: "text-[#8758f4] font-bold" },
+    { title: "ZBrush", imageSrc: "https://www.svgrepo.com/show/508998/zbrush.svg", imageAlt: "ZBrush", experienceLevel: "Medium", darkInvert: true },
+]
+
+export function SkillsSection() {
+    return (
+        <SectionContainer id="skills" className="mb-32">
+            {/* Header - Technical Style */}
+            <div className="flex items-center justify-center gap-4 mb-16 mt-12">
+                <div className="p-3 border border-black/10 dark:border-white/10 rounded-sm bg-black/5 dark:bg-white/5">
+                    <Sparkles className="size-6 text-brand-salmon" strokeWidth={1.5} />
+                </div>
+                <div className="text-left">
+                    <h3 className="text-4xl md:text-5xl font-bold text-[#1a1a1a] dark:text-[#faf9f6] tracking-tight leading-none">
+                        TECH_STACK
+                    </h3>
+                    <p className="text-xs font-mono text-brand-salmon mt-1 tracking-widest uppercase">
+                        // CAPABILITY_MATRIX
+                    </p>
+                </div>
+            </div>
+
+            <div className="relative w-full max-w-6xl mx-auto">
+                {/* Subtle background glow */}
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-brand-purple/5 to-transparent blur-3xl -z-10 rounded-full h-full w-3/4 mx-auto" />
+
+                <SkillSlider
+                    skills={skills}
+                />
+            </div>
+        </SectionContainer>
+    )
+}
