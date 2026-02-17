@@ -7,11 +7,11 @@ import { LightboxGallery } from "@/components/ui/lightbox-gallery"
 import { LightboxImage } from "@/components/ui/image-lightbox"
 
 export const metadata: Metadata = {
-    title: "Graphic Design — Paper Fox Studio",
+    title: "Graphic Design",
     description:
         "Explore the graphic design portfolio of Johan Caicedo, featuring branding projects, logo designs, and illustrations for clients like ILSA.",
     openGraph: {
-        title: "Graphic Design — Paper Fox Studio",
+        title: "Graphic Design",
         description:
             "Explore the graphic design portfolio of Johan Caicedo, featuring branding projects, logo designs, and illustrations.",
         images: [

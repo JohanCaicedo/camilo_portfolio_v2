@@ -7,11 +7,11 @@ import { LightboxImage } from "@/components/ui/image-lightbox"
 import { LightboxGallery } from "@/components/ui/lightbox-gallery"
 
 export const metadata: Metadata = {
-    title: "Web Design — Paper Fox Studio",
+    title: "Web Design",
     description:
         "Explore the web design portfolio of Johan Caicedo, featuring the redesign of the ILSA website, a project focused on UI/UX, visual identity, and SEO optimization.",
     openGraph: {
-        title: "Web Design — Paper Fox Studio",
+        title: "Web Design",
         description:
             "Explore the web design portfolio of Johan Caicedo, featuring the redesign of the ILSA website.",
         images: [

@@ -14,11 +14,11 @@ import { ViewerCard } from "@/components/ui/viewer-card"
 import { LightboxImage } from "@/components/ui/image-lightbox"
 
 export const metadata: Metadata = {
-    title: "Personal Projects — Paper Fox Studio",
+    title: "Personal Projects",
     description:
         "Explore the personal projects of Johan Caicedo, including animation, illustration, and branding for Paper Fox Studio.",
     openGraph: {
-        title: "Personal Projects — Paper Fox Studio",
+        title: "Personal Projects",
         description:
             "Animation, illustration, and branding for Paper Fox Studio.",
         images: [

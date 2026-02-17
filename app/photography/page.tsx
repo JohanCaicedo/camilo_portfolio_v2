@@ -12,11 +12,11 @@ import { SectionContainer } from "@/components/section-container"
 import { ViewerCard } from "@/components/ui/viewer-card"
 
 export const metadata: Metadata = {
-    title: "Photography — Paper Fox Studio",
+    title: "Photography",
     description:
         "Explore the photography portfolio of Johan Caicedo, featuring portrait, nature, and landscape photography, as well as project documentation.",
     openGraph: {
-        title: "Photography — Paper Fox Studio",
+        title: "Photography",
         description:
             "Portrait, nature, landscape photography and project documentation.",
         images: [

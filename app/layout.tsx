@@ -7,17 +7,60 @@ import { InteractiveGridPattern } from "@/components/ui/interactive-grid-pattern
 import { AtomCursor } from "@/components/atom-cursor"
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
+import { JsonLd } from "@/components/json-ld"
 
 const _geist = Geist({ subsets: ["latin"] });
 const _geistMono = Geist_Mono({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: 'Paper Fox Studio',
+  metadataBase: new URL("https://paperfoxstudio.com"),
+  title: {
+    default: "Paper Fox Studio",
+    template: "%s | Paper Fox Studio",
+  },
   description: 'Crafting immersive web experiences that blend creativity with cutting-edge technology',
   generator: 'v0.app',
+  applicationName: 'Paper Fox Studio',
+  authors: [{ name: 'Johan Caicedo', url: 'https://paperfoxstudio.com' }],
+  creator: 'Johan Caicedo',
+  publisher: 'Paper Fox Studio',
   icons: {
     icon: '/favicon.svg',
     apple: '/apple-icon.png',
+  },
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: "https://paperfoxstudio.com",
+    siteName: "Paper Fox Studio",
+    title: "Paper Fox Studio",
+    description: "Crafting immersive web experiences that blend creativity with cutting-edge technology",
+    images: [
+      {
+        url: "/og-image.jpg", // Ensure this exists or use a fallback
+        width: 1200,
+        height: 630,
+        alt: "Paper Fox Studio",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Paper Fox Studio",
+    description: "Crafting immersive web experiences that blend creativity with cutting-edge technology",
+    creator: "@paperfoxstudio", // Placeholder
+    images: ["/og-image.jpg"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
   },
 }
 
@@ -40,9 +83,9 @@ export default function RootLayout({
             {children}
             <Footer />
           </div>
-          <InteractiveGridPattern />
           <AtomCursor />
           <Analytics />
+          <JsonLd />
         </ThemeProvider>
       </body>
     </html>

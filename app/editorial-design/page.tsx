@@ -16,11 +16,11 @@ import { SectionContainer } from "@/components/section-container"
 import { ViewerCard } from "@/components/ui/viewer-card"
 
 export const metadata: Metadata = {
-    title: "Editorial Design — Paper Fox Studio",
+    title: "Editorial Design",
     description:
         "Explore the editorial design portfolio of Johan Caicedo, featuring book covers, layouts, and illustrations for clients like ILSA and JEP.",
     openGraph: {
-        title: "Editorial Design — Paper Fox Studio",
+        title: "Editorial Design",
         description:
             "Book covers, layouts, and illustrations for ILSA, JEP, and other organizations.",
         images: [
