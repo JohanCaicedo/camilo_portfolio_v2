@@ -9,42 +9,42 @@ const projects = [
     {
         id: "01",
         title: "Web Design",
-        colItem: "md:col-span-2",
         tech: "REACT / NEXT.JS / TAILWIND",
         img: "https://firebasestorage.googleapis.com/v0/b/camilo-portfolio-77b8a.appspot.com/o/Dise%C3%B1oWeb.webp?alt=media&token=7df9723e-ef97-4bac-823d-e3ccd377f45b",
         link: "/web-design",
+        desktopCol: "lg:col-span-2",
     },
     {
         id: "02",
         title: "Graphic Design",
-        colItem: "md:col-span-2 md:col-start-3",
         tech: "ADOBE SUITE / FIGMA",
         img: "https://firebasestorage.googleapis.com/v0/b/camilo-portfolio-77b8a.appspot.com/o/Dise%C3%B1o%20Grafico%20(2).webp?alt=media&token=4526b817-ecb5-4fb2-8317-f4ffda77d235",
         link: "/graphic-design",
+        desktopCol: "lg:col-span-2 lg:col-start-3",
     },
     {
         id: "03",
         title: "Personal",
-        colItem: "md:col-span-2 md:col-start-5",
         tech: "EXPERIMENTAL / ART",
         img: "https://firebasestorage.googleapis.com/v0/b/camilo-portfolio-77b8a.appspot.com/o/Foxy-Blink.gif?alt=media&token=6fdef4b7-2f2f-4fbd-94a0-65a59868bfee",
         link: "/personal",
+        desktopCol: "lg:col-span-2 lg:col-start-5",
     },
     {
         id: "04",
         title: "Editorial Design",
-        colItem: "md:col-span-3 md:row-start-2",
         tech: "INDESIGN / TYPOGRAPHY",
         img: "https://firebasestorage.googleapis.com/v0/b/camilo-portfolio-77b8a.appspot.com/o/Editorial%20Design%20Image.webp?alt=media&token=aabfa3b4-9eb3-452b-b0d2-bb66de2456ea",
         link: "/editorial-design",
+        desktopCol: "lg:col-span-3 lg:row-start-2",
     },
     {
         id: "05",
         title: "Photography",
-        colItem: "md:col-span-3 md:col-start-4 md:row-start-2",
         tech: "DIRECTION / RETOUCHING",
         img: "https://firebasestorage.googleapis.com/v0/b/camilo-portfolio-77b8a.appspot.com/o/Photography%20Image.webp?alt=media&token=2f3bcee6-0ff5-4a1c-8ec4-4944542b2c4b",
         link: "/photography",
+        desktopCol: "lg:col-span-3 lg:col-start-4 lg:row-start-2",
     },
 ]
 
@@ -74,7 +74,7 @@ export function ProjectsSection() {
                 </div>
             </div>
 
-            <div className="grid md:grid-cols-6 md:grid-rows-2 grid-cols-1 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 lg:grid-rows-2 gap-4">
                 {projects.map((project) => (
                     <motion.a
                         key={project.id}
@@ -83,8 +83,8 @@ export function ProjectsSection() {
                         whileTap={{ scale: 0.99 }}
                         transition={{ type: "spring", stiffness: 300, damping: 20 }}
                         className={`
-                            ${project.colItem}
-                            block h-[280px] md:h-auto
+                            ${project.desktopCol}
+                            block h-[220px] sm:h-[260px] lg:h-auto
                             relative outline-none 
                             focus-visible:ring-2 focus-visible:ring-brand-blue focus-visible:ring-offset-2 focus-visible:ring-offset-background
                         `}
@@ -110,6 +110,7 @@ export function ProjectsSection() {
                                 <div className="relative flex-1 bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/5 overflow-hidden group">
                                     {project.img && (
                                         <img
+                                            loading="lazy"
                                             className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 ease-out opacity-80 group-hover:opacity-100"
                                             src={project.img}
                                             alt={project.title}

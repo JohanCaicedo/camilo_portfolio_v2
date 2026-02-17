@@ -38,12 +38,27 @@ export function HeroSection() {
   return (
     <section className="relative min-h-screen w-full overflow-hidden snap-section scroll-mt-24">
 
-      <div className="relative z-10 flex flex-col lg:flex-row items-center min-h-screen max-w-7xl mx-auto px-6 lg:px-12">
-        {/* Left side - Text content */}
-        <div className="flex-1 flex flex-col justify-center py-24 lg:py-0 lg:pr-12">
+      {/* Background: ASCII effect for mobile/tablet (reduced mode, no interaction) */}
+      <div 
+        className="absolute inset-0 lg:hidden opacity-40 pointer-events-none"
+        aria-hidden="true"
+      >
+        <AsciiScene reduced />
+      </div>
+
+      {/* Main content container */}
+      <div 
+        className="relative z-10 flex flex-col items-center justify-center min-h-screen max-w-7xl mx-auto w-full"
+        style={{
+          paddingLeft: "max(1.5rem, env(safe-area-inset-left))",
+          paddingRight: "max(1.5rem, env(safe-area-inset-right))",
+        }}
+      >
+        {/* Mobile/Tablet: Full width centered content */}
+        <div className="lg:hidden w-full flex flex-col items-center justify-center text-center px-4 py-20">
           {/* Badge & Status */}
           <div
-            className="flex flex-col gap-4 mb-6 w-fit transition-all duration-700 ease-out"
+            className="flex flex-col gap-4 mb-6 items-center transition-all duration-700 ease-out"
             style={{
               opacity: visible ? 1 : 0,
               transform: visible ? "translateY(0)" : "translateY(20px)",
@@ -57,8 +72,7 @@ export function HeroSection() {
               </span>
             </div>
 
-            {/* Status */}
-            <div className="flex items-center gap-2 px-3 py-1.5 bg-background dark:bg-white/5 border border-black/10 dark:border-white/10 rounded-full w-fit">
+            <div className="flex items-center gap-2 px-3 py-1.5 bg-background/80 dark:bg-white/5 border border-black/10 dark:border-white/10 rounded-full">
               <div className="relative flex h-2 w-2">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-green opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-brand-green"></span>
@@ -71,7 +85,7 @@ export function HeroSection() {
 
           {/* Main heading */}
           <h1
-            className="text-3xl sm:text-4xl lg:text-5xl font-sans font-bold text-foreground leading-tight tracking-tight text-balance mb-6 transition-all duration-700 ease-out dark:text-foreground"
+            className="text-2xl sm:text-3xl md:text-4xl font-sans font-bold text-foreground leading-tight tracking-tight text-balance mb-6 transition-all duration-700 ease-out dark:text-foreground"
             style={{
               opacity: visible ? 1 : 0,
               transform: visible ? "translateY(0)" : "translateY(30px)",
@@ -85,14 +99,14 @@ export function HeroSection() {
 
           {/* Description */}
           <div
-            className="transition-all duration-700 ease-out mb-10"
+            className="transition-all duration-700 ease-out mb-8"
             style={{
               opacity: visible ? 1 : 0,
               transform: visible ? "translateY(0)" : "translateY(20px)",
               transitionDelay: "600ms",
             }}
           >
-            <p className="text-lg text-muted-foreground max-w-md leading-relaxed text-pretty mb-4">
+            <p className="text-base sm:text-lg text-muted-foreground max-w-md leading-relaxed text-pretty mb-4">
               Synthesizing static structure and dynamic motion into a unified, immersive visual language.
             </p>
             <p className="text-sm font-mono text-muted-foreground tracking-widest uppercase">
@@ -125,7 +139,7 @@ export function HeroSection() {
 
           {/* Social Links */}
           <div
-            className="flex flex-wrap items-center gap-4 transition-all duration-700 ease-out"
+            className="flex flex-wrap justify-center items-center gap-3 transition-all duration-700 ease-out"
             style={{
               opacity: visible ? 1 : 0,
               transform: visible ? "translateY(0)" : "translateY(20px)",
@@ -146,25 +160,114 @@ export function HeroSection() {
           </div>
         </div>
 
-        {/* Right side - 3D ASCII cat viewport */}
-        <div
-          className="flex-1 w-full lg:w-auto h-[500px] lg:h-[700px] relative transition-all duration-1000 ease-out"
-          style={{
-            opacity: visible ? 1 : 0,
-            transform: visible ? "scale(1)" : "scale(0.95)",
-            transitionDelay: "500ms",
-          }}
-        >
-          <AsciiScene />
+        {/* Desktop: Side by side layout */}
+        <div className="hidden lg:flex flex-row items-center min-h-screen w-full px-12">
+          {/* Left side - Text content */}
+          <div className="flex-1 flex flex-col justify-center lg:pr-12">
+            {/* Badge & Status */}
+            <div
+              className="flex flex-col gap-4 mb-6 w-fit transition-all duration-700 ease-out"
+              style={{
+                opacity: visible ? 1 : 0,
+                transform: visible ? "translateY(0)" : "translateY(20px)",
+                transitionDelay: "200ms",
+              }}
+            >
+              <div className="inline-flex items-center gap-2">
+                <span className="inline-block w-2 h-2 rounded-full bg-brand-salmon animate-pulse" />
+                <span className="text-xs font-mono text-muted-foreground tracking-widest uppercase dark:text-foreground">
+                  Design Portfolio
+                </span>
+              </div>
+
+              <div className="flex items-center gap-2 px-3 py-1.5 bg-background dark:bg-white/5 border border-black/10 dark:border-white/10 rounded-full w-fit">
+                <div className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-green opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-brand-green"></span>
+                </div>
+                <span className="text-[10px] font-mono font-medium text-foreground dark:text-muted-foreground tracking-widest uppercase">
+                  Available for work
+                </span>
+              </div>
+            </div>
+
+            {/* Main heading */}
+            <h1
+              className="text-3xl sm:text-4xl lg:text-5xl font-sans font-bold text-foreground leading-tight tracking-tight text-balance mb-6 transition-all duration-700 ease-out dark:text-foreground"
+              style={{
+                opacity: visible ? 1 : 0,
+                transform: visible ? "translateY(0)" : "translateY(30px)",
+                transitionDelay: "400ms",
+              }}
+            >
+              Visual Design Continuity
+              <br />
+              <span className="text-brand-blue">Across Every Dimension.</span>
+            </h1>
+
+            {/* Description */}
+            <div
+              className="transition-all duration-700 ease-out mb-10"
+              style={{
+                opacity: visible ? 1 : 0,
+                transform: visible ? "translateY(0)" : "translateY(20px)",
+                transitionDelay: "600ms",
+              }}
+            >
+              <p className="text-lg text-muted-foreground max-w-md leading-relaxed text-pretty mb-4">
+                Synthesizing static structure and dynamic motion into a unified, immersive visual language.
+              </p>
+              <p className="text-sm font-mono text-muted-foreground tracking-widest uppercase">
+                // BASED_IN_BOGOTA_<span
+                  className="inline-block font-bold colombia-flag-text"
+                >COLOMBIA</span>
+              </p>
+            </div>
+
+            {/* Social Links */}
+            <div
+              className="flex flex-wrap items-center gap-4 transition-all duration-700 ease-out"
+              style={{
+                opacity: visible ? 1 : 0,
+                transform: visible ? "translateY(0)" : "translateY(20px)",
+                transitionDelay: "800ms",
+              }}
+            >
+              <SocialPill href="https://www.linkedin.com/in/johan-caicedo/">
+                <Linkedin className="size-4" /> LINKEDIN
+              </SocialPill>
+
+              <SocialPill href="mailto:camilo.design07@gmail.com">
+                <Mail className="size-4" /> MAIL
+              </SocialPill>
+
+              <SocialPill href="https://github.com/JohanCaicedo">
+                <Github className="size-4" /> GITHUB
+              </SocialPill>
+            </div>
+          </div>
+
+          {/* Right side - 3D ASCII viewport (desktop only) */}
+          <div
+            className="flex-1 w-full h-[600px] lg:h-[700px] relative transition-all duration-1000 ease-out"
+            style={{
+              opacity: visible ? 1 : 0,
+              transform: visible ? "scale(1)" : "scale(0.95)",
+              transitionDelay: "500ms",
+            }}
+          >
+            <AsciiScene />
+          </div>
         </div>
       </div>
 
-      {/* Bottom scroll hint — animation stops on scroll */}
+      {/* Bottom scroll hint */}
       <div
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 z-10 transition-all duration-700 ease-out"
+        className="absolute left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 z-10 transition-all duration-700 ease-out"
         style={{
           opacity: visible ? 1 : 0,
           transitionDelay: visible ? "1200ms" : "0ms",
+          bottom: "calc(1.5rem + env(safe-area-inset-bottom))",
         }}
       >
         <span className="text-sm font-mono font-bold text-muted-foreground dark:text-muted-foreground tracking-widest uppercase">

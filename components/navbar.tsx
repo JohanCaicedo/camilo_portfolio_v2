@@ -54,7 +54,9 @@ export function Navbar() {
 
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <button className="relative h-12 w-12 rounded-full overflow-hidden border border-black/10 dark:border-white/10 hover:border-brand-blue transition-colors outline-none focus-visible:ring-2 focus-visible:ring-brand-blue group">
+              <button 
+                style={{ touchAction: "manipulation" }}
+                className="relative h-12 w-12 rounded-full overflow-hidden border border-black/10 dark:border-white/10 hover:border-brand-blue transition-colors outline-none focus-visible:ring-2 focus-visible:ring-brand-blue group">
                 {/* Profile Image (Base) */}
                   <img
                     src="/Profile-Foto-Camilo.webp"
@@ -100,6 +102,7 @@ export function Navbar() {
         {/* Mobile menu button */}
         <button
           onClick={() => setIsOpen(!isOpen)}
+          style={{ touchAction: "manipulation" }}
           className="md:hidden text-foreground dark:text-foreground p-2 outline-none focus-visible:ring-2 focus-visible:ring-brand-blue rounded-md hover:text-brand-blue transition-colors"
           aria-label={isOpen ? "Close menu" : "Open menu"}
         >
