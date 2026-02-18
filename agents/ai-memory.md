@@ -1,320 +1,274 @@
 ---
 name: ai-memory
-description: Complete project memory for the Camilo Portfolio V2. Contains the ASCII design system, component architecture, color palette, interactivity patterns, and performance strategies. Use this as the canonical reference for any future modifications.
+description: Canonical memory for Camilo Portfolio V2 (Paper Fox Studio). Covers architecture, design system, 3D rendering pipeline, content structure, page conventions, performance constraints, and internal skills/workflows.
 metadata:
   author: camilo
-  version: "2.0.0"
-  last-updated: "2026-02-16"
+  version: "3.0.0"
+  last-updated: "2026-02-18"
 ---
 
 # AI Memory — Camilo Portfolio V2
 
-Canonical reference for the entire project. Read this before making ANY changes.
+Single source of truth for future modifications.
 
 ---
 
-## 1. Technology Stack
+## 1) Project Identity
 
-| Layer | Technology |
-|---|---|
-| Framework | Next.js (App Router) |
-| Language | TypeScript |
-| Styling | Tailwind CSS v4 |
-| 3D Engine | Three.js via `@react-three/fiber` + `@react-three/drei` |
-| Animations | Framer Motion, CSS transitions, `requestAnimationFrame` |
-| Theming | `next-themes` (light/dark, class strategy) |
-| Icons | `lucide-react` |
-| Analytics | `@vercel/analytics` |
+- Brand: Paper Fox Studio
+- Owner: Johan Camilo Caicedo
+- Type: Personal portfolio / case-study website
+- Core narrative: multidisciplinary visual design continuity across web, graphic, editorial, photography, and personal experimentation.
+- Main tone: technical/editorial style labels (`// TOKEN`), monospace accents, clean grid cards, subtle motion, warm off-white background.
 
 ---
 
-## 2. Color Palette
+## 2) Tech Stack (Current)
 
-The design uses a **soft, warm** palette across ALL interactive elements:
+- Framework: Next.js 16.1.6 (App Router)
+- Runtime: React 19.2.4
+- Language: TypeScript (strict)
+- Styling: Tailwind CSS v4 + CSS variables in `app/globals.css`
+- Motion: Framer Motion + CSS animations
+- 3D: Three.js via `@react-three/fiber` + `@react-three/drei`
+- Theming: `next-themes`
+- UI primitives: Radix + custom UI components in `components/ui`
+- Analytics: `@vercel/analytics`
+- Lint: ESLint flat config (`eslint.config.mjs`)
 
-| Name | Hex | Usage |
-|---|---|---|
-| Salmon | `#eea284` | Dot grid active, electron trail |
-| Blue | `#bbc9d8` / `#B8CAD9` | Brand accent, atom cursor nucleus, scrollbar |
-| Yellow | `#f7df91` | Dot grid active |
-| Green | `#c4debc` | Status indicator ("Available for work") |
-| Pink | `#f2d3c5` | Dot grid active |
-| Purple | `#6a5deb` | Dot grid active, electron orbit |
-
-### CSS Variables (Tailwind)
-
-```css
---color-brand-blue: #B8CAD9;
---color-brand-green: #C0D9B4;
---color-brand-yellow: #F2D680;
---color-brand-salmon: #F28D77;
-```
-
-### Theme Colors
-
-| Mode | Background | Foreground |
-|---|---|---|
-| Light | `#faf9f6` (warm off-white) | `#1a1a1a` |
-| Dark | `oklch(0.145 0 0)` (~`#1a1a1a`) | `#faf9f6` |
+Package scripts of record:
+- `npm run dev`
+- `npm run build`
+- `npm run start`
+- `npm run lint`
+- `npm run typecheck`
+- `npm run format`
 
 ---
 
-## 3. The ASCII Design System
+## 3) File/Folder Map (Key)
 
-The visual identity centers around an **ASCII render** of a 3D fox model (Zorrito). This is NOT a library plugin — it's a **custom canvas-based ASCII renderer** built from scratch.
+### App routes
+- Home: `app/page.tsx`
+- CV page: `app/cv/page.tsx`
+- Web design: `app/web-design/page.tsx`
+- Graphic design: `app/graphic-design/page.tsx`
+- Editorial design: `app/editorial-design/page.tsx`
+- Photography: `app/photography/page.tsx`
+- Personal: `app/personal/page.tsx`
+- Metadata infra: `app/layout.tsx`, `app/sitemap.ts`, `app/robots.ts`
 
-### 3.1 How the ASCII Renderer Works
+### Core components
+- Hero and 3D scene: `components/hero-section.tsx`, `components/ascii-scene.tsx`, `components/NewZorrito-Web.tsx`
+- Home sections: `components/about-section.tsx`, `components/projects-section.tsx`, `components/experience-section.tsx`, `components/education-section.tsx`, `components/skills-section.tsx`
+- Navigation/footer: `components/navbar.tsx`, `components/footer.tsx`
+- Global interactions: `components/ui/interactive-grid-pattern.tsx`, `components/atom-cursor.tsx`, `components/mode-toggle.tsx`, `components/scroll-to-top.tsx`
+- Snap toggle for home only: `components/home-scroll-snap.tsx`
 
-File: `components/ascii-scene.tsx`
-
-```
-┌─────────────────────────────────────────────┐
-│  Three.js Canvas (hidden, alpha:true)       │
-│  ┌────────────────────────────────────────┐  │
-│  │  3D Scene                              │  │
-│  │  - Zorrito model (GLTF)                │  │
-│  │  - Ambient + Directional + Point light │  │
-│  │  - Mouse-following rotation            │  │
-│  └────────────────────────────────────────┘  │
-│           ↓ renders to ↓                     │
-│  WebGLRenderTarget (low-res, 0.18x)          │
-│           ↓ readPixels ↓                     │
-│  Uint8Array (reused, not per-frame!)         │
-│           ↓ brightness → char mapping ↓      │
-│  2D Overlay Canvas (full-res)                │
-│  - Each pixel → ASCII char from " .,:;|~-=+*#@" │
-│  - Bold monospace font                       │
-│  - Interactive scatter near cursor           │
-└─────────────────────────────────────────────┘
-```
-
-### 3.2 Character Mapping
-
-```
-Brightness 0.0 → " " (space, invisible)
-Brightness 0.5 → "~" (mid-tone)
-Brightness 1.0 → "@" (darkest/most visible)
-```
-
-Character set: `" .,:;|~-=+*#@"` (13 levels)
-
-### 3.3 Interactive Scatter Effect
-
-When the cursor hovers over the ASCII scene, characters near the cursor:
-1. **Repel** — pushed away from cursor (radius: 50px, force: 3)
-2. **Colorize** — change to a random palette color with opacity based on proximity
-3. **Return** — smoothly lerp back to origin (factor: 0.08) when cursor leaves
-
-This mirrors the background dot grid behavior but with **less** separation to preserve the model silhouette.
-
-### 3.4 Performance Architecture
-
-Critical optimizations in the ASCII renderer:
-- **Pixel buffer**: `Uint8Array` allocated ONCE per resize, reused every frame
-- **2D Context**: cached in ref, never re-fetched
-- **Font**: set once on resize, not per-frame
-- **Palette RGB**: pre-computed at module level as `[r,g,b]` arrays
-- **Color strings**: built only for chars near cursor, not all chars
-- **Distance check**: uses `distSq` comparison before `Math.sqrt`
+### Skills in repo
+- `/.agents/skills/react-doctor/SKILL.md`
+- `/.agents/skills/notion-project-publisher/SKILL.md`
+- `/.agents/skills/notion-project-publisher/references/site-patterns.md`
 
 ---
 
-## 4. 3D Model — NewZorrito-Web
+## 4) Global Visual System
 
-File: `components/NewZorrito-Web.tsx`
+### Colors
+Defined via CSS vars in `app/globals.css`:
+- Background (light): `#faf9f6`
+- Background (dark): near-black OKLCH
+- Brand accents:
+  - Blue: `--color-brand-blue: #B8CAD9`
+  - Green: `--color-brand-green: #C0D9B4`
+  - Yellow: `--color-brand-yellow: #F2D680`
+  - Salmon: `--color-brand-salmon: #F28D77`
 
-### Model
+### Typography
+- Sans: Geist
+- Mono: Geist Mono
+- Heavy use of monospace micro-labels and uppercase technical tokens.
 
-- Source: `/models/NewZorrito-Web.glb` (GLTF)
-- Generated via `gltfjsx`
-- 4 meshes: Cuerpo (body), Capa (cape), Ojos (eyes), Accesorio (accessory)
-- Has built-in animations (auto-played)
-- Preloaded via `useGLTF.preload()`
+### Card language
+`ViewerCard` is the canonical content container:
+- corner marks
+- faint border
+- subtle scanline overlay
+- optional HUD label (`label="..."`)
 
-### Mouse-Following Behavior
-
-```
-Base rotation: -PI/6 (slightly angled)
-Mouse X → Y rotation: ±0.4 radians (left/right look)
-Mouse Y → X rotation: ±0.15 radians (subtle up/down tilt)
-Z rotation: ±0.05 (lean into look direction)
-Lerp speed: 0.05 (X/Y), 0.03 (Z)
-Floating: sin(t) * 0.08 on Y axis
-```
-
----
-
-## 5. Interactive Background — Dot Grid
-
-File: `components/ui/interactive-grid-pattern.tsx`
-
-### Structure
-
-- Full-viewport `<canvas>` at `position: fixed`, `z-index: 1`
-- Gap: 20px between dots (dense grid)
-- Dot size: 1.5px radius
-- Base opacity: 0.08 (barely visible)
-
-### Interaction
-
-- **Radius**: 120px from cursor
-- **Repulsion force**: 30 (strong separation)
-- **Color**: Random palette color per dot (assigned at init)
-- **Intensity**: `max(0.3, force) * 0.8` opacity
-- **Return**: lerp 0.08 to origin
-
-### Performance
-
-- No `getBoundingClientRect()` (canvas is fixed, clientX/Y is correct)
-- Pre-computed `PALETTE_RGB` at module level
-- `distSq` optimization before `Math.sqrt`
+### Interaction layers
+- Fixed background interactive dot grid (`InteractiveGridPattern`)
+- Atom cursor overlay (`AtomCursor`)
+- Theme reveal animation via View Transition API (`ModeToggle` + `globals.css`)
 
 ---
 
-## 6. Atom Cursor
+## 5) Home Structure (Current)
 
-File: `components/atom-cursor.tsx`
+Home composition in `app/page.tsx`:
+1. `HeroSection`
+2. `AboutSection`
+3. `ProjectsSection`
+4. `ExperienceSection`
+5. `EducationSection`
+6. `SkillsSection`
 
-### Visual
+### Home scroll behavior
+- Activated only on Home by `HomeScrollSnap` (adds class `home-snap` to `<html>`)
+- CSS in `app/globals.css`:
+  - `scroll-snap-type: y proximity` (non-rigid guidance)
+  - `.snap-section { scroll-snap-align: start; scroll-snap-stop: normal; }`
+  - reduced-motion fallback maintained
 
-- **Nucleus**: 8px radius, brand blue `#B8CAD9`
-- **Orbit ring**: 20px radius, very subtle (`rgba(135,88,244,0.12)`)
-- **Electron 1**: purple `rgba(135,88,244,0.9)`, 2.5px radius
-- **Electron 2**: salmon `rgba(238,162,132,0.9)`, 2.5px radius, offset by PI
-- **Speed**: 2.5 rad/s
-- **Trails**: 8-frame ring buffer per electron (Float32Array)
+### Header icon animation language (semantic micro-motion)
+Implemented with Framer Motion, each section icon has different behavior:
+- About (person): gentle breathing/nod
+- Projects (folder): slight tilt/shift
+- Experience (terminal): pulse/flicker style
+- Education (cap): buoyant toss-like motion
+- Skills (sparkles): twinkle pulse
 
-### Interactive States
-
-| State | Effect |
-|---|---|
-| Default | Blue nucleus, 1x scale |
-| Hover on button/link | Nucleus → salmon `#F28D77`, scale → 1.5x (lerp 0.15) |
-| Click (mousedown) | Scale burst to 2.0x, fast rise (0.4), slow decay (0.92) |
-
-### Interactive Element Detection
-
-Priority order (performance-optimized):
-1. Tag name (`a`, `button`, `input`, `textarea`, `select`)
-2. `role="button"` attribute
-3. `el.closest("a, button, [role='button']")`
-4. `getComputedStyle` (last resort, cached per element)
-
-### Cursor Hiding
-
-Injects: `*, *::before, *::after { cursor: none !important; }`
+Rule: `framer-motion` in a component requires `"use client"` at top.
 
 ---
 
-## 7. Theme Toggle — Circular Reveal
+## 6) Hero + 3D Rendering System
 
-File: `components/mode-toggle.tsx` + `app/globals.css`
+### Hero behavior (`components/hero-section.tsx`)
+- Responsive split:
+  - Desktop: text + 3D side-by-side
+  - Mobile/tablet: centered text + reduced background 3D layer
+- Uses staggered reveal (timed opacity/transform)
+- Shows social pills and scroll hint
+- Uses `AsciiSkeleton` as loading fallback for dynamic 3D import
 
-Uses the **View Transition API** (`document.startViewTransition()`):
-1. Captures click position (x, y)
-2. Calculates max radius to cover viewport
-3. Sets CSS custom properties: `--reveal-x`, `--reveal-y`, `--reveal-radius`
-4. `::view-transition-new(root)` animates `clip-path: circle()` from 0 to max
-5. Duration: 500ms, `cubic-bezier(0.4, 0, 0.2, 1)`
-6. Falls back to instant swap in browsers without support
-7. Respects `prefers-reduced-motion`
+### 3D model source (`components/NewZorrito-Web.tsx`)
+- GLB path: `/models/NewZorrito-Web.glb`
+- Auto-generated with gltfjsx
+- Uses `useAnimations` and currently plays first animation clip (`names[0]`)
+- Also has procedural behavior:
+  - pointer-follow rotation
+  - subtle float and sway
 
----
+### ASCII rendering (`components/ascii-scene.tsx`)
+Current system is a **custom scanline ASCII renderer** (not plain `AsciiRenderer`):
+- Renders scene to low-res `WebGLRenderTarget`
+- Reads pixels and maps luminance to chars (`ASCII_CHARS = " .:-=+*#%@"`)
+- Draws to 2D overlay canvas with scanline style
+- Supports reduced mode (`reduced` prop) for mobile background usage
+- Includes cursor-reactive color displacement (disabled in reduced mode)
+- Wrapped in `ErrorBoundary`
 
-## 8. Component Architecture
-
-```
-app/layout.tsx
-├── ThemeProvider (next-themes, class strategy)
-├── <div z-10> → {children} (page content)
-├── InteractiveGridPattern (fixed canvas, z-1)
-├── AtomCursor (fixed canvas, z-9999)
-└── Analytics
-
-app/page.tsx
-├── Navbar (fixed top, z-50)
-├── HeroSection (eager load)
-│   └── AsciiScene (dynamic, ssr:false)
-│       └── Canvas (react-three-fiber)
-│           ├── Zorrito (GLTF model)
-│           ├── SceneLighting
-│           └── InteractiveAsciiEffect (custom renderer)
-├── ProjectsSection (lazy loaded via next/dynamic)
-├── ExperienceSection (lazy loaded)
-├── EducationSection (lazy loaded)
-└── SkillsSection (lazy loaded)
-```
+Performance choices used:
+- reusable `Uint8Array` buffer
+- cached 2D context
+- precomputed palette RGB
+- distance checks via squared distance
 
 ---
 
-## 9. Custom Scrollbar
+## 7) Navigation + Metadata + SEO
 
-Defined in `globals.css`:
-- Width: 8px
-- Thumb: `#B8CAD9` (brand blue), rounded pill with `background-clip: content-box`
-- Hover: `#a0b8cc`
-- Track: transparent
-- Firefox: `scrollbar-width: thin; scrollbar-color: #B8CAD9 transparent`
+### Navbar (`components/navbar.tsx`)
+- Uses `next/link` and `next/image`
+- Anchors: `#about`, `#projects`, `#education`, `#experience`
+- CV links route to `/cv` (desktop and mobile)
+- dropdown includes profile/contact metadata
 
----
+### CV page (`app/cv/page.tsx`)
+- Styled as technical case page
+- Embedded PDF via iframe
+- download/open fallback actions
+- PDF path:
+  - `/CV%20Johan%20Caicedo%20-%202024%20-%20Digital%20and%20Multimedia%20Designer.pdf`
 
-## 10. Scroll Hint
-
-File: `components/hero-section.tsx`
-
-- Text: "Scroll to explore" — `text-sm font-mono font-bold`
-- 3 ChevronDown icons in cascade, brand-salmon with decreasing opacity (100%/60%/30%)
-- `animate-bounce` at 1.2s with 150ms staggered delays
-- Animation **stops** (but hint stays visible) when `scrollY > 50`
-- Reactivates when scrolling back to top
-
----
-
-## 11. Colombia Flag Text Animation
-
-File: `components/hero-section.tsx` (inline `<style>` tag)
-
-The word "COLOMBIA" in `// BASED_IN_BOGOTA_COLOMBIA` has a sweeping gradient animation using the Colombian flag colors.
-
-### Implementation
-
-- **Technique**: `background-clip: text` with animated `background-position`
-- **Gradient**: `linear-gradient(90deg, gray → yellow → blue → red → gray)`
-- **Background size**: `300% 100%` — gradient is 3x wider than text
-- **Keyframes**: `background-position: 100% → -100%` (smooth one-directional sweep)
-- **Duration**: 6 seconds per cycle
-- **Easing**: `linear` for constant fluid motion
-- **Loop**: `infinite` — never stops
-
-### Flag Colors
-
-| Color | Hex | Gradient Position |
-|---|---|---|
-| Gray (rest) | `#999999` | 0–15%, 80–100% |
-| Yellow | `#FCD116` | 25–35% |
-| Blue | `#003893` | 42–52% |
-| Red | `#CE1126` | 60–70% |
+### Root metadata (`app/layout.tsx`)
+- `metadataBase` set to `https://paperfoxstudio.com`
+- OG/Twitter image uses `/og-image.jpg`
+- `public/og-image.jpg` exists and is used for social previews
+- JSON-LD injected by `components/json-ld.tsx`
 
 ---
 
-## 12. ZBrush Dark Mode Fix
+## 8) Content Architecture for Project Pages
 
-In `components/skills-section.tsx`, the ZBrush skill has `darkInvert: true`.
-In `components/ui/skill-slider.tsx`, when `darkInvert` is set, the image gets `dark:invert` CSS filter to turn the black SVG white in dark mode.
+Each category page follows a repeated pattern:
+- back link (`// BACK_TO_PROJECTS`)
+- hero section (micro-label, title, subtitle)
+- badge row
+- project details cards
+- process/context/challenges/outcome blocks
+- gallery/media blocks
+
+Primary reusable building blocks:
+- `SectionContainer`
+- `ViewerCard`
+- `LightboxImage`
+- `LightboxGallery`
+
+Most page data lives in top-of-file constants (badges/images/specs arrays).
 
 ---
 
-## 13. Key Files Quick Reference
+## 9) Internal Skill Strategy
 
-| File | Purpose |
-|---|---|
-| `components/ascii-scene.tsx` | Custom ASCII renderer + 3D scene |
-| `components/NewZorrito-Web.tsx` | 3D fox model with mouse tracking |
-| `components/atom-cursor.tsx` | Custom atom cursor |
-| `components/ui/interactive-grid-pattern.tsx` | Interactive dot background |
-| `components/hero-section.tsx` | Hero section with staggered reveal |
-| `components/mode-toggle.tsx` | Theme toggle with circular reveal |
-| `components/navbar.tsx` | Navigation with profile hover |
-| `app/globals.css` | CSS variables, scrollbar, view transitions |
-| `app/layout.tsx` | Root layout (providers, global components) |
-| `app/page.tsx` | Home page with lazy-loaded sections |
+### `react-doctor`
+Use for health audits and diagnostics; command:
+- `npx -y react-doctor@latest . --verbose`
+
+### `notion-project-publisher`
+Purpose: convert Notion content into React updates while preserving existing visual identity and component usage.
+
+Hard category lock (only these):
+- `diseño web` -> `web-design`
+- `diseño grafico` -> `graphic-design`
+- `diseño editorial` -> `editorial-design`
+- `fotografia` -> `photography`
+- `personal` -> `personal`
+
+No new categories should be introduced by this skill.
+
+---
+
+## 10) Known Constraints / Pitfalls
+
+1. Any component using Framer Motion must be client component (`"use client"`).
+2. `.git` operations can require elevated permissions in this environment.
+3. Build can fail in restricted-network environments due to Google font fetching.
+4. Home snap should remain guidance-focused (`proximity`), not forced (`mandatory`).
+5. Preserve existing component language; avoid ad-hoc visual patterns.
+
+---
+
+## 11) Maintenance Rules (Practical)
+
+When adding/editing content:
+- Prefer additive changes over rewrites.
+- Keep technical micro-label format (`// TOKEN`) consistent.
+- Reuse `ViewerCard` patterns for new blocks.
+- Keep `alt` texts descriptive.
+- Validate with `npm run typecheck` (or `npx tsc --noEmit`).
+
+When touching home sections:
+- Keep `snap-section` class on each section container.
+- Keep icon motions subtle and semantically relevant.
+- Respect reduced-motion behavior.
+
+When touching 3D:
+- Preserve reduced mode support in Hero mobile background.
+- Avoid expensive per-frame allocations.
+
+---
+
+## 12) Current Maturity Snapshot
+
+Project state is advanced/polished:
+- Multi-section portfolio with coherent visual language
+- Working CV route and navigation flow
+- Themed UI with custom interaction layers
+- Animated section headers and expandable experience timeline
+- Lint/type/tooling modernized
+- Internal skill for Notion-to-portfolio publishing established
+
+Primary future direction:
+- Content velocity and maintainability for adding new projects while preserving style consistency.
