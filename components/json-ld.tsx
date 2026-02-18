@@ -1,3 +1,5 @@
+import Script from "next/script"
+
 export function JsonLd() {
     const jsonLd = {
         "@context": "https://schema.org",
@@ -24,9 +26,11 @@ export function JsonLd() {
     }
 
     return (
-        <script
+        <Script
+            id="json-ld"
             type="application/ld+json"
             dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+            strategy="beforeInteractive"
         />
     )
 }

@@ -1,6 +1,8 @@
 "use client"
 
 import { useState } from "react"
+import Link from "next/link"
+import Image from "next/image"
 import { Menu, X, Home } from "lucide-react"
 import { ModeToggle } from "@/components/mode-toggle"
 import {
@@ -27,24 +29,24 @@ export function Navbar() {
     <nav className="fixed top-0 left-0 right-0 z-50 px-6 lg:px-12 bg-background/80 backdrop-blur-md border-b border-black/5 dark:border-white/5 transition-all duration-300">
       <div className="max-w-7xl mx-auto flex items-center justify-between h-20">
         {/* Home Button (Logo Replacement) */}
-        <a
+        <Link
           href="/"
           className="p-2 text-foreground dark:text-foreground hover:text-brand-blue dark:hover:text-brand-blue transition-colors outline-none focus-visible:ring-2 focus-visible:ring-brand-blue rounded-sm"
           aria-label="Home"
         >
           <Home className="size-6" strokeWidth={1.5} />
-        </a>
+        </Link>
 
         {/* Desktop Links */}
         <div className="hidden md:flex items-center gap-8">
           {navLinks.map((link) => (
-            <a
+            <Link
               key={link.label}
               href={link.href}
               className="text-sm font-medium text-muted-foreground hover:text-brand-blue dark:text-muted-foreground dark:hover:text-brand-blue transition-colors font-mono tracking-wide outline-none focus-visible:ring-2 focus-visible:ring-brand-blue rounded-sm"
             >
               {link.label}
-            </a>
+            </Link>
           ))}
         </div>
 
@@ -54,30 +56,27 @@ export function Navbar() {
 
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <button 
+              <button
                 style={{ touchAction: "manipulation" }}
                 className="relative h-12 w-12 rounded-full overflow-hidden border border-black/10 dark:border-white/10 hover:border-brand-blue transition-colors outline-none focus-visible:ring-2 focus-visible:ring-brand-blue group">
                 {/* Profile Image (Base) */}
-                  <img
-                    src="/Profile-Foto-Camilo.webp"
-                    alt="Portrait of Johan Caicedo, designer and founder of Paper Fox Studio"
-                    className="absolute inset-0 w-full h-full object-cover transition-opacity duration-300 opacity-100 group-hover:opacity-0"
-                    onError={(e) => {
-                      const target = e.target as HTMLImageElement;
-                      target.src = "/placeholder-user.jpg";
-                    }}
-                  />
+                <Image
+                  src="/Profile-Foto-Camilo.webp"
+                  alt="Portrait of Johan Caicedo, designer and founder of Paper Fox Studio"
+                  fill
+                  sizes="48px"
+                  className="absolute inset-0 w-full h-full object-cover transition-opacity duration-300 opacity-100 group-hover:opacity-0"
+                />
 
-                  {/* Fox GIF (Hover) */}
-                  <img
-                    src="/Foxy-Blink-nav-bar.gif"
-                    alt="Paper Fox Studio animated mascot"
-                    className="absolute inset-0 w-full h-full object-cover transition-opacity duration-300 opacity-0 group-hover:opacity-100 scale-110"
-                    onError={(e) => {
-                      const target = e.target as HTMLImageElement;
-                      target.style.display = 'none';
-                    }}
-                  />
+                {/* Fox GIF (Hover) */}
+                <Image
+                  src="/Foxy-Blink-nav-bar.gif"
+                  alt="Paper Fox Studio animated mascot"
+                  fill
+                  sizes="48px"
+                  unoptimized
+                  className="absolute inset-0 w-full h-full object-cover transition-opacity duration-300 opacity-0 group-hover:opacity-100 scale-110"
+                />
               </button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-56 bg-background dark:bg-background border-black/10 dark:border-white/10">
@@ -91,9 +90,9 @@ export function Navbar() {
               </div>
               <DropdownMenuSeparator className="bg-black/5 dark:bg-white/5" />
               <DropdownMenuItem asChild>
-                <a href="/cv" className="font-mono text-xs cursor-pointer text-foreground dark:text-foreground focus:bg-black/5 dark:focus:bg-white/5 hover:text-brand-blue">
+                <Link href="/cv" className="font-mono text-xs cursor-pointer text-foreground dark:text-foreground focus:bg-black/5 dark:focus:bg-white/5 hover:text-brand-blue">
                   View Curriculum
-                </a>
+                </Link>
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
@@ -115,22 +114,22 @@ export function Navbar() {
         <div className="md:hidden absolute top-20 left-0 right-0 bg-background/95 backdrop-blur-lg border-b border-border dark:border-white/10 p-6 shadow-lg animate-in slide-in-from-top-2">
           <div className="flex flex-col gap-6">
             <div className="flex flex-col gap-4">
-              <a
+              <Link
                 href="/"
                 onClick={() => setIsOpen(false)}
                 className="text-lg font-medium text-muted-foreground hover:text-brand-blue dark:text-muted-foreground dark:hover:text-brand-blue transition-colors font-mono outline-none focus-visible:ring-2 focus-visible:ring-brand-blue rounded-sm w-fit flex items-center gap-2"
               >
                 <Home className="size-5" /> Home
-              </a>
+              </Link>
               {navLinks.map((link) => (
-                <a
+                <Link
                   key={link.label}
                   href={link.href}
                   onClick={() => setIsOpen(false)}
                   className="text-lg font-medium text-muted-foreground hover:text-brand-blue dark:text-muted-foreground dark:hover:text-brand-blue transition-colors font-mono outline-none focus-visible:ring-2 focus-visible:ring-brand-blue rounded-sm w-fit"
                 >
                   {link.label}
-                </a>
+                </Link>
               ))}
             </div>
 
@@ -144,7 +143,7 @@ export function Navbar() {
                 </Avatar>
                 <div className="flex flex-col">
                   <span className="text-sm font-bold text-foreground dark:text-foreground">Johan Caicedo</span>
-                  <a href="/cv" className="text-xs font-mono text-brand-blue hover:underline">View CV</a>
+                  <Link href="/cv" className="text-xs font-mono text-brand-blue hover:underline">View CV</Link>
                 </div>
               </div>
               <ModeToggle />

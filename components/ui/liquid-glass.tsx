@@ -25,27 +25,19 @@ export function LiquidGlass({
 }: LiquidGlassProps) {
     const cardRef = useRef<HTMLDivElement>(null)
 
-    // Use state to handle window/client availability safely
-    const [isMounted, setIsMounted] = useState(false)
-
-    useEffect(() => {
-        setIsMounted(true)
-    }, [])
-
     const mouseX = useMotionValue(0.5)
     const mouseY = useMotionValue(0.5)
     const mouseX_abs = useMotionValue(0)
     const mouseY_abs = useMotionValue(0)
 
     useEffect(() => {
-        if (!isMounted) return
         const cardElement = cardRef.current
         if (cardElement) {
             const { width, height } = cardElement.getBoundingClientRect()
             mouseX_abs.set(width / 2)
             mouseY_abs.set(height / 2)
         }
-    }, [isMounted, mouseX_abs, mouseY_abs])
+    }, [mouseX_abs, mouseY_abs])
 
     const rotateX = useTransform(mouseY, [0, 1], [15, -15])
     const rotateY = useTransform(mouseX, [0, 1], [-15, 15])

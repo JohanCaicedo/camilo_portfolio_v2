@@ -313,7 +313,7 @@ export default function WebDesignPage() {
                     <ViewerCard label="KEY_ISSUES">
                         <ol className="space-y-3">
                             {CHALLENGES.map((item, i) => (
-                                <li key={i} className="text-sm text-[#666] dark:text-[#aaa]">
+                                <li key={item.title} className="text-sm text-[#666] dark:text-[#aaa]">
                                     <span className="font-mono text-brand-salmon text-[10px] mr-2">
                                         0{i + 1}
                                     </span>
@@ -363,7 +363,7 @@ export default function WebDesignPage() {
                 {/* Process Steps */}
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 justify-items-center">
                     {PROCESS_STEPS.map((step, i) => (
-                        <div key={i} className="flex flex-col items-center group">
+                        <div key={step.title} className="flex flex-col items-center group">
                             <p className="text-[10px] font-mono text-brand-blue tracking-widest uppercase mb-1">
                                 STEP_0{i + 1}
                             </p>

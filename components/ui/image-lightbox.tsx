@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useState } from "react"
 import { X, ChevronLeft, ChevronRight, ZoomIn } from "lucide-react"
 import { createPortal } from "react-dom"
+import Image from "next/image"
 
 /* ─── Types ─── */
 interface LightboxImage {
@@ -37,11 +38,12 @@ export function LightboxImage({
                 className={`relative group cursor-zoom-in block w-full ${className}`}
                 aria-label={`View ${alt} fullscreen`}
             >
-                <img
+                <Image
                     src={src}
                     alt={alt}
+                    width={800}
+                    height={600}
                     className="w-full h-auto"
-                    loading="lazy"
                 />
                 {/* Hover overlay */}
                 <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300 flex items-center justify-center">

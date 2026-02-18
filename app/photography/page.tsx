@@ -236,9 +236,9 @@ export default function PhotographyPage() {
                             </h3>
                         </div>
                         <ul className="space-y-3">
-                            {TECHNICAL_SKILLS.map((skill, i) => (
+                            {TECHNICAL_SKILLS.map((skill) => (
                                 <li
-                                    key={i}
+                                    key={skill}
                                     className="text-sm font-medium text-[#1a1a1a] dark:text-[#faf9f6] border-l-2 border-brand-salmon/30 pl-4"
                                 >
                                     {skill}

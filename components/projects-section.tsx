@@ -4,6 +4,7 @@ import { motion } from "framer-motion"
 import { FolderGit2 } from "lucide-react"
 import { ViewerCard } from "@/components/ui/viewer-card"
 import { SectionContainer } from "@/components/section-container"
+import Image from "next/image"
 
 const projects = [
     {
@@ -109,11 +110,13 @@ export function ProjectsSection() {
                                 {/* Image Container (Tech look) */}
                                 <div className="relative flex-1 bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/5 overflow-hidden group">
                                     {project.img && (
-                                        <img
-                                            loading="lazy"
-                                            className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 ease-out opacity-80 group-hover:opacity-100"
+                                        <Image
+                                            fill
+                                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                                            className="object-cover grayscale group-hover:grayscale-0 transition-all duration-500 ease-out opacity-80 group-hover:opacity-100"
                                             src={project.img}
                                             alt={project.title}
+                                            unoptimized={project.img.endsWith('.gif')}
                                         />
                                     )}
                                     {/* Scanline overlay on image */}

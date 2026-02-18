@@ -357,9 +357,9 @@ export default function EditorialDesignPage() {
 
                 <ViewerCard label="COVER_PROCESS">
                     <ul className="space-y-3">
-                        {COVER_STRUCTURE.map((item, i) => (
+                        {COVER_STRUCTURE.map((item) => (
                             <li
-                                key={i}
+                                key={item}
                                 className="text-sm text-[#666] dark:text-[#aaa] border-l-2 border-brand-salmon/30 pl-4"
                             >
                                 {item}

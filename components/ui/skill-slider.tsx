@@ -4,6 +4,7 @@ import React, { useEffect, useRef, useState } from "react"
 import { motion, useMotionValue, useTransform, animate } from "framer-motion"
 import { cn } from "@/lib/utils"
 import { ViewerCard } from "@/components/ui/viewer-card"
+import Image from "next/image"
 
 export interface Skill {
     title: string
@@ -47,13 +48,11 @@ function SkillCard({
                 <div className="h-16 flex items-center justify-center w-full my-2">
                     <div className="h-12 w-12 flex items-center justify-center transition-transform duration-300 hover:scale-[1.2]">
                         {imageSrc ? (
-                            <img
+                            <Image
                                 src={imageSrc}
                                 alt={imageAlt || title}
                                 width={48}
                                 height={48}
-                                loading="lazy"
-                                decoding="async"
                                 className={cn("h-12 w-12 object-contain pointer-events-none select-none", darkInvert && "dark:invert")}
                             />
                         ) : icon ? (
