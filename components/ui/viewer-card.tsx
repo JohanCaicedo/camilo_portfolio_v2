@@ -43,7 +43,7 @@ export function ViewerCard({
             <div className="absolute inset-0 opacity-0 group-hover:opacity-[0.03] pointer-events-none bg-gradient-to-b from-transparent via-brand-blue to-transparent bg-[length:100%_4px] transition-opacity duration-500" />
 
             {/* Content */}
-            <div className="relative z-10 p-4">
+            <div className="relative z-10 h-full p-4">
                 {children}
             </div>
         </div>

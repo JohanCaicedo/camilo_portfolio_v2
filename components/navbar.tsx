@@ -26,24 +26,24 @@ export function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 px-6 lg:px-12 bg-background/80 backdrop-blur-md border-b border-black/5 dark:border-white/5 transition-all duration-300">
-      <div className="max-w-7xl mx-auto flex items-center justify-between h-20">
+    <nav className="bg-background/80 fixed top-0 right-0 left-0 z-50 border-b border-black/5 px-6 backdrop-blur-md transition-all duration-300 lg:px-12 dark:border-white/5">
+      <div className="mx-auto flex h-20 max-w-7xl items-center justify-between">
         {/* Home Button (Logo Replacement) */}
         <Link
           href="/"
-          className="p-2 text-foreground dark:text-foreground hover:text-brand-blue dark:hover:text-brand-blue transition-colors outline-none focus-visible:ring-2 focus-visible:ring-brand-blue rounded-sm"
+          className="text-foreground dark:text-foreground hover:text-brand-blue dark:hover:text-brand-blue focus-visible:ring-brand-blue rounded-sm p-2 transition-colors outline-none focus-visible:ring-2"
           aria-label="Home"
         >
           <Home className="size-6" strokeWidth={1.5} />
         </Link>
 
         {/* Desktop Links */}
-        <div className="hidden md:flex items-center gap-8">
+        <div className="hidden items-center gap-8 md:flex">
           {navLinks.map((link) => (
             <Link
               key={link.label}
               href={link.href}
-              className="text-sm font-medium text-muted-foreground hover:text-brand-blue dark:text-muted-foreground dark:hover:text-brand-blue transition-colors font-mono tracking-wide outline-none focus-visible:ring-2 focus-visible:ring-brand-blue rounded-sm"
+              className="text-muted-foreground hover:text-brand-blue dark:text-muted-foreground dark:hover:text-brand-blue focus-visible:ring-brand-blue rounded-sm font-mono text-sm font-medium tracking-wide transition-colors outline-none focus-visible:ring-2"
             >
               {link.label}
             </Link>
@@ -51,21 +51,22 @@ export function Navbar() {
         </div>
 
         {/* User Menu & Theme Toggle */}
-        <div className="hidden md:flex items-center gap-4">
+        <div className="hidden items-center gap-4 md:flex">
           <ModeToggle />
 
-          <DropdownMenu>
+          <DropdownMenu modal={false}>
             <DropdownMenuTrigger asChild>
               <button
                 style={{ touchAction: "manipulation" }}
-                className="relative h-12 w-12 rounded-full overflow-hidden border border-black/10 dark:border-white/10 hover:border-brand-blue transition-colors outline-none focus-visible:ring-2 focus-visible:ring-brand-blue group">
+                className="hover:border-brand-blue/50 focus-visible:ring-brand-blue/50 group relative h-12 w-12 overflow-hidden rounded-full border border-black/10 outline-none focus-visible:ring-2 focus-visible:ring-inset dark:border-white/10"
+              >
                 {/* Profile Image (Base) */}
                 <Image
                   src="/Profile-Foto-Camilo.webp"
                   alt="Portrait of Johan Caicedo, designer and founder of Paper Fox Studio"
                   fill
                   sizes="48px"
-                  className="absolute inset-0 w-full h-full object-cover transition-opacity duration-300 opacity-100 group-hover:opacity-0"
+                  className="absolute inset-0 h-full w-full object-cover opacity-100 transition-opacity duration-300 will-change-[opacity] group-hover:opacity-0"
                 />
 
                 {/* Fox GIF (Hover) */}
@@ -75,22 +76,28 @@ export function Navbar() {
                   fill
                   sizes="48px"
                   unoptimized
-                  className="absolute inset-0 w-full h-full object-cover transition-opacity duration-300 opacity-0 group-hover:opacity-100 scale-110"
+                  className="absolute inset-0 h-full w-full scale-100 object-cover opacity-0 transition-all duration-300 will-change-[opacity,transform] group-hover:scale-110 group-hover:opacity-100"
                 />
               </button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-56 bg-background dark:bg-background border-black/10 dark:border-white/10">
-              <DropdownMenuLabel className="font-mono text-xs text-muted-foreground uppercase tracking-widest">
+            <DropdownMenuContent
+              align="end"
+              className="bg-background dark:bg-background w-56 border-black/10 dark:border-white/10"
+            >
+              <DropdownMenuLabel className="text-muted-foreground font-mono text-xs tracking-widest uppercase">
                 Johan Camilo Caicedo
               </DropdownMenuLabel>
               <DropdownMenuSeparator className="bg-black/5 dark:bg-white/5" />
-              <div className="px-2 py-1.5 text-xs text-muted-foreground dark:text-muted-foreground font-mono space-y-1">
+              <div className="text-muted-foreground dark:text-muted-foreground space-y-1 px-2 py-1.5 font-mono text-xs">
                 <p>camilo.design07@gmail.com</p>
                 <p>+57 300 3094625</p>
               </div>
               <DropdownMenuSeparator className="bg-black/5 dark:bg-white/5" />
               <DropdownMenuItem asChild>
-                <Link href="/cv" className="font-mono text-xs cursor-pointer text-foreground dark:text-foreground focus:bg-black/5 dark:focus:bg-white/5 hover:text-brand-blue">
+                <Link
+                  href="/cv"
+                  className="text-foreground dark:text-foreground hover:text-brand-blue cursor-pointer font-mono text-xs focus:bg-black/5 dark:focus:bg-white/5"
+                >
                   View Curriculum
                 </Link>
               </DropdownMenuItem>
@@ -102,7 +109,7 @@ export function Navbar() {
         <button
           onClick={() => setIsOpen(!isOpen)}
           style={{ touchAction: "manipulation" }}
-          className="md:hidden text-foreground dark:text-foreground p-2 outline-none focus-visible:ring-2 focus-visible:ring-brand-blue rounded-md hover:text-brand-blue transition-colors"
+          className="text-foreground dark:text-foreground focus-visible:ring-brand-blue hover:text-brand-blue rounded-md p-2 transition-colors outline-none focus-visible:ring-2 md:hidden"
           aria-label={isOpen ? "Close menu" : "Open menu"}
         >
           {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
@@ -111,13 +118,13 @@ export function Navbar() {
 
       {/* Mobile menu */}
       {isOpen && (
-        <div className="md:hidden absolute top-20 left-0 right-0 bg-background/95 backdrop-blur-lg border-b border-border dark:border-white/10 p-6 shadow-lg animate-in slide-in-from-top-2">
+        <div className="bg-background/95 border-border animate-in slide-in-from-top-2 absolute top-20 right-0 left-0 border-b p-6 shadow-lg backdrop-blur-lg md:hidden dark:border-white/10">
           <div className="flex flex-col gap-6">
             <div className="flex flex-col gap-4">
               <Link
                 href="/"
                 onClick={() => setIsOpen(false)}
-                className="text-lg font-medium text-muted-foreground hover:text-brand-blue dark:text-muted-foreground dark:hover:text-brand-blue transition-colors font-mono outline-none focus-visible:ring-2 focus-visible:ring-brand-blue rounded-sm w-fit flex items-center gap-2"
+                className="text-muted-foreground hover:text-brand-blue dark:text-muted-foreground dark:hover:text-brand-blue focus-visible:ring-brand-blue flex w-fit items-center gap-2 rounded-sm font-mono text-lg font-medium transition-colors outline-none focus-visible:ring-2"
               >
                 <Home className="size-5" /> Home
               </Link>
@@ -126,7 +133,7 @@ export function Navbar() {
                   key={link.label}
                   href={link.href}
                   onClick={() => setIsOpen(false)}
-                  className="text-lg font-medium text-muted-foreground hover:text-brand-blue dark:text-muted-foreground dark:hover:text-brand-blue transition-colors font-mono outline-none focus-visible:ring-2 focus-visible:ring-brand-blue rounded-sm w-fit"
+                  className="text-muted-foreground hover:text-brand-blue dark:text-muted-foreground dark:hover:text-brand-blue focus-visible:ring-brand-blue w-fit rounded-sm font-mono text-lg font-medium transition-colors outline-none focus-visible:ring-2"
                 >
                   {link.label}
                 </Link>
@@ -142,8 +149,12 @@ export function Navbar() {
                   <AvatarFallback className="bg-brand-blue/10 text-brand-blue">JC</AvatarFallback>
                 </Avatar>
                 <div className="flex flex-col">
-                  <span className="text-sm font-bold text-foreground dark:text-foreground">Johan Caicedo</span>
-                  <Link href="/cv" className="text-xs font-mono text-brand-blue hover:underline">View CV</Link>
+                  <span className="text-foreground dark:text-foreground text-sm font-bold">
+                    Johan Caicedo
+                  </span>
+                  <Link href="/cv" className="text-brand-blue font-mono text-xs hover:underline">
+                    View CV
+                  </Link>
                 </div>
               </div>
               <ModeToggle />

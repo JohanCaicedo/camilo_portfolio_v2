@@ -1,61 +1,68 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { FolderGit2 } from "lucide-react"
+import { FolderGit2, ImageIcon } from "lucide-react"
 import { ViewerCard } from "@/components/ui/viewer-card"
 import { SectionContainer } from "@/components/section-container"
-import Image from "next/image"
+import { useState } from "react"
 
 const projects = [
     {
         id: "01",
         title: "Web Design",
         tech: "REACT / NEXT.JS / TAILWIND",
-        img: "https://firebasestorage.googleapis.com/v0/b/camilo-portfolio-77b8a.appspot.com/o/Dise%C3%B1oWeb.webp?alt=media&token=7df9723e-ef97-4bac-823d-e3ccd377f45b",
+        img: "/WebDesign-Cover.webp",
         link: "/web-design",
         desktopCol: "lg:col-span-2",
+        aspect: "aspect-[4/3] sm:aspect-square",
     },
     {
         id: "02",
         title: "Graphic Design",
         tech: "ADOBE SUITE / FIGMA",
-        img: "https://firebasestorage.googleapis.com/v0/b/camilo-portfolio-77b8a.appspot.com/o/Dise%C3%B1o%20Grafico%20(2).webp?alt=media&token=4526b817-ecb5-4fb2-8317-f4ffda77d235",
+        img: "/GraphicDesign-Cover.webp",
         link: "/graphic-design",
         desktopCol: "lg:col-span-2 lg:col-start-3",
+        aspect: "aspect-[4/3] sm:aspect-square",
     },
     {
         id: "03",
         title: "Personal",
         tech: "EXPERIMENTAL / ART",
-        img: "https://firebasestorage.googleapis.com/v0/b/camilo-portfolio-77b8a.appspot.com/o/Foxy-Blink.gif?alt=media&token=6fdef4b7-2f2f-4fbd-94a0-65a59868bfee",
+        img: "/Foxy-Blink.gif",
         link: "/personal",
         desktopCol: "lg:col-span-2 lg:col-start-5",
+        aspect: "aspect-[4/3] sm:aspect-square",
     },
     {
         id: "04",
         title: "Editorial Design",
         tech: "INDESIGN / TYPOGRAPHY",
-        img: "https://firebasestorage.googleapis.com/v0/b/camilo-portfolio-77b8a.appspot.com/o/Editorial%20Design%20Image.webp?alt=media&token=aabfa3b4-9eb3-452b-b0d2-bb66de2456ea",
+        img: "/EditorialDesign-Cover.webp",
         link: "/editorial-design",
         desktopCol: "lg:col-span-3 lg:row-start-2",
+        aspect: "aspect-[16/10]",
     },
     {
         id: "05",
         title: "Photography",
         tech: "DIRECTION / RETOUCHING",
-        img: "https://firebasestorage.googleapis.com/v0/b/camilo-portfolio-77b8a.appspot.com/o/Photography%20Image.webp?alt=media&token=2f3bcee6-0ff5-4a1c-8ec4-4944542b2c4b",
+        img: "/Photography-Cover.webp",
         link: "/photography",
         desktopCol: "lg:col-span-3 lg:col-start-4 lg:row-start-2",
+        aspect: "aspect-[16/10]",
     },
 ]
 
 export function ProjectsSection() {
+    const [imageErrors, setImageErrors] = useState<Record<string, boolean>>({})
+
     return (
         <SectionContainer id="projects" className="snap-section scroll-mt-24 py-10 md:py-12">
-            {/* Header - Technical / Monospace Accent */}
-            <div className="flex items-center gap-4 mb-7 mt-4">
+            {/* Header */}
+            <div className="mt-4 mb-5 flex items-center gap-3 sm:mb-7 sm:gap-4">
                 <motion.div
-                    className="p-2.5 border border-black/10 dark:border-white/10 rounded-sm bg-black/5 dark:bg-white/5"
+                    className="rounded-sm border border-black/10 bg-black/5 p-2 sm:p-2.5 dark:border-white/10 dark:bg-white/5"
                     animate={{
                         rotate: [0, -2.5, 2, 0],
                         x: [0, 1.2, 0, -0.8, 0],
@@ -63,70 +70,78 @@ export function ProjectsSection() {
                     whileHover={{ rotate: -4, x: 2, scale: 1.06 }}
                     transition={{ duration: 2.6, repeat: Infinity, ease: "easeInOut" }}
                 >
-                    <FolderGit2 className="size-5 text-brand-salmon" strokeWidth={1.5} />
+                    <FolderGit2 className="text-brand-salmon size-4 sm:size-5" strokeWidth={1.5} />
                 </motion.div>
                 <div>
-                    <h3 className="text-3xl md:text-4xl font-bold text-foreground dark:text-foreground tracking-tight leading-none">
+                    <h3 className="text-foreground text-xl leading-none font-bold tracking-tight sm:text-2xl md:text-3xl">
                         SELECTED_PROJECTS
                     </h3>
-                    <p className="text-[10px] font-mono text-brand-salmon mt-1 tracking-widest uppercase">
+                    <p className="text-brand-salmon mt-1 font-mono text-[9px] tracking-widest uppercase sm:text-[10px]">
                         // DATABASE_ACCESS_GRANTED
                     </p>
                 </div>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 lg:grid-rows-2 gap-4">
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-6">
                 {projects.map((project) => (
                     <motion.a
                         key={project.id}
                         href={project.link}
                         whileHover={{ scale: 1.005 }}
-                        whileTap={{ scale: 0.99 }}
+                        whileTap={{ scale: 0.98 }}
                         transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                        className={`
-                            ${project.desktopCol}
-                            block h-[220px] sm:h-[260px] lg:h-auto
-                            relative outline-none 
-                            focus-visible:ring-2 focus-visible:ring-brand-blue focus-visible:ring-offset-2 focus-visible:ring-offset-background
-                        `}
+                        className={`${project.desktopCol} focus-visible:ring-brand-blue focus-visible:ring-offset-background relative block outline-none focus-visible:ring-2 focus-visible:ring-offset-2`}
                     >
                         <ViewerCard
-                            className="h-full w-full flex flex-col justify-between"
+                            className="flex h-full w-full flex-col"
                             label={`PRJ_${project.id}`}
                         >
-                            <div className="flex flex-col h-full relative z-10">
+                            <div className="relative z-10 flex h-full min-h-0 flex-col">
                                 {/* Technical Header */}
-                                <div className="flex justify-between items-start mb-3 border-b border-black/5 dark:border-white/5 pb-3">
-                                    <h3 className="font-bold text-xl text-foreground dark:text-foreground tracking-tight">
+                                <div className="mb-2 flex flex-shrink-0 items-start justify-between border-b border-black/5 pb-2 sm:mb-3 sm:pb-3 dark:border-white/5">
+                                    <h3 className="text-foreground text-lg font-bold tracking-tight sm:text-xl">
                                         {project.title}
                                     </h3>
                                     <div className="bg-brand-blue/10 px-1.5 py-0.5">
-                                        <span className="text-[9px] font-mono text-brand-blue uppercase tracking-wider">
+                                        <span className="text-brand-blue font-mono text-[8px] tracking-wider uppercase sm:text-[9px]">
                                             VIEW_DATA
                                         </span>
                                     </div>
                                 </div>
 
-                                {/* Image Container (Tech look) */}
-                                <div className="relative flex-1 bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/5 overflow-hidden group">
-                                    {project.img && (
-                                        <Image
-                                            fill
-                                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                                            className="object-cover grayscale group-hover:grayscale-0 transition-all duration-500 ease-out opacity-80 group-hover:opacity-100"
+                                {/* Image Container with responsive aspect ratio */}
+                                <div className={`group relative overflow-hidden border border-black/5 bg-black/5 dark:border-white/5 dark:bg-white/5 ${project.aspect}`}>
+                                    {project.img && !imageErrors[project.id] && (
+                                        <img
                                             src={project.img}
                                             alt={project.title}
-                                            unoptimized={project.img.endsWith('.gif')}
+                                            loading="lazy"
+                                            className="absolute inset-0 h-full w-full object-cover opacity-80 grayscale transition-all duration-500 ease-out group-hover:opacity-100 group-hover:grayscale-0"
+                                            onError={() => {
+                                                console.error(`Failed to load image: ${project.title}`, project.img)
+                                                setImageErrors((prev) => ({ ...prev, [project.id]: true }))
+                                            }}
                                         />
                                     )}
-                                    {/* Scanline overlay on image */}
-                                    <div className="absolute inset-0 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.1)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] bg-[length:100%_2px,3px_100%] pointer-events-none" />
+
+                                    {/* Fallback */}
+                                    {imageErrors[project.id] && (
+                                        <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 bg-black/5 dark:bg-white/5">
+                                            <ImageIcon className="text-muted-foreground/40 size-8" strokeWidth={1.5} />
+                                            <span className="text-muted-foreground/50 font-mono text-[10px] tracking-wider uppercase">
+                                                Image unavailable
+                                            </span>
+                                        </div>
+                                    )}
+
+                                    {/* Scanline overlay */}
+                                    <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.1)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] bg-[length:100%_2px,3px_100%]" />
                                 </div>
 
                                 {/* Tech Stack Footer */}
-                                <div className="mt-3 pt-2 border-t border-black/5 dark:border-white/5 flex items-center gap-2">
-                                    <span className="w-1.5 h-1.5 bg-brand-green rounded-full animate-pulse" />
-                                    <span className="text-[10px] font-mono text-muted-foreground dark:text-muted-foreground uppercase tracking-wide">
+                                <div className="mt-2 flex flex-shrink-0 items-center gap-2 border-t border-black/5 pt-1.5 sm:mt-3 sm:pt-2 dark:border-white/5">
+                                    <span className="bg-brand-green h-1.5 w-1.5 animate-pulse rounded-full" />
+                                    <span className="text-muted-foreground font-mono text-[9px] tracking-wide uppercase sm:text-[10px]">
                                         {project.tech}
                                     </span>
                                 </div>

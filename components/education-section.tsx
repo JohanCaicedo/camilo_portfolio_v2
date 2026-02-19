@@ -76,7 +76,7 @@ export function EducationSection() {
                         <GraduationCap className="size-5 text-brand-salmon" strokeWidth={1.5} />
                     </motion.div>
                     <div>
-                        <h3 className="text-3xl md:text-4xl font-bold text-foreground dark:text-foreground tracking-tight leading-none">
+                        <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground dark:text-foreground tracking-tight leading-none">
                             ACADEMIC_DATA
                         </h3>
                         <p className="text-[10px] font-mono text-brand-salmon mt-1 tracking-widest uppercase">
