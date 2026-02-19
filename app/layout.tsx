@@ -8,8 +8,8 @@ import { AtomCursor } from "@/components/atom-cursor"
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
 import { JsonLd } from "@/components/json-ld"
-
 import { ScrollToTop } from "@/components/scroll-to-top"
+import { PageLoader } from "@/components/page-loader"
 
 const _geist = Geist({ subsets: ["latin"] });
 const _geistMono = Geist_Mono({ subsets: ["latin"] });
@@ -80,6 +80,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
+          <PageLoader />
           <div className="relative z-10">
             <Navbar />
             {children}
