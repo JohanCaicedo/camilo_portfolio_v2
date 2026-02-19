@@ -8,47 +8,47 @@ import { ViewerCard } from "@/components/ui/viewer-card"
 
 const EXPERIENCE_DATA = [
     {
-        date: "Aug. 2020 – Present · 5 years 2 months",
-        title: "Generalist Designer",
-        company: "Instituto Latinoamericano para una Sociedad y un Derecho Alternativos - ILSA",
-        description: "As ILSA's generalist designer, I specialize in web design, editorial design, illustration, branding, photography, and audiovisual production. I have successfully created and maintained a cohesive, harmonious, and distinctive visual identity for the institute, significantly enhancing its market presence. Additionally, I have led key projects that have contributed to the organization's growth and success.",
+        date: "Jan. 2026 – Present",
+        title: "Visual Strategy & Digital Communications Lead",
+        company: "ILSA",
+        description: "Directing the 2026 digital transformation and communication master plan. I lead the transition to a headless architecture using Astro and WordPress, optimizing site performance and UX. My role involves orchestrating institutional narratives through high-level editorial design, audiovisual production, and strategic ecosystem management.",
     },
     {
-        date: "Jan 2025 – Sep 2025 · 8 months",
+        date: "Jan 2025 – Sep 2025",
         title: "Graphic Designer",
         company: "PIPE TORO SAS",
-        description: "Developed strategic visual solutions for brands including Reprotec, Fogafín, and Puffer, integrating web design, branding, and graphic communication. Key achievements include leading the website redesign for Reprotec, focused on user experience and brand coherence, along with creating impactful corporate materials and campaigns that strengthened the visual identity of each client.",
+        description: "Conceptualized and executed strategic visual solutions for corporate clients like Fogafín and Reprotec. I spearheaded the UI/UX redesign for Reprotec, focusing on brand consistency and conversion-driven design, while managing complex brand architectures across digital and print assets.",
     },
     {
-        date: "May 2023 – Jul. 2023 · 3 months",
-        title: "Web Developer and Design",
-        company: "Freelance",
-        description: "Designed and developed individual WordPress websites, focusing on customized design strategies that highlight clients' professional strengths and create a distinctive brand image within their niche.",
+        date: "May 2023 – Jul. 2023",
+        title: "Full-Stack Web Designer (Freelance)",
+        company: "Independent",
+        description: "Delivered tailor-made digital solutions using WordPress and modern frameworks. I focused on translating business goals into high-performance websites, optimizing technical SEO and visual storytelling to establish a competitive edge for niche professional brands.",
     },
     {
-        date: "Jul. 2022 – Oct. 2022 · 4 months",
-        title: "Web Developer and Design",
-        company: "Instituto Latinoamericano para una Sociedad y un Derecho Alternativos - ILSA",
-        description: "I spearheaded the complete redesign of the institute's main website, establishing a robust and strategic corporate visual identity. We implemented effective communication channels with users, consolidated the institutional archive, and defined the aesthetics of the digital platform. This transformative project elevated the company's industry relevance, transitioning from a limited online presence to a platform with 15,000 unique visitors per month. Furthermore, we significantly improved SEO and site performance, ensuring an optimal user experience.",
+        date: "Aug. 2020 – Dec. 2025",
+        title: "Visual Strategy & Digital Environments Specialist",
+        company: "ILSA",
+        description: "Managed the institute's global visual identity and digital presence. I scaled organic web traffic to 15,000 monthly visitors through SEO-driven design and led the production of complex digital archives, establishing a cohesive and distinctive brand image for the organization.",
     },
     {
-        date: "Jul. 2022 – Oct. 2022 · 4 months",
-        title: "Photographer and Videographer",
+        date: "Jul. 2022 – Oct. 2022",
+        title: "Creative Content Producer",
         company: "Renta Fácil",
-        description: "Provided production services, including social media videos, corporate videos, and corporate photography sessions.",
+        description: "Managed end-to-back audiovisual production, creating high-engagement video content and corporate photography designed for social media growth and brand storytelling.",
         link: "#",
     },
     {
-        date: "Jul. 2020 – Nov. 2020 · 5 months",
-        title: "Digital designer and photographer",
+        date: "Jul. 2020 – Nov. 2020",
+        title: "Multimedia Designer & Photographer",
         company: "Aire libre y aventura",
-        description: "I was part of the Kuerfit team, serving as a video editor, graphic designer, and photographer. I spearheaded the production of the video course 'Strength Training', created promotional videos and flyers for social media and the website, and provided photographic coverage of the 'Corre Chicaque event.'",
+        description: "Key member of the Kuerfit creative team. Produced the 'Strength Training' digital course, managing video editing and promotional UI assets. Directed photographic coverage for major athletic events like 'Corre Chicaque'.",
     },
 ]
 
 export function ExperienceSection() {
     const [showAll, setShowAll] = useState(false)
-    const initialItemsToShow = 2
+    const initialItemsToShow = 3 // Aumentado a 3 para mostrar el salto de nivel reciente
     const baseItems = EXPERIENCE_DATA.slice(0, initialItemsToShow)
     const extraItems = EXPERIENCE_DATA.slice(initialItemsToShow)
 
@@ -77,39 +77,48 @@ export function ExperienceSection() {
                 </div>
             </div>
 
-            <div className="relative max-w-5xl mx-auto">
-                {/* Timeline Line removed for Grid Layout */}
-
+            <div className="relative">
                 <div className="grid md:grid-cols-2 gap-4">
-                    {baseItems.map((exp, index) => (
-                        <div key={`${exp.title}-${exp.date}`} className="relative">
-                            {/* Timeline Marker removed */}
+                    {baseItems.map((exp, index) => {
+                        const isFirst = index === 0
+                        return (
+                            <div key={`${exp.title}-${exp.date}`} className="relative">
+                                <ViewerCard
+                                    className="w-full h-full flex flex-col"
+                                    label={`LOG_${String(index + 1).padStart(2, '0')}`}
+                                >
+                                    <div className="flex h-full flex-col">
+                                        <div className="flex flex-col gap-1 border-b border-black/5 dark:border-white/5 pb-2 mb-2">
+                                            <div className="flex items-start justify-between gap-2">
+                                                <div className="flex items-center gap-2 flex-wrap">
+                                                    {isFirst && (
+                                                        <span className="inline-flex items-center gap-1 text-[8px] font-mono text-brand-green/80 bg-brand-green/5 px-1 py-0.5 border border-brand-green/15 rounded-sm uppercase tracking-wide whitespace-nowrap flex-shrink-0">
+                                                            <span className="w-1 h-1 bg-brand-green rounded-full animate-pulse" />
+                                                            ACTIVE
+                                                        </span>
+                                                    )}
+                                                    <h3 className="text-base md:text-lg font-bold text-foreground dark:text-foreground tracking-tight leading-snug">
+                                                        {exp.title}
+                                                    </h3>
+                                                </div>
+                                                <span className="text-[9px] font-mono text-brand-salmon bg-brand-salmon/5 px-1.5 py-0.5 border border-brand-salmon/20 rounded-sm uppercase tracking-wide whitespace-nowrap flex-shrink-0">
+                                                    {exp.date}
+                                                </span>
+                                            </div>
+                                            <span className="text-[10px] font-mono text-[#77828c] dark:text-brand-blue uppercase tracking-widest">
+                                                @{exp.company}
+                                            </span>
+                                        </div>
 
-                            <ViewerCard
-                                className="w-full h-full flex flex-col"
-                                label={`LOG_${String(index + 1).padStart(2, '0')}`}
-                            >
-                                <div className="flex flex-col justify-between mb-2 gap-1 border-b border-black/5 dark:border-white/5 pb-2">
-                                    <h3 className="text-base md:text-lg font-bold text-foreground dark:text-foreground tracking-tight leading-snug">
-                                        {exp.title}
-                                    </h3>
-                                    <div className="flex justify-between items-center w-full">
-                                        <span className="text-[10px] font-mono text-brand-blue dark:text-brand-blue uppercase tracking-widest">
-                                            @{exp.company}
-                                        </span>
-                                        <span className="text-[9px] font-mono text-brand-salmon bg-brand-salmon/5 px-1.5 py-0.5 border border-brand-salmon/20 rounded-sm uppercase tracking-wide">
-                                            {exp.date}
-                                        </span>
+                                        <p className="text-xs text-muted-foreground dark:text-muted-foreground leading-relaxed font-mono mt-auto pt-1">
+                                            <span className="text-brand-green/70 mr-1">{'>'}</span>
+                                            {exp.description}
+                                        </p>
                                     </div>
-                                </div>
-
-                                <p className="text-xs text-muted-foreground dark:text-muted-foreground leading-relaxed font-mono mt-auto pt-2">
-                                    <span className="text-brand-green/70 mr-1">{'>'}</span>
-                                    {exp.description}
-                                </p>
-                            </ViewerCard>
-                        </div>
-                    ))}
+                                </ViewerCard>
+                            </div>
+                        )
+                    })}
 
                     <AnimatePresence initial={false}>
                         {showAll &&
@@ -142,24 +151,26 @@ export function ExperienceSection() {
                                             className="w-full h-full flex flex-col"
                                             label={`LOG_${String(index + 1).padStart(2, '0')}`}
                                         >
-                                            <div className="flex flex-col justify-between mb-2 gap-1 border-b border-black/5 dark:border-white/5 pb-2">
-                                                <h3 className="text-base md:text-lg font-bold text-foreground dark:text-foreground tracking-tight leading-snug">
-                                                    {exp.title}
-                                                </h3>
-                                                <div className="flex justify-between items-center w-full">
-                                                    <span className="text-[10px] font-mono text-brand-blue dark:text-brand-blue uppercase tracking-widest">
+                                            <div className="flex h-full flex-col">
+                                                <div className="flex flex-col gap-1 border-b border-black/5 dark:border-white/5 pb-2 mb-2">
+                                                    <div className="flex items-start justify-between gap-2">
+                                                        <h3 className="text-base md:text-lg font-bold text-foreground dark:text-foreground tracking-tight leading-snug">
+                                                            {exp.title}
+                                                        </h3>
+                                                        <span className="text-[9px] font-mono text-brand-salmon bg-brand-salmon/5 px-1.5 py-0.5 border border-brand-salmon/20 rounded-sm uppercase tracking-wide whitespace-nowrap flex-shrink-0">
+                                                            {exp.date}
+                                                        </span>
+                                                    </div>
+                                                    <span className="text-[10px] font-mono text-[#77828c] dark:text-brand-blue uppercase tracking-widest">
                                                         @{exp.company}
                                                     </span>
-                                                    <span className="text-[9px] font-mono text-brand-salmon bg-brand-salmon/5 px-1.5 py-0.5 border border-brand-salmon/20 rounded-sm uppercase tracking-wide">
-                                                        {exp.date}
-                                                    </span>
                                                 </div>
-                                            </div>
 
-                                            <p className="text-xs text-muted-foreground dark:text-muted-foreground leading-relaxed font-mono mt-auto pt-2">
-                                                <span className="text-brand-green/70 mr-1">{'>'}</span>
-                                                {exp.description}
-                                            </p>
+                                                <p className="text-xs text-muted-foreground dark:text-muted-foreground leading-relaxed font-mono mt-auto pt-1">
+                                                    <span className="text-brand-green/70 mr-1">{'>'}</span>
+                                                    {exp.description}
+                                                </p>
+                                            </div>
                                         </ViewerCard>
                                     </motion.div>
                                 )

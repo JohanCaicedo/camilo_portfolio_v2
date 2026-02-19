@@ -8,9 +8,9 @@ import { SectionContainer } from "@/components/section-container"
 const education = [
     {
         id: "1",
-        title: "Digital and Multimedia Design",
-        collage: "Colegiatura Colombiana",
-        type: "Undergraduate",
+        title: "B.A. in Digital and Multimedia Design",
+        college: "Universidad Colegio Mayor de Cundinamarca",
+        type: "Bachelor's Degree",
         state: "Graduate",
         date: "2016 - 2021",
         colSpan: "md:col-span-3 md:row-span-2 sm:col-span-2",
@@ -18,44 +18,24 @@ const education = [
     },
     {
         id: "2",
-        title: "3D Animation for the Entertainment Industries",
-        collage: "UNIR",
-        type: "Master's Degree",
-        state: "Student",
-        date: "2024 - 2025",
-        colSpan: "md:col-span-3 md:row-span-2 md:col-start-4 sm:col-start-3",
-        accentColor: "text-brand-blue",
-    },
-    {
-        id: "3",
-        title: "Video Game Programming: Unity and Unreal",
-        collage: "UNIR",
-        type: "Course",
-        state: "Student",
-        date: "2024 - 2025",
-        colSpan: "md:col-span-2 md:row-span-2 md:row-start-3 sm:row-start-2",
-        accentColor: "text-brand-yellow",
-    },
-    {
-        id: "4",
         title: "LabDesign",
-        collage: "UNIR",
-        type: "Course",
-        state: "Graduate",
+        college: "UNIR",
+        type: "Executive Program",
+        state: "Completed",
         date: "2024",
-        colSpan: "md:col-span-2 row-span-2 md:col-start-3 md:row-start-3 sm:row-start-2",
+        colSpan: "md:col-span-3 md:row-span-2 md:col-start-4 sm:col-start-3",
         accentColor: "text-brand-green",
     },
     {
-        id: "5",
-        title: "Leadership",
-        collage: "MIU City University Miami",
-        type: "Course",
-        state: "Graduate",
+        id: "3",
+        title: "Leadership and Management",
+        college: "MIU City University Miami",
+        type: "Certificate",
+        state: "Completed",
         date: "2024",
-        colSpan: "md:col-span-2 row-span-2 md:col-start-5 md:row-start-3 sm:row-start-2",
+        colSpan: "md:col-span-3 md:row-span-2 md:row-start-3 sm:row-start-2",
         accentColor: "text-brand-salmon",
-    },
+    }
 ]
 
 export function EducationSection() {
@@ -96,28 +76,30 @@ export function EducationSection() {
                                 flex flex-col justify-between
                             `}
                         >
-                            <div className="mb-4 w-full relative z-10">
-                                <div className="flex justify-between items-start mb-2">
-                                    <span className={`text-[9px] font-mono uppercase tracking-widest px-1.5 py-0.5 border rounded-sm ${edu.state === 'Graduate' ? 'text-brand-green border-brand-green/30 bg-brand-green/5' : 'text-brand-yellow border-brand-yellow/30 bg-brand-yellow/5'}`}>
-                                        [{edu.state}]
-                                    </span>
-                                    <span className="text-[10px] font-mono text-muted-foreground dark:text-muted-foreground">
-                                        {edu.date}
-                                    </span>
+                            <div className="flex h-full flex-col relative z-10">
+                                <div className="w-full">
+                                    <div className="flex justify-between items-start mb-2">
+                                        <span className={`text-[9px] font-mono uppercase tracking-widest px-1.5 py-0.5 border rounded-sm ${edu.state === 'Graduate' || edu.state === 'Completed' ? 'text-brand-green border-brand-green/30 bg-brand-green/5' : 'text-brand-yellow border-brand-yellow/30 bg-brand-yellow/5'}`}>
+                                            [{edu.state}]
+                                        </span>
+                                        <span className="text-[10px] font-mono text-muted-foreground dark:text-muted-foreground">
+                                            {edu.date}
+                                        </span>
+                                    </div>
+                                    <h3 className="text-xl font-bold text-left mb-1 tracking-tight leading-tight text-foreground dark:text-foreground">
+                                        {edu.title}
+                                    </h3>
+                                    <h4 className={`text-xs font-mono tracking-wide text-left opacity-80 ${edu.accentColor}`}>
+                                        @{edu.college}
+                                    </h4>
                                 </div>
-                                <h3 className="text-xl font-bold text-left mb-1 tracking-tight leading-tight text-foreground dark:text-foreground">
-                                    {edu.title}
-                                </h3>
-                                <h4 className={`text-xs font-mono tracking-wide text-left opacity-80 ${edu.accentColor}`}>
-                                    @{edu.collage}
-                                </h4>
-                            </div>
 
-                            <div className="flex items-end justify-between relative z-10 border-t border-black/5 dark:border-white/5 pt-3">
-                                <span className="text-[10px] font-mono text-muted-foreground dark:text-muted-foreground uppercase tracking-wider">
-                                    TYPE: {edu.type}
-                                </span>
-                                <div className="w-1.5 h-1.5 bg-brand-blue/50 rounded-full animate-pulse" />
+                                <div className="flex items-end justify-between mt-auto border-t border-black/5 dark:border-white/5 pt-3">
+                                    <span className="text-[10px] font-mono text-muted-foreground dark:text-muted-foreground uppercase tracking-wider">
+                                        TYPE: {edu.type}
+                                    </span>
+                                    <div className="w-1.5 h-1.5 bg-brand-blue/50 rounded-full animate-pulse" />
+                                </div>
                             </div>
                         </ViewerCard>
                     ))}
