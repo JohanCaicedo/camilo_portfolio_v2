@@ -10,6 +10,7 @@ import { Footer } from "@/components/footer"
 import { JsonLd } from "@/components/json-ld"
 import { ScrollToTop } from "@/components/scroll-to-top"
 import { PageLoader } from "@/components/page-loader"
+import { MotionProvider } from "@/components/motion-provider"
 
 const _geist = Geist({ subsets: ["latin"] });
 const _geistMono = Geist_Mono({ subsets: ["latin"] });
@@ -80,17 +81,19 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <PageLoader />
-          <div className="relative z-10">
-            <Navbar />
-            {children}
-            <Footer />
-          </div>
-          <InteractiveGridPattern />
-          <AtomCursor />
-          <ScrollToTop />
-          <Analytics />
-          <JsonLd />
+          <MotionProvider>
+            <PageLoader />
+            <div className="relative z-10">
+              <Navbar />
+              {children}
+              <Footer />
+            </div>
+            <InteractiveGridPattern />
+            <AtomCursor />
+            <ScrollToTop />
+            <Analytics />
+            <JsonLd />
+          </MotionProvider>
         </ThemeProvider>
       </body>
     </html>

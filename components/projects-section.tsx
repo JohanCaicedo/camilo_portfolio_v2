@@ -1,10 +1,11 @@
 "use client"
 
-import { motion } from "framer-motion"
+import { m } from "framer-motion"
 import { FolderGit2, ImageIcon } from "lucide-react"
 import { ViewerCard } from "@/components/ui/viewer-card"
 import { SectionContainer } from "@/components/section-container"
 import { useState } from "react"
+import Image from "next/image"
 
 const projects = [
     {
@@ -61,7 +62,7 @@ export function ProjectsSection() {
         <SectionContainer id="projects" className="snap-section scroll-mt-24 py-10 md:py-12">
             {/* Header */}
             <div className="mt-4 mb-5 flex items-center gap-3 sm:mb-7 sm:gap-4">
-                <motion.div
+                <m.div
                     className="rounded-sm border border-black/10 bg-black/5 p-2 sm:p-2.5 dark:border-white/10 dark:bg-white/5"
                     animate={{
                         rotate: [0, -2.5, 2, 0],
@@ -71,7 +72,7 @@ export function ProjectsSection() {
                     transition={{ duration: 2.6, repeat: Infinity, ease: "easeInOut" }}
                 >
                     <FolderGit2 className="text-brand-salmon size-4 sm:size-5" strokeWidth={1.5} />
-                </motion.div>
+                </m.div>
                 <div>
                     <h3 className="text-foreground text-xl leading-none font-bold tracking-tight sm:text-2xl md:text-3xl">
                         SELECTED_PROJECTS
@@ -84,7 +85,7 @@ export function ProjectsSection() {
 
             <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-6">
                 {projects.map((project) => (
-                    <motion.a
+                    <m.a
                         key={project.id}
                         href={project.link}
                         whileHover={{ scale: 1.005 }}
@@ -112,11 +113,12 @@ export function ProjectsSection() {
                                 {/* Image Container with responsive aspect ratio */}
                                 <div className={`group relative overflow-hidden border border-black/5 bg-black/5 dark:border-white/5 dark:bg-white/5 ${project.aspect}`}>
                                     {project.img && !imageErrors[project.id] && (
-                                        <img
+                                        <Image
                                             src={project.img}
                                             alt={project.title}
-                                            loading="lazy"
+                                            fill
                                             className="absolute inset-0 h-full w-full object-cover opacity-80 grayscale transition-all duration-500 ease-out group-hover:opacity-100 group-hover:grayscale-0"
+                                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                                             onError={() => {
                                                 console.error(`Failed to load image: ${project.title}`, project.img)
                                                 setImageErrors((prev) => ({ ...prev, [project.id]: true }))
@@ -147,7 +149,7 @@ export function ProjectsSection() {
                                 </div>
                             </div>
                         </ViewerCard>
-                    </motion.a>
+                    </m.a>
                 ))}
             </div>
         </SectionContainer>

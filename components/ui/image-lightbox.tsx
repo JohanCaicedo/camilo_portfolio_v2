@@ -131,6 +131,12 @@ function LightboxModal({
             <div
                 className="absolute inset-0 bg-black/90 backdrop-blur-md"
                 onClick={animateOut}
+                role="button"
+                tabIndex={-1}
+                aria-label="Close lightbox"
+                onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") animateOut()
+                }}
             />
 
             {/* ASCII top bar */}
@@ -157,14 +163,17 @@ function LightboxModal({
 
             {/* Image */}
             <div
-                className={`relative z-10 max-w-[90vw] max-h-[80vh] transition-transform duration-200 ${visible ? "scale-100" : "scale-95"
+                className={`relative z-10 w-[90vw] h-[80vh] transition-transform duration-200 ${visible ? "scale-100" : "scale-95"
                     }`}
             >
-                <img
+                <Image
                     src={img.src}
                     alt={img.alt}
-                    className="max-w-full max-h-[80vh] object-contain select-none"
+                    fill
+                    className="object-contain select-none"
                     draggable={false}
+                    sizes="90vw"
+                    priority
                 />
             </div>
 

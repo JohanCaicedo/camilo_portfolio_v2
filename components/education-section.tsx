@@ -1,6 +1,6 @@
 "use client"
 
-import { motion } from "framer-motion"
+import { m } from "framer-motion"
 import { GraduationCap } from "lucide-react"
 import { ViewerCard } from "@/components/ui/viewer-card"
 import { SectionContainer } from "@/components/section-container"
@@ -44,7 +44,7 @@ export function EducationSection() {
             <section>
                 {/* Header - Technical / Data Block Style */}
                 <div className="flex items-center gap-4 mb-7 mt-4">
-                    <motion.div
+                    <m.div
                         className="p-2.5 border border-black/10 dark:border-white/10 rounded-sm bg-black/5 dark:bg-white/5"
                         animate={{
                             y: [0, -3.2, 0],
@@ -54,7 +54,7 @@ export function EducationSection() {
                         transition={{ duration: 2.8, repeat: Infinity, ease: "easeInOut" }}
                     >
                         <GraduationCap className="size-5 text-brand-salmon" strokeWidth={1.5} />
-                    </motion.div>
+                    </m.div>
                     <div>
                         <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground dark:text-foreground tracking-tight leading-none">
                             ACADEMIC_DATA

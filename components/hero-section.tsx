@@ -295,6 +295,13 @@ export function HeroSection() {
       <div
         className="absolute left-1/2 -translate-x-1/2 flex flex-col items-center gap-3 z-10 transition-all duration-1000 cubic-bezier(0.16, 1, 0.3, 1) cursor-pointer group"
         onClick={() => window.scrollTo({ top: window.innerHeight, behavior: 'smooth' })}
+        role="button"
+        tabIndex={0}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            window.scrollTo({ top: window.innerHeight, behavior: 'smooth' })
+          }
+        }}
         style={{
           opacity: visible ? 1 : 0,
           transitionDelay: visible ? "900ms" : "0ms",

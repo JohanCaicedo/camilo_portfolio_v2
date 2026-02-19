@@ -2,7 +2,7 @@
 
 import { SectionContainer } from "@/components/section-container"
 import { ViewerCard } from "@/components/ui/viewer-card"
-import { motion } from "framer-motion"
+import { m } from "framer-motion"
 import { CircuitBoard, Layers3, Radar, UserRound } from "lucide-react"
 
 const FOCUS_AREAS = [
@@ -51,7 +51,7 @@ export function AboutSection() {
     return (
         <SectionContainer id="about" className="snap-section scroll-mt-24 py-8 md:py-10 pt-0 md:pt-3">
             <div className="flex items-center gap-4 mb-7 mt-4">
-                <motion.div
+                <m.div
                     className="p-2.5 border border-black/10 dark:border-white/10 rounded-sm bg-black/5 dark:bg-white/5"
                     animate={{
                         y: [0, -1.5, 0],
@@ -62,7 +62,7 @@ export function AboutSection() {
                     transition={{ duration: 3.2, repeat: Infinity, ease: "easeInOut" }}
                 >
                     <UserRound className="size-5 text-brand-salmon" strokeWidth={1.5} />
-                </motion.div>
+                </m.div>
                 <div>
                     <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground dark:text-foreground tracking-tight leading-none">
                         PROFILE_CONTEXT

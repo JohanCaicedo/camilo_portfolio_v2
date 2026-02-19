@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { AnimatePresence, motion } from "framer-motion"
+import { AnimatePresence, m } from "framer-motion"
 import { ChevronDown, TerminalSquare } from "lucide-react"
 import { SectionContainer } from "@/components/section-container"
 import { ViewerCard } from "@/components/ui/viewer-card"
@@ -56,7 +56,7 @@ export function ExperienceSection() {
         <SectionContainer id="experience" className="snap-section scroll-mt-24 py-10 md:py-12">
             {/* Header - System Log Style */}
             <div className="flex items-center gap-4 mb-7 mt-4">
-                <motion.div
+                <m.div
                     className="p-2.5 border border-black/10 dark:border-white/10 rounded-sm bg-black/5 dark:bg-white/5"
                     animate={{
                         opacity: [1, 0.72, 1, 0.85, 1],
@@ -66,7 +66,7 @@ export function ExperienceSection() {
                     transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
                 >
                     <TerminalSquare className="size-5 text-brand-salmon" strokeWidth={1.5} />
-                </motion.div>
+                </m.div>
                 <div>
                     <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground dark:text-foreground tracking-tight leading-none">
                         SYSTEM_LOG
@@ -125,7 +125,7 @@ export function ExperienceSection() {
                             extraItems.map((exp, extraIndex) => {
                                 const index = extraIndex + initialItemsToShow
                                 return (
-                                    <motion.div
+                                    <m.div
                                         key={`${exp.title}-${exp.date}`}
                                         className="relative"
                                         initial={{ opacity: 0, y: 28, scale: 0.985 }}
@@ -172,7 +172,7 @@ export function ExperienceSection() {
                                                 </p>
                                             </div>
                                         </ViewerCard>
-                                    </motion.div>
+                                    </m.div>
                                 )
                             })}
                     </AnimatePresence>
@@ -180,22 +180,22 @@ export function ExperienceSection() {
 
                 {EXPERIENCE_DATA.length > initialItemsToShow && (
                     <div className="flex justify-center mt-12 relative z-10">
-                        <motion.button
+                        <m.button
                             onClick={() => setShowAll(!showAll)}
                             className="px-8 py-3 bg-background dark:bg-background border border-black/10 dark:border-white/10 hover:border-brand-blue hover:text-brand-blue text-foreground dark:text-foreground font-mono text-sm tracking-widest uppercase transition-all duration-300 outline-none focus-visible:ring-2 focus-visible:ring-brand-blue focus-visible:ring-offset-2 focus-visible:ring-offset-background group"
                             whileHover={{ y: -1, scale: 1.02 }}
                             whileTap={{ scale: 0.98 }}
                             transition={{ type: "spring", stiffness: 320, damping: 20 }}
                         >
-                            <motion.span
+                            <m.span
                                 className="mr-2 inline-flex align-middle"
                                 animate={{ rotate: showAll ? 180 : 0 }}
                                 transition={{ duration: 0.28, ease: "easeInOut" }}
                             >
                                 <ChevronDown className="size-4" />
-                            </motion.span>
+                            </m.span>
                             {showAll ? "COLLAPSE_LOGS" : "LOAD_FULL_HISTORY"}
-                        </motion.button>
+                        </m.button>
                     </div>
                 )}
             </div>

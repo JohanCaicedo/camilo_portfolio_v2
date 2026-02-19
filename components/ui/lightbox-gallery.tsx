@@ -23,7 +23,7 @@ export function LightboxGallery({
         <div className={`grid ${gridClass} gap-4`}>
             {images.map((img, i) => (
                 <ViewerCard
-                    key={i}
+                    key={img.src}
                     label={`${label}_${String(i + 1).padStart(2, "0")}`}
                     className="overflow-hidden"
                 >

@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useRef, useEffect, useState } from "react"
-import { motion, useMotionValue, useTransform } from "framer-motion"
+import { m, useMotionValue, useTransform } from "framer-motion"
 import { cn } from "@/lib/utils"
 
 interface LiquidGlassProps {
@@ -93,7 +93,7 @@ export function LiquidGlass({
             <svg style={{ display: "none" }}>
                 <filter id={filterId}>
                     <feTurbulence type="turbulence" baseFrequency="0.008" numOctaves="2" result="noise" />
-                    <motion.feDisplacementMap
+                    <m.feDisplacementMap
                         in="SourceGraphic"
                         in2="noise"
                         scale={displacementScale}
@@ -101,7 +101,7 @@ export function LiquidGlass({
                 </filter>
             </svg>
 
-            <motion.div
+            <m.div
                 ref={cardRef}
                 onMouseMove={handleMouseMove}
                 onMouseLeave={handleMouseLeave}
@@ -126,19 +126,19 @@ export function LiquidGlass({
                 <div className={cn("absolute inset-0 z-20 rounded-lg", backgroundClasses)}></div>
 
                 {/* Highlight Layer */}
-                <motion.div
+                <m.div
                     className="absolute inset-0 z-30 rounded-lg"
                     style={{
                         background: gradientBackground,
                         opacity: 0.5, // Reduced global opacity of highlight
                     }}
-                ></motion.div>
+                ></m.div>
 
                 {/* Content */}
                 <div className="relative z-40 h-full">
                     {children}
                 </div>
-            </motion.div>
+            </m.div>
         </>
     )
 }

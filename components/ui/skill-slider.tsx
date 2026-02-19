@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useEffect, useRef, useState } from "react"
-import { motion, useMotionValue, useTransform, animate } from "framer-motion"
+import { m, useMotionValue, useTransform, animate } from "framer-motion"
 import { cn } from "@/lib/utils"
 import { ViewerCard } from "@/components/ui/viewer-card"
 import Image from "next/image"
@@ -12,7 +12,7 @@ export interface Skill {
     imageAlt?: string
     experienceLevel?: string
     experienceClass?: string
-    icon?: string
+
     bgColor?: string
     darkInvert?: boolean
 }
@@ -25,7 +25,7 @@ function SkillCard({
     imageAlt,
     experienceLevel,
     experienceClass = "text-muted-foreground",
-    icon,
+
     darkInvert,
 }: SkillCardProps) {
     return (
@@ -54,12 +54,6 @@ function SkillCard({
                                 width={48}
                                 height={48}
                                 className={cn("h-12 w-12 object-contain pointer-events-none select-none", darkInvert && "dark:invert")}
-                            />
-                        ) : icon ? (
-                            <div
-                                className="h-12 w-12 flex items-center justify-center [&>svg]:size-12 [&>svg]:fill-foreground"
-                                aria-hidden="true"
-                                dangerouslySetInnerHTML={{ __html: icon }}
                             />
                         ) : null}
                     </div>
@@ -156,17 +150,17 @@ export function SkillSlider({ skills }: { skills: Skill[] }) {
     })
 
     return (
-        <motion.div
+        <m.div
             ref={containerRef}
             className="relative"
             onHoverStart={() => setIsHovered(true)}
             onHoverEnd={() => setIsHovered(false)}
         >
-            <motion.div
+            <m.div
                 className="overflow-hidden cursor-grab active:cursor-grabbing"
                 style={{ touchAction: "pan-y" }}
             >
-                <motion.div
+                <m.div
                     ref={trackRef}
                     className="flex gap-4"
                     style={{ x }}
@@ -185,18 +179,18 @@ export function SkillSlider({ skills }: { skills: Skill[] }) {
                             {...skill}
                         />
                     ))}
-                </motion.div>
-            </motion.div>
+                </m.div>
+            </m.div>
 
             {/* Scroll progress indicator */}
-            <motion.div
+            <m.div
                 className="absolute -bottom-4 left-0 w-full h-1 px-8 pointer-events-none"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: isHovered ? 1 : 0 }}
                 transition={{ duration: 0.2 }}
             >
                 <div className="bg-black/10 dark:bg-white/10 rounded-full h-full w-full relative overflow-hidden">
-                    <motion.div
+                    <m.div
                         className="absolute top-0 left-0 h-full bg-brand-blue dark:bg-brand-blue rounded-full"
                         style={{
                             width: `${indicatorWidth}%`,
@@ -204,7 +198,7 @@ export function SkillSlider({ skills }: { skills: Skill[] }) {
                         }}
                     />
                 </div>
-            </motion.div>
-        </motion.div>
+            </m.div>
+        </m.div>
     )
 }

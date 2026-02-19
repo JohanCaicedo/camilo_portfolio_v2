@@ -1,9 +1,10 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { motion, AnimatePresence } from "framer-motion"
+import { m, AnimatePresence } from "framer-motion"
 import { MousePointer2 } from "lucide-react"
 import { InteractiveGridPattern } from "@/components/ui/interactive-grid-pattern"
+import { AnimatedFoxLogo } from "@/components/animated-fox-logo"
 
 export function PageLoader() {
     const [phase, setPhase] = useState<"intro" | "split" | "waiting" | "exit">("intro")
@@ -49,7 +50,7 @@ export function PageLoader() {
     return (
         <AnimatePresence>
             {!done && (
-                <motion.div
+                <m.div
                     className="fixed inset-0 z-[9999] flex flex-col bg-background cursor-pointer overflow-hidden"
                     initial={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
@@ -60,8 +61,8 @@ export function PageLoader() {
                     <InteractiveGridPattern />
 
                     {/* Top: Logo + Paper Fox Studio */}
-                    <motion.div
-                        className="relative z-10 flex items-center justify-center gap-3 pt-6 px-6 sm:pt-8 sm:px-8"
+                    <m.div
+                        className="relative z-10 flex flex-col items-center justify-center gap-2 pt-6 px-6 sm:pt-8 sm:px-8"
                         initial={{ opacity: 0, y: -10 }}
                         animate={{
                             opacity: phase === "exit" ? 0 : 1,
@@ -69,20 +70,16 @@ export function PageLoader() {
                         }}
                         transition={{ duration: 0.5, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
                     >
-                        <img
-                            src="/favicon.svg"
-                            alt="Paper Fox Studio"
-                            className="w-8 h-8 sm:w-10 sm:h-10"
-                        />
-                        <span className="text-sm sm:text-base font-sans font-bold text-foreground tracking-tight">
+                        <AnimatedFoxLogo className="w-10 h-10 sm:w-12 sm:h-12" />
+                        <span className="text-sm sm:text-base font-sans font-bold text-muted-foreground tracking-tight">
                             Paper Fox Studio
                         </span>
-                    </motion.div>
+                    </m.div>
 
                     {/* Center: Main content */}
                     <div className="relative z-10 flex-1 flex flex-col items-center justify-center px-6 pb-32">
                         {/* Small subtitle above */}
-                        <motion.p
+                        <m.p
                             className="text-[10px] sm:text-xs font-mono text-muted-foreground tracking-[0.25em] uppercase mb-4"
                             initial={{ opacity: 0 }}
                             animate={{
@@ -91,12 +88,12 @@ export function PageLoader() {
                             transition={{ duration: 0.5, delay: 0.3 }}
                         >
                             Camilo Caicedo&apos;s Design Portfolio
-                        </motion.p>
+                        </m.p>
 
                         {/* Across Every Dimension — large, centered */}
                         <div className="relative select-none">
                             {/* PRISM LAYER 1: Salmon (Top Left) */}
-                            <motion.span
+                            <m.span
                                 className="absolute inset-0 text-brand-salmon/80 font-sans font-bold text-2xl sm:text-3xl md:text-4xl lg:text-5xl tracking-tighter whitespace-nowrap will-change-transform"
                                 aria-hidden="true"
                                 initial={{ opacity: 0, x: 0, y: 0 }}
@@ -113,10 +110,10 @@ export function PageLoader() {
                                 }}
                             >
                                 Across Every Dimension.
-                            </motion.span>
+                            </m.span>
 
                             {/* PRISM LAYER 2: Blue (Top Right) */}
-                            <motion.span
+                            <m.span
                                 className="absolute inset-0 text-brand-blue/80 font-sans font-bold text-2xl sm:text-3xl md:text-4xl lg:text-5xl tracking-tighter whitespace-nowrap will-change-transform"
                                 aria-hidden="true"
                                 initial={{ opacity: 0, x: 0, y: 0 }}
@@ -133,10 +130,10 @@ export function PageLoader() {
                                 }}
                             >
                                 Across Every Dimension.
-                            </motion.span>
+                            </m.span>
 
                             {/* PRISM LAYER 3: Green (Bottom Left) - Appears on exit */}
-                            <motion.span
+                            <m.span
                                 className="absolute inset-0 text-brand-green/80 font-sans font-bold text-2xl sm:text-3xl md:text-4xl lg:text-5xl tracking-tighter whitespace-nowrap"
                                 aria-hidden="true"
                                 initial={{ opacity: 0, x: 0, y: 0 }}
@@ -149,10 +146,10 @@ export function PageLoader() {
                                 transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
                             >
                                 Across Every Dimension.
-                            </motion.span>
+                            </m.span>
 
                             {/* PRISM LAYER 4: Yellow (Bottom Right) - Appears on exit */}
-                            <motion.span
+                            <m.span
                                 className="absolute inset-0 text-brand-yellow/80 font-sans font-bold text-2xl sm:text-3xl md:text-4xl lg:text-5xl tracking-tighter whitespace-nowrap"
                                 aria-hidden="true"
                                 initial={{ opacity: 0, x: 0, y: 0 }}
@@ -165,11 +162,11 @@ export function PageLoader() {
                                 transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
                             >
                                 Across Every Dimension.
-                            </motion.span>
+                            </m.span>
 
 
                             {/* Main Text (Foreground) */}
-                            <motion.span
+                            <m.span
                                 className="relative z-10 font-sans font-bold text-2xl sm:text-3xl md:text-4xl lg:text-5xl tracking-tighter whitespace-nowrap text-foreground"
                                 initial={{ opacity: 0, y: 16 }}
                                 animate={{
@@ -181,13 +178,13 @@ export function PageLoader() {
                                 transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
                             >
                                 Across Every Dimension.
-                            </motion.span>
+                            </m.span>
                         </div>
 
                         {/* Click to continue - appears last */}
                         <AnimatePresence>
                             {phase === "waiting" && (
-                                <motion.div
+                                <m.div
                                     className="absolute bottom-20 flex flex-col items-center gap-3"
                                     initial={{ opacity: 0, y: 10 }}
                                     animate={{ opacity: 1, y: 0 }}
@@ -196,7 +193,7 @@ export function PageLoader() {
                                 >
                                     <div className="relative">
                                         <MousePointer2 className="w-5 h-5 text-muted-foreground animate-bounce" strokeWidth={1.5} />
-                                        <motion.div
+                                        <m.div
                                             className="absolute -top-1 -right-1 w-2 h-2 bg-brand-salmon rounded-full"
                                             animate={{ scale: [1, 1.5, 1], opacity: [0.5, 0, 0.5] }}
                                             transition={{ duration: 1.5, repeat: Infinity }}
@@ -205,11 +202,11 @@ export function PageLoader() {
                                     <span className="text-[10px] font-mono text-muted-foreground/60 tracking-[0.2em] uppercase animate-pulse">
                                         Click to continue
                                     </span>
-                                </motion.div>
+                                </m.div>
                             )}
                         </AnimatePresence>
                     </div>
-                </motion.div>
+                </m.div>
             )}
         </AnimatePresence>
     )

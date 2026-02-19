@@ -1,10 +1,12 @@
 import type { Metadata } from "next"
 import Link from "next/link"
-import { ArrowLeft, Wand2, Palette, User, Pencil, Hammer, BarChart3, Lightbulb, type LucideIcon } from "lucide-react"
+import { ArrowLeft, Wand2, Palette, User, Pencil, Hammer, BarChart3, Lightbulb } from "lucide-react"
 import { SectionContainer } from "@/components/section-container"
 import { ViewerCard } from "@/components/ui/viewer-card"
 import { LightboxImage } from "@/components/ui/image-lightbox"
 import { LightboxGallery } from "@/components/ui/lightbox-gallery"
+import { SectionHeader } from "@/components/ui/section-header"
+import { BadgeRow } from "@/components/ui/badge-row"
 
 export const metadata: Metadata = {
     title: "Web Design",
@@ -75,31 +77,7 @@ const CHALLENGES = [
 ]
 
 /* ─── Section Header Helper ─── */
-function SectionHeader({
-    icon: Icon,
-    label,
-    title,
-}: {
-    icon: LucideIcon
-    label: string
-    title: string
-}) {
-    return (
-        <div className="flex items-center gap-4 mb-8">
-            <div className="p-2.5 border border-black/10 dark:border-white/10 rounded-sm bg-black/5 dark:bg-white/5">
-                <Icon className="size-5 text-brand-salmon" strokeWidth={1.5} />
-            </div>
-            <div>
-                <h2 className="text-2xl md:text-3xl font-bold text-[#1a1a1a] dark:text-[#faf9f6] tracking-tight leading-none">
-                    {title}
-                </h2>
-                <p className="text-[10px] font-mono text-brand-salmon mt-1 tracking-widest uppercase">
-                    // {label}
-                </p>
-            </div>
-        </div>
-    )
-}
+
 
 /* ─── Page ─── */
 export default function WebDesignPage() {
@@ -133,21 +111,7 @@ export default function WebDesignPage() {
                 </div>
 
                 {/* Badges */}
-                <nav className="flex flex-wrap gap-2 justify-center mb-10" aria-label="Project tags">
-                    {BADGES.map((badge) => (
-                        <span
-                            key={badge.label}
-                            className="px-3 py-1 text-xs font-mono uppercase tracking-wider border rounded-sm"
-                            style={{
-                                borderColor: badge.color,
-                                color: badge.color,
-                                backgroundColor: `${badge.color}10`,
-                            }}
-                        >
-                            {badge.label}
-                        </span>
-                    ))}
-                </nav>
+                <BadgeRow badges={BADGES} />
 
                 {/* Hero Mockup Image */}
                 <ViewerCard label="MOCKUP_PREVIEW" className="overflow-hidden">

@@ -1,7 +1,7 @@
 "use client"
 
 import { cn } from "@/lib/utils"
-import { motion } from "framer-motion"
+
 
 interface ViewerCardProps extends React.HTMLAttributes<HTMLDivElement> {
     children: React.ReactNode
