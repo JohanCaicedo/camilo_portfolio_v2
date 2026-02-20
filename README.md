@@ -115,60 +115,151 @@ The loader uses a hardcoded `backgroundColor: #faf9f6` on the container to guara
 
 ```
 camilo_portfolio_v2/
-├── app/
-│   ├── globals.css              # Tailwind v4 theme + CSS variables
-│   ├── layout.tsx               # Root layout: ThemeProvider, MotionProvider, PageLoader, Navbar
-│   ├── template.tsx             # Page transition wrapper (AnimatePresence)
-│   ├── page.tsx                 # Homepage (Hero + all sections)
-│   ├── cv/                      # CV page
-│   ├── web-design/              # Project category pages
+│
+├── app/                                    # Next.js App Router
+│   ├── globals.css                         # Tailwind v4 theme, CSS variables, brand palette
+│   ├── layout.tsx                          # Root layout: ThemeProvider, MotionProvider, Navbar, PageLoader
+│   ├── template.tsx                        # Page transition wrapper (AnimatePresence fade)
+│   ├── page.tsx                            # Homepage — assembles all page sections
+│   ├── sitemap.ts                          # Dynamic sitemap generator
+│   ├── robots.ts                           # SEO robots.txt
+│   ├── cv/
+│   │   └── page.tsx                        # Curriculum Vitae page
+│   ├── web-design/
+│   │   └── page.tsx                        # Web Design project category
 │   ├── graphic-design/
+│   │   └── page.tsx                        # Graphic Design category
 │   ├── editorial-design/
+│   │   └── page.tsx                        # Editorial Design category
 │   ├── photography/
-│   ├── personal/
-│   ├── sitemap.ts               # Dynamic sitemap
-│   └── robots.ts                # SEO robots
+│   │   └── page.tsx                        # Photography category
+│   └── personal/
+│       └── page.tsx                        # Personal Projects category
 │
-├── components/
-│   ├── animated-fox-logo.tsx    # 🦊 Animated SVG mascot (blink, drift, hover sparkles)
-│   ├── page-loader.tsx          # 🎬 Full-screen page entrance animation
-│   ├── navbar.tsx               # 🧭 Floating navbar with fox home button
-│   ├── hero-section.tsx         # Main hero landing section
-│   ├── about-section.tsx        # About section
-│   ├── projects-section.tsx     # Projects grid
-│   ├── experience-section.tsx   # Work experience cards
-│   ├── education-section.tsx    # Education section
-│   ├── skills-section.tsx       # Skills section
-│   ├── footer.tsx               # Site footer
-│   ├── atom-cursor.tsx          # Custom animated cursor
-│   ├── ascii-scene.tsx          # Three.js ASCII renderer scene
-│   ├── motion-provider.tsx      # LazyMotion + MotionConfig wrapper
-│   ├── theme-provider.tsx       # next-themes wrapper
-│   ├── mode-toggle.tsx          # Dark/Light mode toggle
-│   ├── scroll-to-top.tsx        # Scroll-to-top button
-│   ├── json-ld.tsx              # Structured data (SEO)
-│   └── ui/                      # shadcn/ui component library
-│
-├── lib/
-│   └── utils.ts                 # `cn()` helper (clsx + tailwind-merge)
+├── components/                             # React components
+│   │
+│   ├── ui/                                 # Custom UI component library
+│   │   ├── ascii-skeleton.tsx              # Loading skeleton for ASCII scene
+│   │   ├── avatar.tsx                      # Avatar (image + fallback)
+│   │   ├── badge-row.tsx                   # Row of tag/tech badges
+│   │   ├── button.tsx                      # Button with CVA variants
+│   │   ├── dropdown-menu.tsx               # Dropdown menu (Radix)
+│   │   ├── error-boundary.tsx              # React error boundary
+│   │   ├── image-lightbox.tsx              # Fullscreen image lightbox
+│   │   ├── interactive-grid-pattern.tsx    # Animated dot grid background
+│   │   ├── lightbox-gallery.tsx            # Gallery grid → lightbox connector
+│   │   ├── section-header.tsx              # Reusable section title/label
+│   │   ├── skill-slider.tsx                # Animated horizontal skill scroll
+│   │   ├── social-pill.tsx                 # Social link pill button
+│   │   └── viewer-card.tsx                 # Project thumbnail card
+│   │
+│   ├── animated-fox-logo.tsx               # � Fox SVG mascot — blink/drift/sparkle animations
+│   ├── ascii-scene.tsx                     # Three.js + ASCII renderer scene
+│   ├── atom-cursor.tsx                     # Custom orbital cursor animation
+│   ├── hero-section.tsx                    # Hero: headline, subtitle, CTA, ASCII scene
+│   ├── about-section.tsx                   # About: bio, avatar, social links
+│   ├── projects-section.tsx                # Projects: grid of ViewerCards by category
+│   ├── experience-section.tsx              # Work experience timeline cards
+│   ├── education-section.tsx               # Education history
+│   ├── skills-section.tsx                  # Skills: SkillSliders by discipline
+│   ├── footer.tsx                          # Site footer with links
+│   ├── navbar.tsx                          # 🧭 Floating pill navbar with fox home button
+│   ├── page-loader.tsx                     # 🎬 Full-screen prismatic page loader
+│   ├── motion-provider.tsx                 # LazyMotion + MotionConfig wrapper
+│   ├── theme-provider.tsx                  # next-themes ThemeProvider wrapper
+│   ├── mode-toggle.tsx                     # Dark/Light mode toggle button
+│   ├── scroll-to-top.tsx                   # Floating scroll-to-top button
+│   ├── json-ld.tsx                         # JSON-LD structured data (SEO)
+│   ├── section-container.tsx               # Consistent section padding wrapper
+│   ├── home-scroll-snap.tsx                # Scroll-snap layout helper
+│   └── NewZorrito-Web.tsx                  # [WIP] New fox character component
 │
 ├── hooks/
-│   └── use-mobile.ts            # Mobile breakpoint hook
+│   └── use-mobile.ts                       # Mobile breakpoint detection hook
 │
-├── public/
-│   ├── favicon.svg              # Fox favicon
-│   ├── apple-icon.png           # Apple touch icon
-│   ├── og-image.jpg             # Open Graph image
-│   ├── Profile-Foto-Camilo.webp # Navbar avatar photo
-│   ├── Foxy-Blink-nav-bar.gif   # Navbar avatar hover GIF
-│   └── projects/                # Project images (WebP)
+├── lib/
+│   └── utils.ts                            # `cn()` — clsx + tailwind-merge helper
 │
-├── next.config.mjs              # Next.js config
-├── tailwind.config.js           # Tailwind config (brand colors)
-├── postcss.config.mjs           # PostCSS config
-├── tsconfig.json                # TypeScript config
-├── components.json              # shadcn/ui config
-└── package.json
+├── public/                                 # Static assets (served at /)
+│   │
+│   ├── favicon.svg                         # Fox SVG favicon
+│   ├── favicon.ico                         # Fallback favicon
+│   ├── apple-icon.png                      # Apple touch icon
+│   ├── og-image.jpg                        # Open Graph social preview image
+│   ├── icon.svg / icon-dark-32x32.png / icon-light-32x32.png
+│   │
+│   ├── Profile-Foto-Camilo.webp            # Navbar avatar — idle photo
+│   ├── Foxy-Blink-nav-bar.gif              # Navbar avatar — hover fox GIF
+│   ├── Foxy-Blink.gif                      # Full-size fox blink animation
+│   ├── PaperFoxStudio-IMG.svg              # Studio logo SVG
+│   ├── PaperFoxStudio-Logo.webp            # Studio logo bitmap
+│   │
+│   ├── models/                             # 3D model assets
+│   │   └── (3D model files)
+│   │
+│   ├── — Web Design project images —
+│   │   ├── Web-Banner (2-5).webp
+│   │   ├── Web-Gallery1-12.webp
+│   │   ├── WebDesign-Cover.webp
+│   │   └── Use Case (1-5).webp
+│   │
+│   ├── — Graphic Design images —
+│   │   ├── GraphicDesign-Cover.webp
+│   │   ├── Graphic Design.webm
+│   │   ├── Illustration.webp / IllustrationBanner.webp
+│   │   ├── Publicaciones_1-5.webp
+│   │   ├── GraphicPieces.webp
+│   │   └── Diseño Grafico (2).webp
+│   │
+│   ├── — Editorial Design images —
+│   │   ├── EditorialDesign-Cover.webp
+│   │   ├── Editorial-Design ID.webp
+│   │   └── Editorial-Desing-Cover (1-9).webp
+│   │
+│   ├── — Photography images —
+│   │   ├── Photography-Cover.webp
+│   │   ├── Portrait (1-11).webp
+│   │   ├── Nature.webp / Nature 2.webp / Nature 3.webp
+│   │   ├── Inside.webp / Inside 2.webp
+│   │   ├── Necoclí 2024 (1-13).webp
+│   │   ├── Postales_1-7.webp
+│   │   └── Timelapse 18 de julio 2022.webm
+│   │
+│   ├── — Personal / Studio images —
+│   │   ├── PaperFoxStudio-Build.webm
+│   │   ├── PaperFoxLogoV2.webp
+│   │   ├── PFS-SafeAreas.webp
+│   │   ├── Personal-MoodBoard.webp
+│   │   ├── ID-Personal.webp
+│   │   ├── Render_New_Zorrito 360_Cycles-Web.mp4
+│   │   ├── Zorrito-Nahim-Paint.mp4
+│   │   ├── Neil-Style.webm / Nile Riggin.webm
+│   │   ├── Nile-Style.webp
+│   │   └── Ñoquito-Portrait.webp
+│   │
+│   └── CV Johan Caicedo - 2024.pdf         # Downloadable CV
+│
+├── styles/
+│   └── globals.css                         # (legacy, main styles are in app/globals.css)
+│
+├── .agents/                                # AI agent configuration
+│   └── skills/                             # Agent skill definitions
+│       ├── notion-project-publisher/
+│       └── react-doctor/
+│
+├── docs/                                   # Internal documentation
+│
+├── .env.local                              # Environment variables (not committed)
+├── .gitignore
+├── .prettierrc                             # Prettier formatting config
+├── components.json                         # shadcn/ui config
+├── eslint.config.mjs                       # ESLint config
+├── next.config.mjs                         # Next.js config
+├── postcss.config.mjs                      # PostCSS config
+├── tailwind.config.js                      # Tailwind config (brand colors, fonts)
+├── tsconfig.json                           # TypeScript config
+├── pnpm-workspace.yaml                     # pnpm workspace config
+└── package.json                            # Dependencies & scripts
 ```
 
 ---
