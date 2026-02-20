@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
+import { SpeedInsights } from '@vercel/speed-insights/next'
 import './globals.css'
 import { ThemeProvider } from "@/components/theme-provider"
 import { InteractiveGridPattern } from "@/components/ui/interactive-grid-pattern"
@@ -99,6 +100,7 @@ export default function RootLayout({
             <AtomCursor />
             <ScrollToTop />
             <Analytics />
+            <SpeedInsights />
             <JsonLd />
           </MotionProvider>
         </ThemeProvider>
