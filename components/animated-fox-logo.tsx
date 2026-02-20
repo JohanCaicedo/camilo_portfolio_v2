@@ -1,15 +1,15 @@
 "use client"
 
-import { m } from "framer-motion"
-import { useEffect, useReducer } from "react"
+import { motion } from "framer-motion"
+import { useEffect, useState } from "react"
 
 export function AnimatedFoxLogo({ className }: { className?: string }) {
-    const [isBlinking, dispatch] = useReducer((_: boolean, action: boolean) => action, false)
+    const [isBlinking, setIsBlinking] = useState(false)
 
     useEffect(() => {
         const blink = () => {
-            dispatch(true)
-            setTimeout(() => dispatch(false), 150) // Blink duration (faster)
+            setIsBlinking(true)
+            setTimeout(() => setIsBlinking(false), 150) // Blink duration (faster)
 
             // Random interval between 1.5s and 4.5s (more frequent)
             const nextBlink = Math.random() * 3000 + 1500
@@ -80,7 +80,7 @@ export function AnimatedFoxLogo({ className }: { className?: string }) {
 		C47.64,854.58,29.87,821.26,24.96,800.88z" />
 
                 {/* Eyes - Animated */}
-                <m.g
+                <motion.g
                     animate={isBlinking ? "closed" : "open"}
                     variants={eyeVariants}
                     transition={{ duration: 0.1 }}
@@ -93,7 +93,7 @@ export function AnimatedFoxLogo({ className }: { className?: string }) {
                     {/* Pupils/Highlights - Should blink with eye? Usually highlights disappear or flatten. Let's flatten them too */}
                     <ellipse className="st6" cx="664" cy="621.28" rx="16.38" ry="20.52" />
                     <ellipse className="st6" cx="378.45" cy="618.25" rx="16.38" ry="20.52" />
-                </m.g>
+                </motion.g>
             </g>
         </svg>
     )
