@@ -3,7 +3,8 @@
 import { useState } from "react"
 import Link from "next/link"
 import Image from "next/image"
-import { Menu, X, Home } from "lucide-react"
+import { Menu, X } from "lucide-react"
+import { AnimatedFoxLogo } from "@/components/animated-fox-logo"
 import { ModeToggle } from "@/components/mode-toggle"
 import {
   DropdownMenu,
@@ -26,15 +27,15 @@ export function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
 
   return (
-    <nav className="bg-background/80 fixed top-0 right-0 left-0 z-50 border-b border-black/5 px-6 backdrop-blur-md transition-all duration-300 lg:px-12 dark:border-white/5">
+    <nav className="bg-background/80 fixed top-3 right-4 left-4 z-50 border border-black/5 px-6 backdrop-blur-md transition-all duration-300 lg:px-12 dark:border-white/5 rounded-2xl shadow-sm">
       <div className="mx-auto flex h-20 max-w-7xl items-center justify-between">
         {/* Home Button (Logo Replacement) */}
         <Link
           href="/"
-          className="text-foreground dark:text-foreground hover:text-brand-blue dark:hover:text-brand-blue focus-visible:ring-brand-blue rounded-sm p-2 transition-colors outline-none focus-visible:ring-2"
+          className="group rounded-sm p-2 outline-none focus-visible:ring-2 focus-visible:ring-brand-blue"
           aria-label="Home"
         >
-          <Home className="size-6" strokeWidth={1.5} />
+          <AnimatedFoxLogo className="size-12 transition-transform duration-200 group-hover:scale-[1.2]" />
         </Link>
 
         {/* Desktop Links */}
@@ -126,7 +127,7 @@ export function Navbar() {
                 onClick={() => setIsOpen(false)}
                 className="text-muted-foreground hover:text-brand-blue dark:text-muted-foreground dark:hover:text-brand-blue focus-visible:ring-brand-blue flex w-fit items-center gap-2 rounded-sm font-mono text-lg font-medium transition-colors outline-none focus-visible:ring-2"
               >
-                <Home className="size-5" /> Home
+                <AnimatedFoxLogo className="size-6" /> Home
               </Link>
               {navLinks.map((link) => (
                 <Link

@@ -1,23 +1,44 @@
 "use client"
 
-import { motion } from "framer-motion"
+import { motion, AnimatePresence } from "framer-motion"
 import { useEffect, useState } from "react"
+
+// 4-point star (sparkle) path centered at (cx, cy)
+function sparkle(cx: number, cy: number, R: number, r: number) {
+    return `M ${cx},${cy - R} L ${cx + r},${cy - r} L ${cx + R},${cy} L ${cx + r},${cy + r} L ${cx},${cy + R} L ${cx - r},${cy + r} L ${cx - R},${cy} L ${cx - r},${cy - r} Z`
+}
+
+const SPARKLES = [
+    { path: sparkle(540, 30, 65, 15), color: "#F2691D", delay: 0 },       // top-center, salmon
+    { path: sparkle(170, 110, 55, 13), color: "#FFD797", delay: 0.1 },     // top-left, gold
+    { path: sparkle(910, 80, 60, 14), color: "#7B9FD4", delay: 0.2 },     // top-right, blue
+    { path: sparkle(40, 480, 50, 12), color: "#F2691D", delay: 0.3 },     // left-mid, salmon
+    { path: sparkle(1040, 420, 55, 13), color: "#FFD797", delay: 0.05 },    // right-mid, gold
+    { path: sparkle(160, 920, 48, 11), color: "#7B9FD4", delay: 0.25 },    // bottom-left, blue
+    { path: sparkle(920, 940, 58, 14), color: "#F2691D", delay: 0.15 },    // bottom-right, salmon
+    { path: sparkle(540, 1060, 52, 12), color: "#FFD797", delay: 0.35 },    // bottom-center, gold
+]
 
 export function AnimatedFoxLogo({ className }: { className?: string }) {
     const [isBlinking, setIsBlinking] = useState(false)
+    const [isHovered, setIsHovered] = useState(false)
 
     useEffect(() => {
+        let timer: NodeJS.Timeout
+        let blinkTimer: NodeJS.Timeout
+
         const blink = () => {
             setIsBlinking(true)
-            setTimeout(() => setIsBlinking(false), 150) // Blink duration (faster)
-
-            // Random interval between 1.5s and 4.5s (more frequent)
+            blinkTimer = setTimeout(() => setIsBlinking(false), 150)
             const nextBlink = Math.random() * 3000 + 1500
-            setTimeout(blink, nextBlink)
+            timer = setTimeout(blink, nextBlink)
         }
 
-        const timeout = setTimeout(blink, 500) // Start almost immediately
-        return () => clearTimeout(timeout)
+        timer = setTimeout(blink, 500)
+        return () => {
+            clearTimeout(timer)
+            clearTimeout(blinkTimer)
+        }
     }, [])
 
     const eyeVariants = {
@@ -32,7 +53,9 @@ export function AnimatedFoxLogo({ className }: { className?: string }) {
             xmlnsXlink="http://www.w3.org/1999/xlink"
             viewBox="0 0 1080 1080"
             className={className}
-
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+            style={{ overflow: "visible" }}
         >
             <style type="text/css">
                 {`
@@ -46,27 +69,28 @@ export function AnimatedFoxLogo({ className }: { className?: string }) {
                 `}
             </style>
 
-            {/* Main Head Group - Animated (Looking Left/Right) */}
+            {/* Main Head Group - idle sway */}
             <motion.g
-                animate={{
-                    rotate: [0, -3, -3, 2, 2, 0],
-                }}
-                transition={{
-                    duration: 7,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                    times: [0, 0.15, 0.35, 0.5, 0.7, 0.85]
-                }}
+                animate={{ rotate: [0, -8, 8, 0] }}
+                transition={{ duration: 8, repeat: Infinity, repeatType: "mirror", ease: "easeInOut" }}
                 style={{ transformBox: "fill-box", transformOrigin: "center bottom" }}
             >
-                <path className="st0" d="M462.85,294.5c-102.68,69.76-203.94,97.49-205.12,268.74c-51.01-72.72-92.34-165.85-112.99-267.95
+                {/* Ears - wobble */}
+                <motion.g
+                    animate={{ rotate: [0, -4, 4, 0] }}
+                    transition={{ duration: 3, repeat: Infinity, repeatType: "mirror", ease: "easeInOut" }}
+                    style={{ transformBox: "fill-box", transformOrigin: "center bottom" }}
+                >
+                    <path className="st0" d="M462.85,294.5c-102.68,69.76-203.94,97.49-205.12,268.74c-51.01-72.72-92.34-165.85-112.99-267.95
 		c-18.51-91.54-19.59-180.71-6.1-260.78c32.46-3.4,78.58,12.73,107.3,29.44C319.15,106.55,408.11,229.55,462.85,294.5z" />
-                <path className="st1" d="M266.84,574.96l12.95-87.47c-127.08-77.14-72.26-358.64-142.66-446.67
+                    <path className="st1" d="M266.84,574.96l12.95-87.47c-127.08-77.14-72.26-358.64-142.66-446.67
 		C115.29,236.33,152.74,425.16,266.84,574.96z" />
-                <path className="st0" d="M659.55,304.11c55.14,27.9,213.55,87.88,214.73,259.13c51.01-72.72,92.34-165.85,112.99-267.95
+                    <path className="st0" d="M659.55,304.11c55.14,27.9,213.55,87.88,214.73,259.13c51.01-72.72,92.34-165.85,112.99-267.95
 		c18.51-91.54,19.59-180.71,6.1-260.78c-32.46-3.4-78.58,12.73-107.3,29.44C812.86,106.55,714.28,239.16,659.55,304.11z" />
-                <path className="st1" d="M865.17,574.96l-12.95-87.47c127.08-77.14,72.26-358.64,142.66-446.67
+                    <path className="st1" d="M865.17,574.96l-12.95-87.47c127.08-77.14,72.26-358.64,142.66-446.67
 		C1016.71,236.33,979.27,425.16,865.17,574.96z" />
+                </motion.g>
+
                 <path className="st2" d="M544.59,282.66c-188.07,0-305.73,126.56-337.92,262.99c-28.8,115.81-80.71,171.79-154.43,171.25
 		c3.65,18.07,27.24,46.72,45.87,58.1C84.02,791.75,59.43,800.32,24.72,801c7.59,28.33,36.79,59.78,68.81,65.75
 		c-7.66,8.15-25.28,14.81-41.05,15.27c64.16,57.69,208.16,112.92,357.56,140.69c67.49,27.78,140.44,29.06,217.12,12.23
@@ -92,35 +116,60 @@ export function AnimatedFoxLogo({ className }: { className?: string }) {
                 <path className="st0" d="M24.96,800.88c34.79,34.78,76.23,59.16,137.29,60.54c-19.51,4.32-45.42,7.72-68.73,5.32
 		C47.64,854.58,29.87,821.26,24.96,800.88z" />
 
-                {/* Eyes - Animated (Blinking) */}
+                {/* Eyes - blinking */}
                 <motion.g
                     animate={isBlinking ? "closed" : "open"}
                     variants={eyeVariants}
                     transition={{ duration: 0.1 }}
                     style={{ transformBox: "fill-box", transformOrigin: "center" }}
                 >
-                    {/* Right Eye Background */}
                     <ellipse className="st5" cx="657.41" cy="654.18" rx="48.34" ry="68.86" />
-                    {/* Left Eye Background */}
                     <ellipse className="st5" cx="371.88" cy="651.97" rx="48.34" ry="68.86" />
 
-                    {/* Pupils/Highlights - Animated (Looking Left/Right) */}
+                    {/* Pupils - looking left/right */}
                     <motion.g
-                        animate={{
-                            x: [0, -12, -12, 10, 10, 0],
-                        }}
-                        transition={{
-                            duration: 7,
-                            repeat: Infinity,
-                            ease: "easeInOut",
-                            times: [0, 0.15, 0.35, 0.5, 0.7, 0.85]
-                        }}
+                        animate={{ x: [0, -10, 8, 0] }}
+                        transition={{ duration: 5, repeat: Infinity, repeatType: "mirror", ease: "easeInOut" }}
                     >
                         <ellipse className="st6" cx="664" cy="621.28" rx="16.38" ry="20.52" />
                         <ellipse className="st6" cx="378.45" cy="618.25" rx="16.38" ry="20.52" />
                     </motion.g>
                 </motion.g>
             </motion.g>
+
+            {/* Sparkles — wrapped in ONE parent so AnimatePresence exit works despite repeat:Infinity on children */}
+            <AnimatePresence>
+                {isHovered && (
+                    <motion.g
+                        key="sparkles"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.25 }}
+                    >
+                        {SPARKLES.map((s, i) => (
+                            <motion.path
+                                key={i}
+                                d={s.path}
+                                fill={s.color}
+                                animate={{
+                                    scale: [4, 1, 0.85, 1, 0],
+                                    opacity: [0, 1, 1, 1, 0],
+                                    rotate: [0, 15, 8, 20, 45],
+                                }}
+                                transition={{
+                                    duration: 0.9,
+                                    delay: s.delay,
+                                    ease: "easeOut",
+                                    repeat: Infinity,
+                                    repeatDelay: 0.5,
+                                }}
+                                style={{ transformBox: "fill-box", transformOrigin: "center" }}
+                            />
+                        ))}
+                    </motion.g>
+                )}
+            </AnimatePresence>
         </svg>
     )
 }
