@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unknown-property */
 "use client"
 
 import { Canvas, useThree, useFrame } from "@react-three/fiber"
@@ -6,6 +7,7 @@ import { Suspense, useEffect, useRef } from "react"
 import { useTheme } from "next-themes"
 import * as THREE from "three"
 import { ErrorBoundary } from "@/components/ui/error-boundary"
+import Image from "next/image"
 
 const PALETTE = [
   "#eea284",
@@ -130,10 +132,10 @@ function ScanlineAsciiEffect({
     const totalLineHeight = lineHeight + lineSpacing
     const numLines = Math.floor(size.height / totalLineHeight)
     const numCols = Math.floor(size.width / charSpacing)
-    
+
     const scaleX = size.width / w
     const scaleY = size.height / h
-    
+
     scaleRef.current = {
       charToRtX: charSpacing / scaleX,
       charToRtY: totalLineHeight / scaleY,
@@ -226,7 +228,7 @@ function ScanlineAsciiEffect({
         if (a > 20) {
           const brightness = (r * 0.299 + g * 0.587 + b * 0.114) / 255
           charData.opacity = brightness
-          
+
           const charIndex = Math.floor(brightness * (ASCII_CHARS.length - 1))
           charData.char = ASCII_CHARS[Math.min(charIndex, ASCII_CHARS.length - 1)]
         } else {
@@ -322,10 +324,12 @@ function SceneLighting() {
 function SceneErrorFallback() {
   return (
     <div className="w-full h-full flex items-center justify-center">
-      <img
+      <Image
         src="/Foxy-Blink.gif"
         alt="Paper Fox Studio mascot"
         className="w-64 h-64 object-contain opacity-80"
+        width={256}
+        height={256}
       />
     </div>
   )

@@ -1,5 +1,6 @@
 import type { Metadata } from "next"
 import Link from "next/link"
+import Image from "next/image"
 import { ArrowLeft, Wand2, Palette, User, Pencil, Hammer, BarChart3, Lightbulb } from "lucide-react"
 import { SectionContainer } from "@/components/section-container"
 import { ViewerCard } from "@/components/ui/viewer-card"
@@ -182,12 +183,13 @@ export default function WebDesignPage() {
             <SectionContainer>
                 <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
                     <div className="md:col-span-2">
-                        <ViewerCard label="CONTEXT_IMG" className="overflow-hidden">
-                            <img
+                        <ViewerCard label="CONTEXT_IMG" className="overflow-hidden relative w-full aspect-video">
+                            <Image
                                 src="https://firebasestorage.googleapis.com/v0/b/camilo-portfolio-77b8a.appspot.com/o/ILSA-Web-mockup-1.webp?alt=media&token=20977961-0397-4c6e-b91f-efd038073d62"
                                 alt="ILSA website mockup detail"
-                                className="w-full h-auto"
-                                loading="lazy"
+                                fill
+                                className="object-cover"
+                                sizes="(max-width: 768px) 100vw, 50vw"
                             />
                         </ViewerCard>
                     </div>
@@ -245,18 +247,19 @@ export default function WebDesignPage() {
                 <SectionHeader icon={Wand2} label="METHODOLOGY_LOADED" title="Design Process" />
 
                 {/* Moodboard */}
-                <ViewerCard label="MOODBOARD" className="overflow-hidden mb-8">
+                <ViewerCard label="MOODBOARD" className="overflow-hidden mb-8 relative w-full aspect-[2/1]">
                     <a
                         href="https://ilsa.org.co/voces-en-movimiento/"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="block"
+                        className="block w-full h-full"
                     >
-                        <img
+                        <Image
                             src="https://firebasestorage.googleapis.com/v0/b/camilo-portfolio-77b8a.appspot.com/o/Artboard%201.webp?alt=media&token=3f717565-0d68-4b7a-bb5c-e60ece2ebbbc"
                             alt="ILSA design moodboard"
-                            className="w-full h-auto hover:opacity-90 transition-opacity"
-                            loading="lazy"
+                            fill
+                            className="object-cover hover:opacity-90 transition-opacity"
+                            sizes="100vw"
                         />
                     </a>
                 </ViewerCard>

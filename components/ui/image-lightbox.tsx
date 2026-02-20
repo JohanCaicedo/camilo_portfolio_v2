@@ -56,7 +56,7 @@ export function LightboxImage({
             {open && (
                 <LightboxModal
                     images={gallery || [{ src, alt }]}
-                    initialIndex={gallery ? index : 0}
+                    startIndex={gallery ? index : 0}
                     onClose={() => setOpen(false)}
                 />
             )}
@@ -67,14 +67,14 @@ export function LightboxImage({
 /* ─── Fullscreen Modal ─── */
 function LightboxModal({
     images,
-    initialIndex,
+    startIndex,
     onClose,
 }: {
     images: LightboxImage[]
-    initialIndex: number
+    startIndex: number
     onClose: () => void
 }) {
-    const [current, setCurrent] = useState(initialIndex)
+    const [current, setCurrent] = useState(startIndex)
     const [mounted, setMounted] = useState(false)
     const [visible, setVisible] = useState(false)
     const hasMultiple = images.length > 1

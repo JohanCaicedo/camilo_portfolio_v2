@@ -1,0 +1,87 @@
+react-doctor v0.0.28
+
+[?25l[2K[1G[36m?[39m [1mFound 9 uncommitted changed files. Only scan current changes?[22m [90m»[39m [90m(Y/n)[39m[2K[1G[2K[1G[32m√[39m [1mFound 9 uncommitted changed files. Only scan current changes?[22m [90m...[39m no
+[?25h[2mScanning D:\camilo_portfolio_v2...[22m
+
+
+  [33m⚠[39m 3 setState calls in a single useEffect — consider using useReducer or deriving state[33m (2)[39m
+[2m    Combine into useReducer: `const [state, dispatch] = useReducer(reducer, initialState)`[22m
+[2m    components/animated-fox-logo.tsx: 9[22m
+[2m    components/page-loader.tsx: 18[22m
+
+  [33m⚠[39m useState initialized from prop "startIndex" — if this value should stay in sync with the prop, derive it during render instead
+[2m    Remove useState and compute the value inline: `const value = transform(propName)`[22m
+[2m    components/ui/image-lightbox.tsx: 77[22m
+
+  [33m⚠[39m Component "GraphicDesignPage" is 356 lines — consider breaking it into smaller focused components[33m (3)[39m
+[2m    Extract logical sections into focused components: `<UserHeader />`, `<UserActions />`, etc.[22m
+[2m    app/graphic-design/page.tsx: 106[22m
+[2m    app/personal/page.tsx: 171[22m
+[2m    app/web-design/page.tsx: 84[22m
+
+  [33m⚠[39m Unknown property found[33m (16)[39m
+[2m    Remove unknown property[22m
+[2m    components/ascii-scene.tsx: 316, 317, 317, 318, 318, 319, 319[22m
+[2m    components/NewZorrito-Web.tsx: 84, 86, 87, 90, 91, 94, 95, 98, 99[22m
+
+  [33m⚠[39m Use next/script <Script> instead of <script> — provides loading strategy optimization and deferred loading
+[2m    `import Script from "next/script"` — use `strategy="afterInteractive"` for analytics or `"lazyOnload"` for widgets[22m
+[2m    components/json-ld.tsx: 29[22m
+
+  [33m⚠[39m Unused file[33m (15)[39m
+[2m    This file is not imported by any other file in the project.[22m
+[2m    hooks\use-mobile.ts[22m
+[2m    hooks\use-toast.ts[22m
+[2m    styles\globals.css[22m
+[2m    components\ui\badge.tsx[22m
+[2m    components\ui\button.tsx[22m
+[2m    components\ui\dialog.tsx[22m
+[2m    components\ui\input.tsx[22m
+[2m    components\ui\label.tsx[22m
+[2m    components\ui\separator.tsx[22m
+[2m    components\ui\sheet.tsx[22m
+[2m    components\ui\skeleton.tsx[22m
+[2m    components\ui\textarea.tsx[22m
+[2m    components\ui\toast.tsx[22m
+[2m    components\ui\toggle.tsx[22m
+[2m    components\ui\tooltip.tsx[22m
+
+  [33m⚠[39m Unused export: DropdownMenuPortal[33m (9)[39m
+[2m    components\ui\dropdown-menu.tsx[22m
+
+  [2m┌────────────────────────────────────────────────────┐[22m
+  [2m│[22m [32m┌─────┐[39m                                            [2m│[22m
+  [2m│[22m [32m│ ◠ ◠ │[39m                                            [2m│[22m
+  [2m│[22m [32m│  ▽  │[39m                                            [2m│[22m
+  [2m│[22m [32m└─────┘[39m                                            [2m│[22m
+  [2m│[22m React Doctor [2m(www.react.doctor)[22m                    [2m│[22m
+  [2m│[22m                                                    [2m│[22m
+  [2m│[22m [32m95[39m / 100  [32mGreat[39m                                    [2m│[22m
+  [2m│[22m                                                    [2m│[22m
+  [2m│[22m [32m████████████████████████████████████████████████[39m[2m░░[22m [2m│[22m
+  [2m│[22m                                                    [2m│[22m
+  [2m│[22m [33m⚠ 47 warnings[39m  [2macross 25/104 files[22m  [2min 796ms[22m       [2m│[22m
+  [2m└────────────────────────────────────────────────────┘[22m
+
+[2m  Full diagnostics written to C:\Users\Camilo\AppData\Local\Temp\react-doctor-1af1ce7d-a79c-4578-ab01-b50a42b820c1[22m
+
+[2m  Share your results: [36mhttps://www.react.doctor/share?p=paperfox-studio&s=95&w=47&f=25[39m[22m
+
+
+[?25l[36m?[39m [1mFix issues?[22m [90m»[39m [90m- Use arrow-keys. Return to submit.[39m
+[36m>[39m   [36m[4mUse Ami (recommended)[39m[24m[90m - Optimized coding agent for React Doctor[39m
+    Skip[90m[39m
+[2K[1G  [2m┌──────────────────────────────────────────────────────┐[22m
+  [2m│[22m Score: [32m95[39m [2m→[22m [32m~99[39m                                      [2m│[22m
+  [2m│[22m                                                      [2m│[22m
+  [2m│[22m [36mAmi[39m is a coding agent built for React. It reads      [2m│[22m
+  [2m│[22m your react-doctor report, understands your codebase, [2m│[22m
+  [2m│[22m and fixes [33m47[39m issues one by one — then re-runs the    [2m│[22m
+  [2m│[22m scan to verify the score improved.                   [2m│[22m
+  [2m│[22m                                                      [2m│[22m
+  [2m│[22m Free to use. [36mhttps://ami.dev[39m                         [2m│[22m
+  [2m└──────────────────────────────────────────────────────┘[22m
+
+[36m?[39m [1mFix issues?[22m [90m»[39m [90m- Use arrow-keys. Return to submit.[39m
+[36m>[39m   [36m[4mUse Ami (recommended)[39m[24m[90m - Optimized coding agent for React Doctor[39m
+    Skip[90m[39m

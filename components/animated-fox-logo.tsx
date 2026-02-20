@@ -1,15 +1,15 @@
 "use client"
 
 import { m } from "framer-motion"
-import { useEffect, useState } from "react"
+import { useEffect, useReducer } from "react"
 
 export function AnimatedFoxLogo({ className }: { className?: string }) {
-    const [isBlinking, setIsBlinking] = useState(false)
+    const [isBlinking, dispatch] = useReducer((_: boolean, action: boolean) => action, false)
 
     useEffect(() => {
         const blink = () => {
-            setIsBlinking(true)
-            setTimeout(() => setIsBlinking(false), 150) // Blink duration (faster)
+            dispatch(true)
+            setTimeout(() => dispatch(false), 150) // Blink duration (faster)
 
             // Random interval between 1.5s and 4.5s (more frequent)
             const nextBlink = Math.random() * 3000 + 1500

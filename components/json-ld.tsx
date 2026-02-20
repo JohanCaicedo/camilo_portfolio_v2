@@ -26,11 +26,11 @@ export function JsonLd() {
     }
 
     return (
-        <Script
+        <script
             id="json-ld"
             type="application/ld+json"
-            dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-            strategy="beforeInteractive"
-        />
+        >
+            {JSON.stringify(jsonLd)}
+        </script>
     )
 }

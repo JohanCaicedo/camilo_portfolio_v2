@@ -1,26 +1,31 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useReducer } from "react"
 import { m, AnimatePresence } from "framer-motion"
 import { MousePointer2 } from "lucide-react"
 import { InteractiveGridPattern } from "@/components/ui/interactive-grid-pattern"
 import { AnimatedFoxLogo } from "@/components/animated-fox-logo"
 
+type LoaderState = { phase: "intro" | "split" | "waiting" | "exit"; done: boolean }
+
 export function PageLoader() {
-    const [phase, setPhase] = useState<"intro" | "split" | "waiting" | "exit">("intro")
-    const [done, setDone] = useState(false)
+    const [state, dispatch] = useReducer(
+        (state: LoaderState, action: Partial<LoaderState>) => ({ ...state, ...action }),
+        { phase: "intro", done: false }
+    )
+    const { phase, done } = state
 
     useEffect(() => {
         // Check if already loaded this session
         if (sessionStorage.getItem("pfs-loaded")) {
-            setDone(true)
+            dispatch({ done: true })
             return
         }
 
         // Phase 1: Intro — elements fade in (0–1000ms)
-        const t1 = setTimeout(() => setPhase("split"), 1000)
+        const t1 = setTimeout(() => dispatch({ phase: "split" }), 1000)
         // Phase 2: Split — dimensional layers diverge (1000–1800ms)
-        const t2 = setTimeout(() => setPhase("waiting"), 1800)
+        const t2 = setTimeout(() => dispatch({ phase: "waiting" }), 1800)
 
         // Timeout: Force exit after 30s if no click
         const t3 = setTimeout(() => {
@@ -36,11 +41,11 @@ export function PageLoader() {
 
     const handleExit = () => {
         if (phase === "exit" || done) return
-        setPhase("exit")
+        dispatch({ phase: "exit" })
 
         // End everything
         setTimeout(() => {
-            setDone(true)
+            dispatch({ done: true })
             sessionStorage.setItem("pfs-loaded", "1")
         }, 1000)
     }

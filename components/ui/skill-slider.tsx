@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils"
 import { ViewerCard } from "@/components/ui/viewer-card"
 import Image from "next/image"
 
-export interface Skill {
+interface Skill {
     title: string
     imageSrc?: string
     imageAlt?: string
@@ -175,7 +175,7 @@ export function SkillSlider({ skills }: { skills: Skill[] }) {
                 >
                     {doubledSkills.map((skill, index) => (
                         <SkillCard
-                            key={`${skill.title}-${index}`}
+                            key={`${skill.title}-${index < skills.length ? 'original' : 'clone'}`}
                             {...skill}
                         />
                     ))}
