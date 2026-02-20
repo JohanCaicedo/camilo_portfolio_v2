@@ -45,7 +45,20 @@ export function AnimatedFoxLogo({ className }: { className?: string }) {
                     .st6{fill:#FFFEFD;}
                 `}
             </style>
-            <g>
+
+            {/* Main Head Group - Animated (Looking Left/Right) */}
+            <motion.g
+                animate={{
+                    rotate: [0, -3, -3, 2, 2, 0],
+                }}
+                transition={{
+                    duration: 7,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                    times: [0, 0.15, 0.35, 0.5, 0.7, 0.85]
+                }}
+                style={{ transformBox: "fill-box", transformOrigin: "center bottom" }}
+            >
                 <path className="st0" d="M462.85,294.5c-102.68,69.76-203.94,97.49-205.12,268.74c-51.01-72.72-92.34-165.85-112.99-267.95
 		c-18.51-91.54-19.59-180.71-6.1-260.78c32.46-3.4,78.58,12.73,107.3,29.44C319.15,106.55,408.11,229.55,462.85,294.5z" />
                 <path className="st1" d="M266.84,574.96l12.95-87.47c-127.08-77.14-72.26-358.64-142.66-446.67
@@ -79,22 +92,35 @@ export function AnimatedFoxLogo({ className }: { className?: string }) {
                 <path className="st0" d="M24.96,800.88c34.79,34.78,76.23,59.16,137.29,60.54c-19.51,4.32-45.42,7.72-68.73,5.32
 		C47.64,854.58,29.87,821.26,24.96,800.88z" />
 
-                {/* Eyes - Animated */}
+                {/* Eyes - Animated (Blinking) */}
                 <motion.g
                     animate={isBlinking ? "closed" : "open"}
                     variants={eyeVariants}
                     transition={{ duration: 0.1 }}
                     style={{ transformBox: "fill-box", transformOrigin: "center" }}
                 >
-                    {/* Right Eye */}
+                    {/* Right Eye Background */}
                     <ellipse className="st5" cx="657.41" cy="654.18" rx="48.34" ry="68.86" />
-                    {/* Left Eye */}
+                    {/* Left Eye Background */}
                     <ellipse className="st5" cx="371.88" cy="651.97" rx="48.34" ry="68.86" />
-                    {/* Pupils/Highlights - Should blink with eye? Usually highlights disappear or flatten. Let's flatten them too */}
-                    <ellipse className="st6" cx="664" cy="621.28" rx="16.38" ry="20.52" />
-                    <ellipse className="st6" cx="378.45" cy="618.25" rx="16.38" ry="20.52" />
+
+                    {/* Pupils/Highlights - Animated (Looking Left/Right) */}
+                    <motion.g
+                        animate={{
+                            x: [0, -12, -12, 10, 10, 0],
+                        }}
+                        transition={{
+                            duration: 7,
+                            repeat: Infinity,
+                            ease: "easeInOut",
+                            times: [0, 0.15, 0.35, 0.5, 0.7, 0.85]
+                        }}
+                    >
+                        <ellipse className="st6" cx="664" cy="621.28" rx="16.38" ry="20.52" />
+                        <ellipse className="st6" cx="378.45" cy="618.25" rx="16.38" ry="20.52" />
+                    </motion.g>
                 </motion.g>
-            </g>
+            </motion.g>
         </svg>
     )
 }
