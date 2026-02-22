@@ -172,7 +172,7 @@ export default function PhotographyPage() {
                 <BadgeRow badges={BADGES} />
 
                 {/* Hero Video */}
-                <ViewerCard label="TIMELAPSE_PREVIEW" className="overflow-hidden">
+                <ViewerCard label="TIMELAPSE_PREVIEW">
                     <video
                         controls
                         autoPlay

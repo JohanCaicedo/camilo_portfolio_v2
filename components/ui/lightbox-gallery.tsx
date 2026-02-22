@@ -25,7 +25,6 @@ export function LightboxGallery({
                 <ViewerCard
                     key={img.src}
                     label={`${label}_${String(i + 1).padStart(2, "0")}`}
-                    className="overflow-hidden"
                 >
                     <LightboxImage
                         src={img.src}

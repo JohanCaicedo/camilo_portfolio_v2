@@ -90,7 +90,7 @@ export default function CvPage() {
           </ViewerCard>
         </div>
 
-        <ViewerCard label="CV_VIEWER" className="overflow-hidden">
+        <ViewerCard label="CV_VIEWER">
           <div className="w-full border border-black/10 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.02]">
             <iframe
               src={CV_FILE_PATH}

@@ -163,7 +163,7 @@ export default function EditorialDesignPage() {
                 <BadgeRow badges={BADGES} />
 
                 {/* Hero Banner */}
-                <ViewerCard label="BANNER_PREVIEW" className="overflow-hidden">
+                <ViewerCard label="BANNER_PREVIEW">
                     <LightboxImage
                         src="/Editorial-Design ID.webp"
                         alt="ILSA Editorial Design banner"

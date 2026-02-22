@@ -115,7 +115,7 @@ export default function WebDesignPage() {
                 <BadgeRow badges={BADGES} />
 
                 {/* Hero Mockup Image */}
-                <ViewerCard label="MOCKUP_PREVIEW" className="overflow-hidden">
+                <ViewerCard label="MOCKUP_PREVIEW">
                     <LightboxImage
                         src="https://firebasestorage.googleapis.com/v0/b/camilo-portfolio-77b8a.appspot.com/o/ILSA-Web-mockup.webp?alt=media&token=780054d4-1628-4e29-8652-29148ff403e5"
                         alt="ILSA website redesign mockup"
@@ -183,7 +183,7 @@ export default function WebDesignPage() {
             <SectionContainer>
                 <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
                     <div className="md:col-span-2">
-                        <ViewerCard label="CONTEXT_IMG" className="overflow-hidden relative w-full aspect-video">
+                        <ViewerCard label="CONTEXT_IMG" className="relative w-full aspect-video">
                             <Image
                                 src="https://firebasestorage.googleapis.com/v0/b/camilo-portfolio-77b8a.appspot.com/o/ILSA-Web-mockup-1.webp?alt=media&token=20977961-0397-4c6e-b91f-efd038073d62"
                                 alt="ILSA website mockup detail"
@@ -247,7 +247,7 @@ export default function WebDesignPage() {
                 <SectionHeader icon={Wand2} label="METHODOLOGY_LOADED" title="Design Process" />
 
                 {/* Moodboard */}
-                <ViewerCard label="MOODBOARD" className="overflow-hidden mb-8 relative w-full aspect-[2/1]">
+                <ViewerCard label="MOODBOARD" className="mb-8 relative w-full aspect-[2/1]">
                     <a
                         href="https://ilsa.org.co/voces-en-movimiento/"
                         target="_blank"
@@ -303,7 +303,7 @@ export default function WebDesignPage() {
                 <h3 className="text-xl font-bold text-[#1a1a1a] dark:text-[#faf9f6] mb-4">
                     Conceptualization and Design
                 </h3>
-                <ViewerCard label="FIGMA_BOARD" className="overflow-hidden mb-8">
+                <ViewerCard label="FIGMA_BOARD" className="mb-8">
                     <div className="w-full aspect-[16/9] relative">
                         <iframe
                             src="https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Fboard%2Fy8YZXMIIogI6XgTZNQXQmb%2FUntitled%3Fnode-id%3D0-1%26t%3Dbkn2jdLYoVMPi8gU-1"
@@ -444,7 +444,7 @@ export default function WebDesignPage() {
                 />
 
                 <div className="grid md:grid-cols-2 gap-6 mb-10">
-                    <ViewerCard label="WIREFRAME_HOME" className="overflow-hidden">
+                    <ViewerCard label="WIREFRAME_HOME">
                         <LightboxImage
                             src="https://firebasestorage.googleapis.com/v0/b/camilo-portfolio-77b8a.appspot.com/o/ILSA%20-Wireframe%20-Home.webp?alt=media&token=9942a7aa-1739-46b0-a690-dfa4d8a04033"
                             alt="ILSA homepage wireframe"
@@ -461,7 +461,7 @@ export default function WebDesignPage() {
                                 it more engaging.
                             </p>
                         </ViewerCard>
-                        <ViewerCard label="WIREFRAME_MEDIA" className="overflow-hidden">
+                        <ViewerCard label="WIREFRAME_MEDIA">
                             <LightboxImage
                                 src="https://firebasestorage.googleapis.com/v0/b/camilo-portfolio-77b8a.appspot.com/o/ILSA%20-Wireframe%20-Multimedia.webp?alt=media&token=fd066bba-fb7c-4788-983d-080570bcf825"
                                 alt="ILSA multimedia page wireframe"
@@ -509,7 +509,7 @@ export default function WebDesignPage() {
                             improving the site&apos;s search engine visibility.
                         </p>
                     </ViewerCard>
-                    <ViewerCard label="BACKEND_PREVIEW" className="overflow-hidden">
+                    <ViewerCard label="BACKEND_PREVIEW">
                         <LightboxImage
                             src="https://firebasestorage.googleapis.com/v0/b/camilo-portfolio-77b8a.appspot.com/o/ILSA%20Wordpress%20backend.webp?alt=media&token=77aa0c98-e10a-4c38-ac8d-1832c57d5cdb"
                             alt="ILSA WordPress backend dashboard"
@@ -543,13 +543,13 @@ export default function WebDesignPage() {
                     </p>
                 </ViewerCard>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10">
-                    <ViewerCard label="STATS_01" className="overflow-hidden">
+                    <ViewerCard label="STATS_01">
                         <LightboxImage
                             src="https://firebasestorage.googleapis.com/v0/b/camilo-portfolio-77b8a.appspot.com/o/ILSA%20-%20Clodflare%20stadistics%20(1).webp?alt=media&token=e30afec0-0a9e-467a-a4d8-01a1d3fcc116"
                             alt="Cloudflare analytics for ILSA website"
                         />
                     </ViewerCard>
-                    <ViewerCard label="STATS_02" className="overflow-hidden">
+                    <ViewerCard label="STATS_02">
                         <LightboxImage
                             src="https://firebasestorage.googleapis.com/v0/b/camilo-portfolio-77b8a.appspot.com/o/ILSA%20-%20Clodflare%20stadistics%20(2).webp?alt=media&token=726e9429-d215-4577-8108-4ffc6763426b"
                             alt="Cloudflare traffic statistics for ILSA website"

@@ -34,7 +34,7 @@ export function ViewerCard({
 
             {/* Optional Data Label (HUD style) */}
             {label && (
-                <div className="absolute -top-3 left-4 bg-background dark:bg-background px-2 text-[10px] font-mono text-brand-blue tracking-widest uppercase border border-black/5 dark:border-white/5">
+                <div className="absolute -top-3 left-4 z-20 bg-background dark:bg-background px-2 py-0.5 text-[10px] font-mono leading-none text-brand-blue tracking-widest uppercase border border-black/5 dark:border-white/5">
                     {label}
                 </div>
             )}

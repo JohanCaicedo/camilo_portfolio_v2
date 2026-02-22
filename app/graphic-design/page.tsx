@@ -136,7 +136,7 @@ export default function GraphicDesignPage() {
                 <BadgeRow badges={BRANDING_BADGES} />
 
                 {/* Hero Banner */}
-                <ViewerCard label="BANNER_PREVIEW" className="overflow-hidden">
+                <ViewerCard label="BANNER_PREVIEW">
                     <LightboxImage
                         src="https://firebasestorage.googleapis.com/v0/b/camilo-portfolio-77b8a.appspot.com/o/ILSA-Banner-2024.webp?alt=media&token=e2597250-4690-400d-89b7-f44bb61b53fb"
                         alt="ILSA Branding 2024 banner"
@@ -202,7 +202,7 @@ export default function GraphicDesignPage() {
             ══════════════════════════════════════════════ */}
             <SectionContainer>
                 <div className="grid md:grid-cols-2 gap-6">
-                    <ViewerCard label="IMAGOTYPE" className="overflow-hidden flex items-center justify-center">
+                    <ViewerCard label="IMAGOTYPE" className="flex items-center justify-center">
                         <LightboxImage
                             src="https://firebasestorage.googleapis.com/v0/b/camilo-portfolio-77b8a.appspot.com/o/ILSA-2024-Imagotipo.webp?alt=media&token=a7a94b92-64e4-4c67-80bb-adc6aa4b21c8"
                             alt="ILSA 2024 imagotype"
@@ -261,7 +261,7 @@ export default function GraphicDesignPage() {
 
                 {/* Logo Blue + Description */}
                 <div className="grid md:grid-cols-2 gap-4 mb-4">
-                    <ViewerCard label="LOGO_BLUE" className="overflow-hidden bg-[#efefef] dark:bg-[#1a1a1a] flex items-center justify-center">
+                    <ViewerCard label="LOGO_BLUE" className="bg-[#efefef] dark:bg-[#1a1a1a] flex items-center justify-center">
                         <LightboxImage
                             src="https://firebasestorage.googleapis.com/v0/b/camilo-portfolio-77b8a.appspot.com/o/Dise%C3%B1o%20grafico%2FILSA%20Logo%20Azul-12.svg?alt=media&token=37c8c193-7c27-4f38-ac70-1852d5cc7153"
                             alt="ILSA Logo blue"
@@ -295,7 +295,7 @@ export default function GraphicDesignPage() {
                             the proportions of the other graphic elements.
                         </p>
                     </ViewerCard>
-                    <ViewerCard label="FAVICON" className="overflow-hidden bg-[#4e7cce] flex items-center justify-center">
+                    <ViewerCard label="FAVICON" className="bg-[#4e7cce] flex items-center justify-center">
                         <LightboxImage
                             src="https://firebasestorage.googleapis.com/v0/b/camilo-portfolio-77b8a.appspot.com/o/Dise%C3%B1o%20grafico%2FILSA-Favicon-Blanco-16.svg?alt=media&token=4de42555-f478-4e00-a02c-8caf81746295"
                             alt="ILSA World Map favicon"
@@ -316,7 +316,7 @@ export default function GraphicDesignPage() {
                             cohesion to the two elements of the logo.
                         </p>
                     </ViewerCard>
-                    <ViewerCard label="ACRONYM_IMG" className="overflow-hidden bg-[#efefef] dark:bg-[#1a1a1a] flex items-center justify-center">
+                    <ViewerCard label="ACRONYM_IMG" className="bg-[#efefef] dark:bg-[#1a1a1a] flex items-center justify-center">
                         <LightboxImage
                             src="https://firebasestorage.googleapis.com/v0/b/camilo-portfolio-77b8a.appspot.com/o/Dise%C3%B1o%20grafico%2FILSA-Type.svg?alt=media&token=abd052d3-29c2-44b7-9ebb-846fcb543d60"
                             alt="ILSA Logo acronym typography"
@@ -381,7 +381,7 @@ export default function GraphicDesignPage() {
                     <p className="text-[10px] font-mono text-[#999] tracking-widest uppercase text-right mb-2">
                         // portfolio/graphic-pieces
                     </p>
-                    <ViewerCard label="GP_BANNER" className="overflow-hidden">
+                    <ViewerCard label="GP_BANNER">
                         <LightboxImage
                             src="/GraphicPieces.webp"
                             alt="Graphic Pieces banner"
@@ -429,7 +429,7 @@ export default function GraphicDesignPage() {
                     <p className="text-[10px] font-mono text-[#999] tracking-widest uppercase text-right mb-2">
                         // portfolio/illustration
                     </p>
-                    <ViewerCard label="ILLUS_BANNER" className="overflow-hidden">
+                    <ViewerCard label="ILLUS_BANNER">
                         <LightboxImage
                             src="/IllustrationBanner.webp"
                             alt="Illustration banner"

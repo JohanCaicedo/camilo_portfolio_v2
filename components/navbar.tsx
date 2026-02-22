@@ -17,10 +17,10 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 
 const navLinks = [
-  { label: "About", href: "#about" },
-  { label: "Projects", href: "#projects" },
-  { label: "Education", href: "#education" },
-  { label: "Experience", href: "#experience" },
+  { label: "Web Design", href: "/web-design" },
+  { label: "Graphic Design", href: "/graphic-design" },
+  { label: "Editorial Design", href: "/editorial-design" },
+  { label: "Photography", href: "/photography" },
 ]
 
 export function Navbar() {

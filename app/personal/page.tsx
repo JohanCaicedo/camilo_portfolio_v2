@@ -201,7 +201,7 @@ export default function PersonalPage() {
                 <BadgeRow badges={BADGES} />
 
                 {/* Hero Banner */}
-                <ViewerCard label="BANNER_PREVIEW" className="overflow-hidden">
+                <ViewerCard label="BANNER_PREVIEW">
                     <LightboxImage
                         src="/ID-Personal.webp"
                         alt="Paper Fox Studio personal identity"
@@ -304,7 +304,7 @@ export default function PersonalPage() {
                     will guide the next stages, from brand creation to studio expansion.
                 </p>
 
-                <ViewerCard label="FIGMA_EMBED" className="overflow-hidden">
+                <ViewerCard label="FIGMA_EMBED">
                     <iframe
                         src="https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Fboard%2Fp7w4TjLESvQfPmxLsfrv84%2FMindmap-(Community)%3Fnode-id%3D0-1%26t%3DiFmcAKuGvymkMgI5-1"
                         className="w-full aspect-[8/3] border-0"
@@ -389,7 +389,7 @@ export default function PersonalPage() {
 
                 {/* Moodboard */}
                 <div className="mt-8">
-                    <ViewerCard label="MOODBOARD" className="overflow-hidden">
+                    <ViewerCard label="MOODBOARD">
                         <LightboxImage
                             src="/Personal-MoodBoard.webp"
                             alt="Visual identity and character MoodBoard"
@@ -453,7 +453,7 @@ export default function PersonalPage() {
 
                 {/* V1 + Build Video */}
                 <div className="grid md:grid-cols-2 gap-4 mb-4">
-                    <ViewerCard label="LOGO_V1" className="overflow-hidden">
+                    <ViewerCard label="LOGO_V1">
                         <LightboxImage
                             src="/PaperFoxStudioV1.webp"
                             alt="Paper Fox Studio Logo V1"
@@ -462,7 +462,7 @@ export default function PersonalPage() {
                             // logo_v1
                         </p>
                     </ViewerCard>
-                    <ViewerCard label="LOGO_BUILD" className="overflow-hidden">
+                    <ViewerCard label="LOGO_BUILD">
                         <video
                             controls
                             autoPlay
@@ -482,7 +482,7 @@ export default function PersonalPage() {
 
                 {/* V2 + Safe Areas */}
                 <div className="grid md:grid-cols-2 gap-4">
-                    <ViewerCard label="LOGO_V2" className="overflow-hidden">
+                    <ViewerCard label="LOGO_V2">
                         <LightboxImage
                             src="/PaperFoxLogoV2.webp"
                             alt="Paper Fox Studio Logo V2"
@@ -499,7 +499,7 @@ export default function PersonalPage() {
                             </a>
                         </p>
                     </ViewerCard>
-                    <ViewerCard label="SAFE_AREAS" className="overflow-hidden">
+                    <ViewerCard label="SAFE_AREAS">
                         <LightboxImage
                             src="/PFS-SafeAreas.webp"
                             alt="Paper Fox Studio safe areas"
@@ -532,7 +532,7 @@ export default function PersonalPage() {
 
                 <div className="grid md:grid-cols-2 gap-4">
                     {VIDEOS.slice(1).map((video) => (
-                        <ViewerCard key={video.label} label={video.label} className="overflow-hidden">
+                        <ViewerCard key={video.label} label={video.label}>
                             <video
                                 controls
                                 autoPlay

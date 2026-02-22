@@ -256,7 +256,7 @@ export function AtomCursor() {
         <canvas
             ref={canvasRef}
             className="fixed inset-0 pointer-events-none"
-            style={{ zIndex: 9999 }}
+            style={{ zIndex: 50000 }}
             aria-hidden="true"
         />
     )
