@@ -40,8 +40,7 @@ export function PageLoader() {
         }, 1000)
     }
 
-    // Low tier: skip the entire loader
-    if (done || tier === "low") return null
+    if (done) return null
 
     return (
         <AnimatePresence>
@@ -61,8 +60,8 @@ export function PageLoader() {
                             height: 100vh;
                         }
                     `}</style>
-                    {/* Same dot grid as the rest of the site (high tier only) */}
-                    {tier === "high" && <InteractiveGridPattern />}
+                    {/* Dot grid background — all tiers, interactive only on high */}
+                    <InteractiveGridPattern interactive={tier === "high"} />
 
                     {/* Top: Logo + Paper Fox Studio */}
                     <motion.div

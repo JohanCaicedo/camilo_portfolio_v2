@@ -33,64 +33,36 @@ const STORAGE_KEY = "pfs-perf-tier"
  *   - Screen width ≤ 768       → −1 (likely small/mobile)
  */
 function detectTier(): PerformanceTier {
-    if (typeof window === "undefined") return "medium"
+    if (typeof window === "undefined") return "high"
 
-    // Hard override: reduced motion preference
+    // Hard override: reduced motion preference -> Lite mode
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
         return "low"
     }
 
-    let score = 0
-
-    // WebGPU availability
-    if ("gpu" in navigator) {
-        score += 2
-    }
-
-    // CPU cores
     const cores = navigator.hardwareConcurrency ?? 4
-    if (cores >= 8) score += 2
-    else if (cores >= 4) score += 1
-
-    // Device memory (Chrome only)
     const mem = (navigator as { deviceMemory?: number }).deviceMemory
-    if (mem !== undefined) {
-        if (mem >= 8) score += 2
-        else if (mem >= 4) score += 1
-        else score -= 1
+
+    // Very weak devices (<= 2 cores or <= 2GB RAM) -> Lite mode
+    if (cores <= 2 || (mem !== undefined && mem <= 2)) {
+        return "low"
     }
 
-    // WebGL2 support
-    try {
-        const canvas = document.createElement("canvas")
-        const gl = canvas.getContext("webgl2")
-        if (gl) score += 1
-    } catch {
-        // no WebGL2
-    }
-
-    // Small screen → likely mobile
-    if (window.innerWidth <= 768) {
-        score -= 1
-    }
-
-    // Touch-only device → cap at medium
     const isTouchOnly =
         window.matchMedia("(pointer: coarse)").matches &&
         window.matchMedia("(hover: none)").matches
 
-    if (isTouchOnly && score > 3) {
-        score = 3
+    // Mid-range mobile/tablets (<= 4 cores or <= 4GB RAM + touch) -> Balanced mode
+    if (isTouchOnly && (cores <= 4 || (mem !== undefined && mem <= 4))) {
+        return "medium"
     }
 
-    // Thresholds
-    if (score >= 5) return "high"
-    if (score >= 2) return "medium"
-    return "low"
+    // Default to Ultra for everything else (modern desktops, phones, tablets)
+    return "high"
 }
 
 export function PerformanceProvider({ children }: { children: ReactNode }) {
-    const [tier, setTierState] = useState<PerformanceTier>("medium")
+    const [tier, setTierState] = useState<PerformanceTier>("high")
     const [isAutoDetected, setIsAutoDetected] = useState(true)
 
     // Initialise on mount (client only)

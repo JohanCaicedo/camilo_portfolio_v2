@@ -67,6 +67,10 @@ function ScanlineAsciiEffect({
   const cachedColorRef = useRef<string>(fgColor)
   const hasFrozenFrame = useRef(false)
 
+  // WebGPU async readback state
+  const isWebGPU = useRef(!('readRenderTargetPixels' in gl))
+  const asyncReadPending = useRef(false)
+
   useEffect(() => {
     isMountedRef.current = true
 
@@ -119,8 +123,12 @@ function ScanlineAsciiEffect({
   useEffect(() => {
     if (!size.width || !size.height) return
 
-    const w = Math.floor(size.width * resolution)
-    const h = Math.floor(size.height * resolution)
+    const rawW = Math.floor(size.width * resolution)
+    const rawH = Math.floor(size.height * resolution)
+    // WebGPU requires bytesPerRow (width*4) to be a multiple of 256.
+    // Align width to 64 pixels so width*4 = multiple of 256.
+    const w = isWebGPU.current ? Math.ceil(rawW / 64) * 64 : rawW
+    const h = rawH
 
     if (renderTarget.current) renderTarget.current.dispose()
     renderTarget.current = new THREE.WebGLRenderTarget(w, h)
@@ -193,7 +201,36 @@ function ScanlineAsciiEffect({
 
     const pixels = pixelsRef.current
     if (!pixels) return
-    gl.readRenderTargetPixels(rt, 0, 0, rtWidth, rtHeight, pixels)
+
+    // WebGPU async readback path
+    if (isWebGPU.current) {
+      if (asyncReadPending.current) return // still waiting for previous read
+      asyncReadPending.current = true
+        ; (gl as any).readRenderTargetPixelsAsync(rt, 0, 0, rtWidth, rtHeight)
+          .then((buffer: ArrayBuffer) => {
+            if (!isMountedRef.current) return
+            const src = new Uint8Array(buffer)
+            const expectedSize = rtWidth * rtHeight * 4
+            if (src.byteLength <= expectedSize) {
+              pixels.set(src)
+            } else {
+              // WebGPU pads rows to 256-byte alignment — unpack
+              const bytesPerRow = Math.ceil((rtWidth * 4) / 256) * 256
+              const unpadded = rtWidth * 4
+              for (let row = 0; row < rtHeight; row++) {
+                pixels.set(
+                  src.subarray(row * bytesPerRow, row * bytesPerRow + unpadded),
+                  row * unpadded
+                )
+              }
+            }
+            asyncReadPending.current = false
+          })
+          .catch(() => { asyncReadPending.current = false })
+    } else {
+      // WebGL sync readback
+      gl.readRenderTargetPixels(rt, 0, 0, rtWidth, rtHeight, pixels)
+    }
 
     ctx.clearRect(0, 0, overlay.width, overlay.height)
 
@@ -225,7 +262,8 @@ function ScanlineAsciiEffect({
       const rtY = Math.floor(row * charToRtY)
 
       if (rtX >= 0 && rtX < rtWidth && rtY >= 0 && rtY < rtHeight) {
-        const pixelIdx = ((rtHeight - 1 - rtY) * rtWidth + rtX) * 4
+        // WebGL reads pixels bottom-to-top (flip Y), WebGPU reads top-to-bottom (no flip)
+        const pixelIdx = (((isWebGPU.current ? rtY : (rtHeight - 1 - rtY))) * rtWidth + rtX) * 4
         const r = pixels[pixelIdx]
         const g = pixels[pixelIdx + 1]
         const b = pixels[pixelIdx + 2]
@@ -346,6 +384,15 @@ function SceneErrorFallback() {
   )
 }
 
+// Async WebGPU renderer factory — auto-falls back to WebGL2 on unsupported browsers
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+async function createWebGPURenderer(props: any) {
+  const { WebGPURenderer } = await import("three/webgpu")
+  const renderer = new WebGPURenderer({ ...props, alpha: true, antialias: true })
+  await renderer.init()
+  return renderer
+}
+
 export function AsciiScene({
   reduced = false,
   tier,
@@ -358,6 +405,7 @@ export function AsciiScene({
   // Tier overrides: low → frozen (static frame 1), medium → reduced mode
   const isFrozen = tier === "low"
   const effectiveReduced = reduced || tier === "medium" || tier === "low"
+  const useWebGPU = tier === "high"
   const fgColor = theme === "dark" ? "#faf9f6" : "#1a1a1a"
 
   return (
@@ -365,7 +413,11 @@ export function AsciiScene({
       <ErrorBoundary fallback={<SceneErrorFallback />}>
         <Canvas
           camera={{ position: [0, 1, 5], fov: 35 }}
-          gl={{ alpha: true }}
+          gl={
+            (useWebGPU
+              ? createWebGPURenderer
+              : { alpha: true }) as any // eslint-disable-line @typescript-eslint/no-explicit-any
+          }
           style={{ background: "transparent" }}
         >
           <Suspense fallback={null}>

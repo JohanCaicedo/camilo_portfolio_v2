@@ -1,10 +1,10 @@
 ---
 name: ai-memory
-description: Canonical memory for Camilo Portfolio V2 (Paper Fox Studio). Covers architecture, design system, 3D rendering pipeline, content structure, page conventions, performance constraints, and internal skills/workflows.
+description: Canonical memory for Camilo Portfolio V2 (Paper Fox Studio). Covers architecture, design system, 3D rendering pipeline, performance tier system, WebGPU integration, content structure, page conventions, and internal skills/workflows.
 metadata:
   author: camilo
-  version: "3.0.0"
-  last-updated: "2026-02-18"
+  version: "4.0.0"
+  last-updated: "2026-02-22"
 ---
 
 # AI Memory — Camilo Portfolio V2
@@ -61,8 +61,10 @@ Package scripts of record:
 ### Core components
 - Hero and 3D scene: `components/hero-section.tsx`, `components/ascii-scene.tsx`, `components/NewZorrito-Web.tsx`
 - Home sections: `components/about-section.tsx`, `components/projects-section.tsx`, `components/experience-section.tsx`, `components/education-section.tsx`, `components/skills-section.tsx`
-- Navigation/footer: `components/navbar.tsx`, `components/footer.tsx`
+- Navigation/footer: `components/navbar.tsx`, `components/footer.tsx` (footer is client component with tier selector)
 - Global interactions: `components/ui/interactive-grid-pattern.tsx`, `components/atom-cursor.tsx`, `components/mode-toggle.tsx`, `components/scroll-to-top.tsx`
+- Performance system: `components/performance-context.tsx`, `components/tiered-effects.tsx`
+- Page loader: `components/page-loader.tsx` (intro animation, works on all tiers)
 - Snap toggle for home only: `components/home-scroll-snap.tsx`
 
 ### Skills in repo
@@ -97,13 +99,41 @@ Defined via CSS vars in `app/globals.css`:
 - optional HUD label (`label="..."`)
 
 ### Interaction layers
-- Fixed background interactive dot grid (`InteractiveGridPattern`)
-- Atom cursor overlay (`AtomCursor`)
+- Fixed background interactive dot grid (`InteractiveGridPattern`) — shown on all tiers, interactive only on Ultra
+- Atom cursor overlay (`AtomCursor`) — Ultra tier only, DPR-aware (crisp at any zoom)
 - Theme reveal animation via View Transition API (`ModeToggle` + `globals.css`)
+- Page loader (`PageLoader`) — prism text animation + fox logo, works on all tiers
 
 ---
 
-## 5) Home Structure (Current)
+## 5) Performance Tier System
+
+Three-tier graphics system with auto-detection and manual override.
+
+### Tiers
+| Tier | Label | Effects |
+|------|-------|---------|
+| `high` | ⚡ Ultra | WebGPU 3D render, interactive dot grid, atom cursor, full animations, full page loader |
+| `medium` | ⚖️ Balanced | WebGL2 3D render (reduced), static dot grid, no cursor, blink-only fox logo, page loader with static grid |
+| `low` | 🍃 Lite | WebGL2 3D render (frozen frame 1), static dot grid, no cursor, static fox logo, page loader with static grid |
+
+### Architecture
+- **Context**: `components/performance-context.tsx` — React Context + `usePerformanceTier()` hook
+- **Auto-detection**: Lenient detection (defaults to Ultra). Only downgrades to Balanced on low-end touch devices (≤ 4 cores or ≤ 4GB RAM), or Lite on very weak hardware (≤ 2 cores / ≤ 2GB RAM) and `prefers-reduced-motion`. Initial CSR state matches SSR state (`high`) to avoid hydration mismatch.
+- **Manual override**: Dropdown in footer, persisted via `localStorage` key `"pfs-perf-tier"`
+- **Conditional rendering**: `components/tiered-effects.tsx` renders grid + cursor based on tier
+- **Layout integration**: `app/layout.tsx` wraps app with `<PerformanceProvider>`
+
+### Component tier behavior
+- `InteractiveGridPattern`: `interactive` prop — `true` on high, `false` on medium/low (static dots)
+- `AtomCursor`: Only rendered on `high` tier
+- `AsciiScene`: `tier` prop — high=WebGPU full, medium=WebGL2 reduced, low=WebGL2 frozen (frame 1)
+- `AnimatedFoxLogo`: high=full anims, medium=blink only, low=static SVG
+- `PageLoader`: Shows on all tiers, grid interactive only on high, all text/fox animations preserved
+
+---
+
+## 6) Home Structure (Current)
 
 Home composition in `app/page.tsx`:
 1. `HeroSection`
@@ -132,7 +162,7 @@ Rule: `framer-motion` in a component requires `"use client"` at top.
 
 ---
 
-## 6) Hero + 3D Rendering System
+## 7) Hero + 3D Rendering System
 
 ### Hero behavior (`components/hero-section.tsx`)
 - Responsive split:
@@ -151,23 +181,35 @@ Rule: `framer-motion` in a component requires `"use client"` at top.
   - subtle float and sway
 
 ### ASCII rendering (`components/ascii-scene.tsx`)
-Current system is a **custom scanline ASCII renderer** (not plain `AsciiRenderer`):
-- Renders scene to low-res `WebGLRenderTarget`
-- Reads pixels and maps luminance to chars (`ASCII_CHARS = " .:-=+*#%@"`)
-- Draws to 2D overlay canvas with scanline style
-- Supports reduced mode (`reduced` prop) for mobile background usage
-- Includes cursor-reactive color displacement (disabled in reduced mode)
-- Wrapped in `ErrorBoundary`
+Custom scanline ASCII renderer with WebGPU/WebGL2 dual-path:
+- **Ultra tier**: Uses `THREE.WebGPURenderer` (async init via `three/webgpu`) with automatic WebGL2 fallback
+- **Medium tier**: Uses standard `WebGLRenderer` in reduced mode
+- **Low tier**: Uses standard `WebGLRenderer`, frozen on frame 1
+- Renders scene to low-res `WebGLRenderTarget` (width 64-aligned for WebGPU compatibility)
+- Pixel readback: sync `readRenderTargetPixels` for WebGL, async `readRenderTargetPixelsAsync` for WebGPU
+- Y-axis handling: WebGL reads bottom-to-top (flip Y), WebGPU reads top-to-bottom (no flip)
+- Maps luminance to chars (`ASCII_CHARS = " .:-=+*#%@"`) on 2D overlay canvas
+- Cursor-reactive color displacement (disabled in reduced/frozen modes)
+- Wrapped in `ErrorBoundary` with GIF fallback
 
-Performance choices used:
-- reusable `Uint8Array` buffer
-- cached 2D context
-- precomputed palette RGB
-- distance checks via squared distance
+Performance choices:
+- Reusable `Uint8Array` pixel buffer
+- Cached 2D context
+- Precomputed palette RGB
+- Squared distance checks
+- WebGPU async read uses pending flag to avoid overlapping reads
+
+### Atom Cursor (`components/atom-cursor.tsx`)
+- Canvas-based custom cursor with nucleus + orbiting electrons
+- DPR-aware: canvas buffer scaled by `devicePixelRatio` — stays crisp at any browser zoom
+- Hover detection: grows on interactive elements (fast-path tag check + cached `getComputedStyle`)
+- Click animation: burst scale with slow elegant retraction
+- Trail ring buffers pre-allocated (no per-frame allocations)
+- Only rendered on Ultra tier
 
 ---
 
-## 7) Navigation + Metadata + SEO
+## 8) Navigation + Metadata + SEO
 
 ### Navbar (`components/navbar.tsx`)
 - Uses `next/link` and `next/image`
@@ -190,7 +232,7 @@ Performance choices used:
 
 ---
 
-## 8) Content Architecture for Project Pages
+## 9) Content Architecture for Project Pages
 
 Each category page follows a repeated pattern:
 - back link (`// BACK_TO_PROJECTS`)
@@ -210,7 +252,7 @@ Most page data lives in top-of-file constants (badges/images/specs arrays).
 
 ---
 
-## 9) Internal Skill Strategy
+## 10) Internal Skill Strategy
 
 ### `react-doctor`
 Use for health audits and diagnostics; command:
@@ -230,17 +272,20 @@ No new categories should be introduced by this skill.
 
 ---
 
-## 10) Known Constraints / Pitfalls
+## 11) Known Constraints / Pitfalls
 
 1. Any component using Framer Motion must be client component (`"use client"`).
 2. `.git` operations can require elevated permissions in this environment.
 3. Build can fail in restricted-network environments due to Google font fetching.
 4. Home snap should remain guidance-focused (`proximity`), not forced (`mandatory`).
 5. Preserve existing component language; avoid ad-hoc visual patterns.
+6. Three.js `WebGPURenderer` has a bug in `copyTextureToBuffer` — buffer size doesn't account for 256-byte row padding. Worked around by aligning render target width to 64px multiples.
+7. WebGL and WebGPU have opposite Y-axis conventions for pixel readback — handled in `ascii-scene.tsx` via `isWebGPU` flag.
+8. Footer is a client component (uses `usePerformanceTier` hook).
 
 ---
 
-## 11) Maintenance Rules (Practical)
+## 12) Maintenance Rules (Practical)
 
 When adding/editing content:
 - Prefer additive changes over rewrites.
@@ -255,18 +300,24 @@ When touching home sections:
 - Respect reduced-motion behavior.
 
 When touching 3D:
-- Preserve reduced mode support in Hero mobile background.
+- Preserve reduced/frozen mode support in Hero mobile background.
 - Avoid expensive per-frame allocations.
+- Keep WebGPU/WebGL2 dual-path in ASCII readback.
+- Keep render target width 64-aligned for WebGPU compatibility.
+- Test Y-axis orientation when changing pixel readback logic.
 
 ---
 
-## 12) Current Maturity Snapshot
+## 13) Current Maturity Snapshot
 
 Project state is advanced/polished:
 - Multi-section portfolio with coherent visual language
 - Working CV route and navigation flow
 - Themed UI with custom interaction layers
 - Animated section headers and expandable experience timeline
+- 3-tier performance system (Ultra/Balanced/Lite) with auto-detection
+- WebGPU rendering on Ultra with automatic WebGL2 fallback
+- DPR-aware atom cursor (crisp at any zoom)
 - Lint/type/tooling modernized
 - Internal skill for Notion-to-portfolio publishing established
 

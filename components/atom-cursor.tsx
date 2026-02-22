@@ -45,10 +45,15 @@ export function AtomCursor() {
         const ctx = canvas.getContext("2d")
         if (!ctx) return
 
-        // Sizing
+        // Sizing — account for devicePixelRatio to avoid pixelation on zoom
+        let dpr = 1
         const resize = () => {
-            canvas.width = window.innerWidth
-            canvas.height = window.innerHeight
+            dpr = window.devicePixelRatio || 1
+            canvas.width = window.innerWidth * dpr
+            canvas.height = window.innerHeight * dpr
+            canvas.style.width = `${window.innerWidth}px`
+            canvas.style.height = `${window.innerHeight}px`
+            ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
         }
         resize()
         window.addEventListener("resize", resize)
@@ -142,7 +147,10 @@ export function AtomCursor() {
         }))
 
         const animate = (time: number) => {
+            ctx.save()
+            ctx.setTransform(1, 0, 0, 1, 0, 0) // reset to clear the full buffer
             ctx.clearRect(0, 0, canvas.width, canvas.height)
+            ctx.restore() // re-apply DPR scaling
 
             if (!visibleRef.current) {
                 animRef.current = requestAnimationFrame(animate)
