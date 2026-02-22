@@ -1,18 +1,27 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useState, useLayoutEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { MousePointer2 } from "lucide-react"
 import { InteractiveGridPattern } from "@/components/ui/interactive-grid-pattern"
 import { AnimatedFoxLogo } from "@/components/animated-fox-logo"
 import { usePerformanceTier } from "@/components/performance-context"
 
+const useIsomorphicLayoutEffect = typeof window !== "undefined" ? useLayoutEffect : useEffect
+
 export function PageLoader() {
     const [phase, setPhase] = useState<"intro" | "split" | "waiting" | "exit">("intro")
     const [done, setDone] = useState(false)
     const { tier } = usePerformanceTier()
 
-    useEffect(() => {
+    useIsomorphicLayoutEffect(() => {
+        // Only run loader once per tab session
+        if (sessionStorage.getItem("pfs-loader-seen")) {
+            setDone(true)
+            return
+        }
+        sessionStorage.setItem("pfs-loader-seen", "true")
+
         // Phase 1: Intro — elements fade in (0–1000ms)
         const t1 = setTimeout(() => setPhase("split"), 1000)
         // Phase 2: Split — dimensional layers diverge (1000–1800ms)

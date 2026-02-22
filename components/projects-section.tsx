@@ -6,6 +6,7 @@ import { ViewerCard } from "@/components/ui/viewer-card"
 import { SectionContainer } from "@/components/section-container"
 import { useState } from "react"
 import Image from "next/image"
+import Link from "next/link"
 
 const projects = [
     {
@@ -55,6 +56,8 @@ const projects = [
     },
 ]
 
+const MotionLink = m.create(Link)
+
 export function ProjectsSection() {
     const [imageErrors, setImageErrors] = useState<Record<string, boolean>>({})
 
@@ -85,7 +88,7 @@ export function ProjectsSection() {
 
             <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-6">
                 {projects.map((project) => (
-                    <m.a
+                    <MotionLink
                         key={project.id}
                         href={project.link}
                         whileHover={{ scale: 1.005 }}
@@ -149,7 +152,7 @@ export function ProjectsSection() {
                                 </div>
                             </div>
                         </ViewerCard>
-                    </m.a>
+                    </MotionLink>
                 ))}
             </div>
         </SectionContainer>
