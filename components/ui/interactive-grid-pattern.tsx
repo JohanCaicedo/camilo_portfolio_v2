@@ -22,10 +22,12 @@ const PALETTE_RGB: [number, number, number][] = PALETTE.map((hex) => [
 
 interface InteractiveGridPatternProps {
     gap?: number
+    interactive?: boolean
 }
 
 export function InteractiveGridPattern({
     gap = 20,
+    interactive = true,
 }: InteractiveGridPatternProps) {
     const canvasRef = useRef<HTMLCanvasElement>(null)
     const { theme } = useTheme()
@@ -37,7 +39,7 @@ export function InteractiveGridPattern({
         const ctx = canvas.getContext("2d")
         if (!ctx) return
 
-        let animationFrameId: number
+        let animationFrameId: number | null = null
         let mouseX = -1000
         let mouseY = -1000
 
@@ -81,10 +83,25 @@ export function InteractiveGridPattern({
             }
         }
 
+        const drawStatic = () => {
+            ctx.clearRect(0, 0, canvas.width, canvas.height)
+            for (const dot of dots) {
+                ctx.beginPath()
+                ctx.arc(dot.originX, dot.originY, dot.size, 0, Math.PI * 2)
+                ctx.fillStyle = dot.baseColor
+                ctx.fill()
+            }
+        }
+
         const resize = () => {
             canvas.width = window.innerWidth
             canvas.height = window.innerHeight
             initDots()
+
+            // If not interactive, just draw once and bail
+            if (!interactive) {
+                drawStatic()
+            }
         }
 
         const animate = () => {
@@ -141,19 +158,29 @@ export function InteractiveGridPattern({
         }
 
         window.addEventListener("resize", resize)
-        window.addEventListener("mousemove", handleMouseMove)
-        window.addEventListener("mouseleave", handleMouseLeave)
+
+        if (interactive) {
+            window.addEventListener("mousemove", handleMouseMove)
+            window.addEventListener("mouseleave", handleMouseLeave)
+        }
 
         resize()
-        animate()
+
+        if (interactive) {
+            animate()
+        }
 
         return () => {
             window.removeEventListener("resize", resize)
-            window.removeEventListener("mousemove", handleMouseMove)
-            window.removeEventListener("mouseleave", handleMouseLeave)
-            cancelAnimationFrame(animationFrameId)
+            if (interactive) {
+                window.removeEventListener("mousemove", handleMouseMove)
+                window.removeEventListener("mouseleave", handleMouseLeave)
+            }
+            if (animationFrameId !== null) {
+                cancelAnimationFrame(animationFrameId)
+            }
         }
-    }, [gap, theme])
+    }, [gap, theme, interactive])
 
     return (
         <canvas
@@ -163,3 +190,4 @@ export function InteractiveGridPattern({
         />
     )
 }
+

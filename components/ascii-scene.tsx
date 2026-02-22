@@ -44,6 +44,7 @@ function ScanlineAsciiEffect({
   charSpacing = 8,
   resolution = 0.18,
   reduced = false,
+  frozen = false,
 }: {
   fgColor: string
   lineSpacing?: number
@@ -51,6 +52,7 @@ function ScanlineAsciiEffect({
   charSpacing?: number
   resolution?: number
   reduced?: boolean
+  frozen?: boolean
 }) {
   const { gl, scene, camera, size } = useThree()
   const overlayRef = useRef<HTMLCanvasElement | null>(null)
@@ -63,6 +65,7 @@ function ScanlineAsciiEffect({
   const timeRef = useRef(0)
   const scaleRef = useRef({ charToRtX: 0, charToRtY: 0, rtWidth: 0, rtHeight: 0, numCols: 0 })
   const cachedColorRef = useRef<string>(fgColor)
+  const hasFrozenFrame = useRef(false)
 
   useEffect(() => {
     isMountedRef.current = true
@@ -173,6 +176,9 @@ function ScanlineAsciiEffect({
 
   useFrame((state) => {
     if (!renderTarget.current || !overlayRef.current || !isMountedRef.current) return
+
+    // If frozen and we already rendered one frame, skip
+    if (frozen && hasFrozenFrame.current) return
 
     const rt = renderTarget.current
     const overlay = overlayRef.current
@@ -305,6 +311,11 @@ function ScanlineAsciiEffect({
     }
 
     ctx.globalAlpha = 1
+
+    // Mark frozen frame as rendered
+    if (frozen) {
+      hasFrozenFrame.current = true
+    }
   }, 1)
 
   return null
@@ -335,9 +346,18 @@ function SceneErrorFallback() {
   )
 }
 
-export function AsciiScene({ reduced = false }: { reduced?: boolean } = {}) {
+export function AsciiScene({
+  reduced = false,
+  tier,
+}: {
+  reduced?: boolean
+  tier?: "high" | "medium" | "low"
+} = {}) {
   const { theme } = useTheme()
 
+  // Tier overrides: low → frozen (static frame 1), medium → reduced mode
+  const isFrozen = tier === "low"
+  const effectiveReduced = reduced || tier === "medium" || tier === "low"
   const fgColor = theme === "dark" ? "#faf9f6" : "#1a1a1a"
 
   return (
@@ -357,11 +377,12 @@ export function AsciiScene({ reduced = false }: { reduced?: boolean } = {}) {
           </Suspense>
           <ScanlineAsciiEffect
             fgColor={fgColor}
-            lineSpacing={reduced ? 2 : 1}
-            lineHeight={reduced ? 3 : 2}
-            charSpacing={reduced ? 12 : 8}
-            resolution={reduced ? 0.12 : 0.18}
-            reduced={reduced}
+            lineSpacing={effectiveReduced ? 2 : 1}
+            lineHeight={effectiveReduced ? 3 : 2}
+            charSpacing={effectiveReduced ? 12 : 8}
+            resolution={effectiveReduced ? 0.12 : 0.18}
+            reduced={effectiveReduced}
+            frozen={isFrozen}
           />
         </Canvas>
       </ErrorBoundary>

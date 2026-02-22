@@ -5,10 +5,12 @@ import { motion, AnimatePresence } from "framer-motion"
 import { MousePointer2 } from "lucide-react"
 import { InteractiveGridPattern } from "@/components/ui/interactive-grid-pattern"
 import { AnimatedFoxLogo } from "@/components/animated-fox-logo"
+import { usePerformanceTier } from "@/components/performance-context"
 
 export function PageLoader() {
     const [phase, setPhase] = useState<"intro" | "split" | "waiting" | "exit">("intro")
     const [done, setDone] = useState(false)
+    const { tier } = usePerformanceTier()
 
     useEffect(() => {
         // Phase 1: Intro — elements fade in (0–1000ms)
@@ -38,7 +40,8 @@ export function PageLoader() {
         }, 1000)
     }
 
-    if (done) return null
+    // Low tier: skip the entire loader
+    if (done || tier === "low") return null
 
     return (
         <AnimatePresence>
@@ -58,8 +61,8 @@ export function PageLoader() {
                             height: 100vh;
                         }
                     `}</style>
-                    {/* Same dot grid as the rest of the site */}
-                    <InteractiveGridPattern />
+                    {/* Same dot grid as the rest of the site (high tier only) */}
+                    {tier === "high" && <InteractiveGridPattern />}
 
                     {/* Top: Logo + Paper Fox Studio */}
                     <motion.div

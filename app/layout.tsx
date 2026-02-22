@@ -4,14 +4,14 @@ import { Analytics } from '@vercel/analytics/next'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import './globals.css'
 import { ThemeProvider } from "@/components/theme-provider"
-import { InteractiveGridPattern } from "@/components/ui/interactive-grid-pattern"
-import { AtomCursor } from "@/components/atom-cursor"
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
 import { JsonLd } from "@/components/json-ld"
 import { ScrollToTop } from "@/components/scroll-to-top"
 import { PageLoader } from "@/components/page-loader"
 import { MotionProvider } from "@/components/motion-provider"
+import { PerformanceProvider } from "@/components/performance-context"
+import { TieredEffects } from "@/components/tiered-effects"
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -89,20 +89,21 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <MotionProvider>
-            <PageLoader />
-            <div className="relative z-10">
-              <Navbar />
-              {children}
-              <Footer />
-            </div>
-            <InteractiveGridPattern />
-            <AtomCursor />
-            <ScrollToTop />
-            <Analytics />
-            <SpeedInsights />
-            <JsonLd />
-          </MotionProvider>
+          <PerformanceProvider>
+            <MotionProvider>
+              <PageLoader />
+              <div className="relative z-10">
+                <Navbar />
+                {children}
+                <Footer />
+              </div>
+              <TieredEffects />
+              <ScrollToTop />
+              <Analytics />
+              <SpeedInsights />
+              <JsonLd />
+            </MotionProvider>
+          </PerformanceProvider>
         </ThemeProvider>
       </body>
     </html>

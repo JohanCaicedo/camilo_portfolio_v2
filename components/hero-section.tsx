@@ -5,12 +5,13 @@ import { SocialPill } from "@/components/ui/social-pill"
 import { Github, Linkedin, Mail, ChevronDown } from "lucide-react"
 import { useEffect, useState } from "react"
 import { AsciiSkeleton } from "@/components/ui/ascii-skeleton"
+import { usePerformanceTier } from "@/components/performance-context"
 
 const AsciiScene = dynamic(
   () => import("./ascii-scene").then((mod) => ({ default: mod.AsciiScene })),
   {
     ssr: false,
-    loading: () => <AsciiSkeleton />
+    loading: () => <AsciiSkeleton />,
   }
 )
 
@@ -26,6 +27,7 @@ function useStaggeredReveal() {
 export function HeroSection() {
   const visible = useStaggeredReveal()
   const [hasScrolled, setHasScrolled] = useState(false)
+  const { tier } = usePerformanceTier()
 
   useEffect(() => {
     const handleScroll = () => {
@@ -43,7 +45,7 @@ export function HeroSection() {
         className="absolute inset-0 lg:hidden opacity-30 pointer-events-none"
         aria-hidden="true"
       >
-        <AsciiScene reduced />
+        <AsciiScene reduced tier={tier} />
       </div>
 
       {/* Main content container */}
@@ -286,7 +288,7 @@ export function HeroSection() {
             }}
           >
             <div className="absolute inset-0 bg-gradient-to-l from-background via-transparent to-transparent z-10 w-20 pointer-events-none" />
-            <AsciiScene />
+            <AsciiScene tier={tier} />
           </div>
         </div>
       </div>

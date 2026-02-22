@@ -1,5 +1,8 @@
+"use client"
+
 import Link from "next/link"
 import { Github, Linkedin, Mail, Instagram, Phone } from "lucide-react"
+import { usePerformanceTier, type PerformanceTier } from "@/components/performance-context"
 
 const NAV_LINKS = [
     { label: "Projects", href: "/#projects" },
@@ -15,8 +18,15 @@ const SOCIAL_LINKS = [
     { icon: Phone, href: "tel:+573003094625", label: "Phone" },
 ]
 
+const TIER_OPTIONS: { value: PerformanceTier; label: string; icon: string }[] = [
+    { value: "high", label: "Ultra", icon: "⚡" },
+    { value: "medium", label: "Balanced", icon: "⚖️" },
+    { value: "low", label: "Lite", icon: "🍃" },
+]
+
 export function Footer() {
     const year = new Date().getFullYear()
+    const { tier, setTier, isAutoDetected } = usePerformanceTier()
 
     return (
         <footer className="relative w-full border-t border-black/10 dark:border-white/10 bg-background/80 dark:bg-background/80 backdrop-blur-sm">
@@ -80,18 +90,47 @@ export function Footer() {
                 </div>
 
                 {/* Bottom bar */}
-                <div className="pt-6 border-t border-black/5 dark:border-white/5 flex flex-col sm:flex-row justify-between items-center gap-2">
+                <div className="pt-6 border-t border-black/5 dark:border-white/5 flex flex-col sm:flex-row justify-between items-center gap-4">
                     <p className="text-[10px] font-mono text-[#999] tracking-wide">
                         © {year} Paper Fox Studio. All rights reserved.
                     </p>
-                    <div className="flex items-center gap-2">
-                        <span className="w-1.5 h-1.5 bg-brand-green rounded-full animate-pulse" />
-                        <span className="text-[10px] font-mono text-[#999] tracking-wide uppercase">
-                            STATUS: ONLINE
-                        </span>
+
+                    <div className="flex items-center gap-4">
+                        {/* Performance Tier Selector */}
+                        <div className="flex items-center gap-2">
+                            <span className="text-[10px] font-mono text-[#999] tracking-wide uppercase hidden sm:inline">
+                                GFX:
+                            </span>
+                            <select
+                                value={tier}
+                                onChange={(e) => setTier(e.target.value as PerformanceTier)}
+                                aria-label="Graphics quality tier"
+                                className="text-[10px] font-mono text-[#999] tracking-wide uppercase bg-transparent border border-black/10 dark:border-white/10 rounded px-2 py-1 outline-none focus:border-brand-blue hover:border-brand-salmon transition-colors cursor-pointer appearance-none pr-5"
+                                style={{
+                                    backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8' viewBox='0 0 8 8'%3E%3Cpath d='M0 2l4 4 4-4' fill='none' stroke='%23999' stroke-width='1.5'/%3E%3C/svg%3E")`,
+                                    backgroundRepeat: "no-repeat",
+                                    backgroundPosition: "right 6px center",
+                                }}
+                            >
+                                {TIER_OPTIONS.map((opt) => (
+                                    <option key={opt.value} value={opt.value}>
+                                        {opt.icon} {opt.label}{isAutoDetected ? " (auto)" : ""}
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
+
+                        {/* Status indicator */}
+                        <div className="flex items-center gap-2">
+                            <span className="w-1.5 h-1.5 bg-brand-green rounded-full animate-pulse" />
+                            <span className="text-[10px] font-mono text-[#999] tracking-wide uppercase">
+                                STATUS: ONLINE
+                            </span>
+                        </div>
                     </div>
                 </div>
             </div>
         </footer>
     )
 }
+
